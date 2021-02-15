@@ -11,11 +11,10 @@ const requestContext = cls.createNamespace('Context');
 
 cds.on('bootstrap', (app: Router) => {
   app.use(helmet());
-  app.use(function (req: Request, res: Response, next: NextFunction) {
+  app.use(function (_req: Request, res: Response, next: NextFunction) {
     requestContext.run(function () {
       const environment: IEnvironment = {
         __UUID: uuidv4(),
-        __REQUEST: req,
       };
       res.setHeader('Request-UUID', environment.__UUID);
       requestContext.set('Environment', environment);

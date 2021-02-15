@@ -1,4 +1,4 @@
-import { Handler, AfterRead, Entities, OnRead, Srv, Req, BeforeRead, OnCreate, Data, Param } from 'cds-routing-handlers';
+import { Handler, AfterRead, Entities, OnRead, Srv, Req, BeforeRead, OnCreate, Data, Param, User } from 'cds-routing-handlers';
 import { TestService } from '@Shared/Contract';
 import { DIContainer } from '@Application/DIContainer';
 import { GetPersonsUseCase, GetPersonsUseCaseParams } from '@Features/tests/usecases/GetPersonUseCase';
@@ -6,6 +6,7 @@ import * as TestServiceImpl from '@Services/TestService';
 import { Request } from '@sap/cds/apis/services';
 import { column_expr } from '@sap/cds/apis/cqn';
 import { GetPersonsUnitWork } from '@Features/tests/unitsOfWork/GetPersonsUnitWork';
+import { IUser } from '@Shared/IUser';
 /**
  * Person handler
  */
@@ -16,8 +17,9 @@ export class PersonHandler {
    * @param persons
    */
   @AfterRead()
-  async addLastName(@Entities() persons: TestService.IPerson[]): Promise<any> {
-    console.log('After: Test addLastName');
+  async addLastName(@Entities() persons: TestService.IPerson[], @User() incommingUser: Promise<IUser>): Promise<any> {
+    const user: IUser = await incommingUser;
+    console.log('After: Test addLastName: ' + JSON.stringify(user));
     if (persons) {
       for (const person of persons) {
         person.title += ` -- 11% discount!`;
@@ -29,8 +31,14 @@ export class PersonHandler {
    *
    */
   @OnRead()
-  async queryPersons(@Srv() srv: TestServiceImpl.TestService, @Req() req: Request, @Param('ID') id: string): Promise<any> {
-    console.log('Read: Test queryPersons');
+  async queryPersons(
+    @Srv() srv: TestServiceImpl.TestService,
+    @Req() req: Request,
+    @Param('ID') id: string,
+    @User() incommingUser: Promise<IUser>
+  ): Promise<any> {
+    const user: IUser = await incommingUser;
+    console.log('Read: Test queryPersons: ' + JSON.stringify(user));
     let params: GetPersonsUseCaseParams;
     if (id) {
       params = {
@@ -61,16 +69,23 @@ export class PersonHandler {
    *
    */
   @BeforeRead()
-  async befff(): Promise<any> {
-    console.log('Before: Test befff');
+  async befff(@User() incommingUser: Promise<IUser>): Promise<any> {
+    const user: IUser = await incommingUser;
+    console.log('Before: Test befff: ' + JSON.stringify(user));
   }
 
   /**
    *
    */
   @OnCreate()
-  async createPerson(@Srv() srv: TestServiceImpl.TestService, @Req() req: any, @Data() data: any): Promise<any> {
-    console.log('Ceate: Test queryPersons');
+  async createPerson(
+    @Srv() srv: TestServiceImpl.TestService,
+    @Req() req: any,
+    @Data() data: any,
+    @User() incommingUser: Promise<IUser>
+  ): Promise<any> {
+    const user: IUser = await incommingUser;
+    console.log('Ceate: Test queryPersons: ' + JSON.stringify(user));
     throw new Error('NOPE');
   }
 }

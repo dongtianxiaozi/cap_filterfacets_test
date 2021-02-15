@@ -2,6 +2,8 @@ import cds from '@sap/cds';
 import { createCombinedHandler } from 'cds-routing-handlers';
 import path from 'path';
 import { Service } from '@sap/cds/apis/services';
+import { EnvironmentMiddleware } from '@Application/GlobalMiddleware';
+import { SFCUserChecker } from '@Application/SFCUserChecker';
 
 export class TestService extends cds.ApplicationService {
   async init() {
@@ -16,6 +18,8 @@ export class TestService extends cds.ApplicationService {
         path.join(__dirname, '..', baseDir, 'features', 'tests', '/handlers/functions/**/*.js'),
         path.join(__dirname, '..', baseDir, 'features', 'tests', '/handlers/actions/**/*.js'),
       ],
+      middlewares: [EnvironmentMiddleware],
+      userChecker: SFCUserChecker,
     };
     const hdl = createCombinedHandler(options);
     hdl(service);
