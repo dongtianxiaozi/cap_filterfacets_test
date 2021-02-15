@@ -1,0 +1,132 @@
+{
+    "inputs": [
+      {
+        "id": "UI5Version",
+        "type": "command",
+        "command": "sap.ux.appGenerator.ui5Version"
+      }
+    ],
+    "configurations": [
+      {
+        "command": "cds run --with-mocks --in-memory?",
+        "name": "cds run",
+        "request": "launch",
+        "type": "node-terminal",
+        "skipFiles": [
+          "<node_internals>/**"
+        ]
+      },
+      {
+        "name": "Start v2_orders",
+        "type": "node",
+        "request": "launch",
+        "runtimeExecutable": "npm",
+        "cwd": "c:\\Users\\mmauri\\ipWorkspace\\sfcSandbox\\v2_orders",
+        "windows": {
+          "runtimeExecutable": "npm.cmd"
+        },
+        "runtimeArgs": [
+          "run-script",
+          "start"
+        ],
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "port": 9229,
+        "env": {
+          "DEBUG": "--inspect"
+        }
+      },
+      {
+        "name": "Start v2_orders with UI5 Version",
+        "type": "node",
+        "request": "launch",
+        "runtimeExecutable": "npm",
+        "cwd": "c:\\Users\\mmauri\\ipWorkspace\\sfcSandbox\\v2_orders",
+        "windows": {
+          "runtimeExecutable": "npm.cmd"
+        },
+        "runtimeArgs": [
+          "run-script",
+          "start"
+        ],
+        "args": [
+          "--",
+          "${input:UI5Version}"
+        ],
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "port": 9229,
+        "env": {
+          "DEBUG": "--inspect"
+        }
+      },
+      {
+        "name": "Start v2_orders Mock",
+        "type": "node",
+        "request": "launch",
+        "cwd": "c:\\Users\\mmauri\\ipWorkspace\\sfcSandbox\\v2_orders",
+        "runtimeExecutable": "npm",
+        "windows": {
+          "runtimeExecutable": "npm.cmd"
+        },
+        "runtimeArgs": [
+          "run-script",
+          "start-mock"
+        ],
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "port": 9229,
+        "env": {}
+      },
+      {
+        "name": "Start v2_orders Mock with UI5 Version",
+        "type": "node",
+        "request": "launch",
+        "cwd": "c:\\Users\\mmauri\\ipWorkspace\\sfcSandbox\\v2_orders",
+        "runtimeExecutable": "npm",
+        "windows": {
+          "runtimeExecutable": "npm.cmd"
+        },
+        "runtimeArgs": [
+          "run-script",
+          "start-mock"
+        ],
+        "args": [
+          "--",
+          "${input:UI5Version}"
+        ],
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "port": 9229
+      },
+      {
+        "name": "Start v2_orders Local",
+        "type": "node",
+        "request": "launch",
+        "cwd": "c:\\Users\\mmauri\\ipWorkspace\\sfcSandbox\\v2_orders",
+        "runtimeExecutable": "npm",
+        "windows": {
+          "runtimeExecutable": "npm.cmd"
+        },
+        "runtimeArgs": [
+          "run-script",
+          "start-local"
+        ],
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "port": 9229,
+        "env": {}
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Test",
+        "skipFiles": ["<node_internals>/**"],
+        "program": "${workspaceFolder}/gen/srv/srv/serverdev.js",
+        "preLaunchTask": "npm: build",
+        "outFiles": ["${workspaceFolder}/gen/**/*.js"]
+      }
+    ],
+    "compounds": [],
+    "version": "0.2.0"
+  }

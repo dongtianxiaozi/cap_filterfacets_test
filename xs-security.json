@@ -1,0 +1,24 @@
+{
+  "xsappname": "sfc",
+  "tenant-mode": "dedicated",
+  "scopes": [ 
+    {
+      "name": "uaa.user",
+      "description": "UAA"
+    }, 
+    {
+      "name": "$XSAPPNAME.user",
+      "description": "User"
+    }    
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "SFCUserRT",
+      "description": "Role Template for accessing SFC",
+      "scope-references": [
+        "uaa.user", "$XSAPPNAME.user"
+      ]
+    }     
+  ]
+}
