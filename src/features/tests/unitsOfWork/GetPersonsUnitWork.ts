@@ -6,6 +6,7 @@ import { inject, injectable, interfaces } from 'inversify';
 import { ILogger } from '@Logger/ILogger';
 import { IUseCase } from '@Core/IUseCase';
 import { GetPersonsUseCase, GetPersonsUseCaseParams } from '../usecases/GetPersonUseCase';
+import { ContextManager } from '@Application/ContextManager';
 
 @injectable()
 export class GetPersonsUnitWork extends UnitOfWork<GetPersonsUseCaseParams, UnexpectedError, QueryResult<any>> {
@@ -13,10 +14,11 @@ export class GetPersonsUnitWork extends UnitOfWork<GetPersonsUseCaseParams, Unex
 
   constructor(
     @inject('Logger') logger: ILogger,
+    contextManager: ContextManager,
     @inject('Factory<IUseCase>')
     useCaseResolver: (service: interfaces.ServiceIdentifier<IUseCase<any, any>>) => IUseCase<any, any>
   ) {
-    super(logger);
+    super(logger, contextManager);
     this.useCaseResolver = useCaseResolver;
   }
 

@@ -2,6 +2,8 @@ import { IUserChecker, UserChecker, Jwt } from 'cds-routing-handlers';
 import { IUser } from '@Shared/IUser';
 import cls from 'cls-hooked';
 import { IEnvironment } from '@Shared/IEnvironment';
+import { DIContainer } from './DIContainer';
+import { ContextManager } from './ContextManager';
 
 @UserChecker() // Omit options for handler middlewares
 export class SFCUserChecker implements IUserChecker {
@@ -10,7 +12,8 @@ export class SFCUserChecker implements IUserChecker {
   public async check(@Jwt() jwt: string): Promise<IUser> {
     // Custom code here to create user from JWT...
     // Let's fake it here
-    const environment: IEnvironment = cls.getNamespace('Context').get('Environment');
+    const contextManager = DIContainer.get(ContextManager);
+    const environment: IEnvironment = contextManager.getEnvironment()
     const request = environment.__REQUEST;
     return {
       username: request.user.id,

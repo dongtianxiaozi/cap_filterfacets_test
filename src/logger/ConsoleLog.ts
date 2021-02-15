@@ -1,13 +1,18 @@
 import { Level, LogMessage, getLevel, now } from './ILogger';
 import { injectable } from 'inversify';
-import cls from 'cls-hooked';
 import { IEnvironment } from '../shared/IEnvironment';
+import { ContextManager } from '@Application/ContextManager';
 
 @injectable()
 export class ConsoleLog {
+  private readonly contextManager: ContextManager;
+
+  constructor(contextManager: ContextManager) {
+    this.contextManager = contextManager;
+  }
+
   log(level: Level, tag: string, message: LogMessage): void {
-    const requestContext = cls.getNamespace('Context');
-    const environment: IEnvironment = requestContext && requestContext.get('Environment');
+    const environment: IEnvironment = this.contextManager.getEnvironment();
     const uuid = environment && environment.__UUID;
     const msg = `::${now()} [${getLevel(level).toUpperCase()}] UUID:${uuid} TAG:${tag}\tMESSAGE:${message}`;
     switch (level) {

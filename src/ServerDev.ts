@@ -7,9 +7,11 @@ import * as TestService from '@Services/TestService';
 import helmet from 'helmet';
 import { v4 as uuidv4 } from 'uuid';
 import { IEnvironment } from '@Shared/IEnvironment';
-import cls from 'cls-hooked';
+import { ContextManager } from '@Application/ContextManager';
+import { DIContainer } from '@Application/DIContainer';
 
-const requestContext = cls.createNamespace('Context');
+const contextManager: ContextManager = DIContainer.get(ContextManager);
+contextManager.initContext();
 
 export class ServerDev {
   static async run() {
@@ -17,13 +19,13 @@ export class ServerDev {
       const app = express();
       app.use(helmet());
       app.use(function (req: Request, res: Response, next: NextFunction) {
-        requestContext.run(function () {
+        contextManager.startContext(function () {
           const environment: IEnvironment = {
             __UUID: uuidv4(),
             __REQUEST: req,
           };
           res.setHeader('TokenApi-UUID', environment.__UUID);
-          requestContext.set('Environment', environment);
+          contextManager.setEnvironment(environment);
           next();
         });
       });

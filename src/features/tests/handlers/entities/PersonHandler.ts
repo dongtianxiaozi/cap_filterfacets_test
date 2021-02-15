@@ -57,7 +57,7 @@ export class PersonHandler {
         select: columns,
       };
     }
-    const result = await DIContainer.get(GetPersonsUseCase).execute(params);
+    const result = await DIContainer.get(GetPersonsUnitWork).execute(params);
     if (result.isRight()) {
       return result.rightValue().data;
     } else {

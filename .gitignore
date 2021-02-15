@@ -2,7 +2,7 @@
 _out
 *.db
 connection.properties
-default-*.json
+## default-*.json  (En aquest fitxer hi podem guardar informació dels serveis quan estiguem mockejant serveis cloud en local.)
 gen/
 node_modules/
 target/

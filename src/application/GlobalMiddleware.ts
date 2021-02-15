@@ -1,6 +1,7 @@
 import { ICdsMiddleware, Middleware, Req, Jwt } from 'cds-routing-handlers';
 import { IEnvironment } from '@Shared/IEnvironment';
-import cls from 'cls-hooked';
+import { DIContainer } from './DIContainer';
+import { ContextManager } from './ContextManager';
 
 @Middleware({ global: true, priority: 1 })
 export class EnvironmentMiddleware implements ICdsMiddleware {
@@ -8,9 +9,9 @@ export class EnvironmentMiddleware implements ICdsMiddleware {
   public async use(@Req() req: any, @Jwt() jwt: string): Promise<void> {
     console.log('I am global middleware prio 1');
 
-    const requestContext = cls.getNamespace('Context');
-    const environment: IEnvironment = requestContext.get('Environment');
+    const contextManager = DIContainer.get(ContextManager);
+    const environment: IEnvironment = contextManager.getEnvironment();
     environment.__REQUEST = req;
-    requestContext.set('Environment', environment);
+    contextManager.setEnvironment(environment);
   }
 }

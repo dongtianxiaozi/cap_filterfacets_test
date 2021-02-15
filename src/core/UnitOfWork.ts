@@ -2,11 +2,9 @@ import { IUnitOfWork } from '@Core/IUnitOfWork';
 import { Either, Left, Right } from '@Core/Either';
 import { inject, injectable } from 'inversify';
 import { ILogger } from '@Logger/ILogger';
-import cls from 'cls-hooked';
 import { Transaction } from '@sap/cds/apis/services';
 import { UnexpectedError } from '@Results/GlobalResults';
-import { Request } from '@sap/cds/apis/services';
-import { IEnvironment } from '@Shared/IEnvironment';
+import { ContextManager } from '@Application/ContextManager';
 
 /**
  * Clase para permitir realizar transacciones entre multiples Repositorios/Casos de Uso. Para ello, antes de lanzar el flujo
@@ -19,12 +17,14 @@ import { IEnvironment } from '@Shared/IEnvironment';
 export abstract class UnitOfWork<T, FailedResult, SuccessResult>
   implements IUnitOfWork<T, Either<FailedResult | UnexpectedError, SuccessResult>> {
   private readonly _logger: ILogger;
+  private readonly contextManager: ContextManager;
   // private readonly provider: () => Promise<Either<any, Connection>>;
   // private readonly isolationLevel?: IsolationLevel;
   // private readonly mode?: 'master' | 'slave';
 
-  protected constructor(@inject('Logger') logger: ILogger) {
+  protected constructor(@inject('Logger') logger: ILogger, contextManager: ContextManager) {
     this._logger = logger;
+    this.contextManager = contextManager;
   }
 
   protected get logger(): ILogger {
@@ -38,11 +38,10 @@ export abstract class UnitOfWork<T, FailedResult, SuccessResult>
    */
   async execute(request: T): Promise<Either<FailedResult | UnexpectedError, SuccessResult>> {
     this.logger.v(`${this.constructor.name}`, () => `Preparing transaction.`);
-    const currentTransaction = cls.getNamespace('Context').get('CurrentTransaction');
-    const environment: IEnvironment = cls.getNamespace('Context').get('Environment');
-    if (currentTransaction) {
+    const tx: Transaction = this.contextManager.getCurrentTransaction();
+    if (tx) {
       this.logger.w(`${this.constructor.name}`, () => `Existing transaction in use... Recycling current transaction`);
-      const transaction: Transaction = currentTransaction.get('CurrentTransaction');
+      const transaction: Transaction = this.contextManager.getCurrentTransaction();
       if (transaction) {
         this.logger.v(`${this.constructor.name}`, () => `Recycling existing transaction.`);
         return this.executeInTransaction(request);
@@ -50,12 +49,10 @@ export abstract class UnitOfWork<T, FailedResult, SuccessResult>
     }
     try {
       this.logger.v(`${this.constructor.name}`, () => `Start transaction.`);
-      const tx = cds.tx(environment.__REQUEST);
-      tx.run(async (tx: Transaction) => {
-        const result = await this.internalExecute(request, tx);
-        if (result.isLeft()) return Left(result.leftValue());
-        return Right(result.rightValue());
-      });
+      const tx = cds.tx(this.contextManager.getEnvironment().__REQUEST);
+      const result = await this.internalExecute(request, tx);
+      if (result.isLeft()) return Left(result.leftValue());
+      return Right(result.rightValue());
     } catch (error) {
       this.logger.e(
         `${this.constructor.name}`,
@@ -80,12 +77,11 @@ export abstract class UnitOfWork<T, FailedResult, SuccessResult>
    * @param queryRunner
    */
   private async internalExecute(request: T, tx: Transaction): Promise<Either<FailedResult | UnexpectedError, SuccessResult>> {
-    const currentTransaction = cls.getNamespace('Context');
     try {
-      currentTransaction.set('CurrentTransaction', tx);
+      this.contextManager.setCurrentTransaction(tx);
       const data = await this.executeInTransaction(request);
-      currentTransaction.set('CurrentTransaction', null);
-      if (data.leftValue()) {
+      this.contextManager.setCurrentTransaction(null);
+      if (data.isLeft()) {
         this.logger.v(`${this.constructor.name}`, () => `Rollback transaction.`);
         await tx.rollback();
       } else {
@@ -101,7 +97,7 @@ export abstract class UnitOfWork<T, FailedResult, SuccessResult>
       );
     } finally {
       this.logger.v(`${this.constructor.name}`, () => `Release transaction.`);
-      currentTransaction.set('CurrentTransaction', null);
+      this.contextManager.setCurrentTransaction(null);
     }
     return Left(new UnexpectedError());
   }
