@@ -4,7 +4,6 @@ import { DIContainer } from '@Application/DIContainer';
 import { GetPersonsUseCase, GetPersonsUseCaseParams } from '@Features/tests/usecases/GetPersonUseCase';
 import * as TestServiceImpl from '@Services/TestService';
 import { Request } from '@sap/cds/apis/services';
-import { column_expr } from '@sap/cds/apis/cqn';
 import { GetPersonsUnitWork } from '@Features/tests/unitsOfWork/GetPersonsUnitWork';
 import { IUser } from '@Shared/IUser';
 /**

@@ -78,8 +78,11 @@ export abstract class UnitOfWork<T, FailedResult, SuccessResult>
    */
   private async internalExecute(request: T, tx: Transaction): Promise<Either<FailedResult | UnexpectedError, SuccessResult>> {
     try {
+      this.logger.v(`${this.constructor.name}`, () => `save current tx in ContextManager`);
       this.contextManager.setCurrentTransaction(tx);
+      this.logger.v(`${this.constructor.name}`, () => `starting unit of work...`);
       const data = await this.executeInTransaction(request);
+      this.logger.v(`${this.constructor.name}`, () => `unit of work completed.`);
       this.contextManager.setCurrentTransaction(null);
       if (data.isLeft()) {
         this.logger.v(`${this.constructor.name}`, () => `Rollback transaction.`);

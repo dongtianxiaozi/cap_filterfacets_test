@@ -6,9 +6,8 @@ import { Query } from '@sap/cds/apis/cqn';
 
 @injectable()
 export class DBDatasource {
-  private readonly logger: ILogger;
-
   private readonly contextManager: ContextManager;
+  private readonly logger: ILogger;
 
   constructor(contextManager: ContextManager, @inject('Logger') logger: ILogger) {
     this.logger = logger;
@@ -16,15 +15,19 @@ export class DBDatasource {
   }
 
   async executeInTransaction<T>(sqlStatement: Query): Promise<T> {
+    this.logger.v(DBDatasource.name, () => `trying to execute in tx: ${JSON.stringify(sqlStatement)}`);
     const tx: Transaction = this.contextManager.getCurrentTransaction();
     if (tx) {
+      this.logger.v(DBDatasource.name, () => `executing in current tx.`);
       return tx.run(sqlStatement);
     } else {
+      this.logger.v(DBDatasource.name, () => `cannot execute in current tx. It isn't active.`);
       return this.execute(sqlStatement);
     }
   }
 
   async execute<T>(sqlStatement: Query): Promise<T> {
+    this.logger.v(DBDatasource.name, () => `executing statemant without tx: ${JSON.stringify(sqlStatement)}`);
     return cds.run(sqlStatement);
   }
 }
