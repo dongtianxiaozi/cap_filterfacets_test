@@ -21,8 +21,8 @@ Si se activa el auto-attach del debug:
 
 - [Nomenclaturas a utilizar en el modelado](https://seidor.sharepoint.com/:p:/t/ShopFloorControlConsultingESP/EZ6gD5IkBi9Mq_6MiRr9iXsBRCBV5vNPUTpeWju7Yn02iQ?e=YZ8Tad)
 - [Cómo realizar búsquedas en typescript contra el CDS](https://cap.cloud.sap/docs/cds/cqn)
-- (https://github.com/mrbandler/cds-routing-handlers#readme)
-- (https://github.com/SAP-samples/cloud-cap-samples)
+- [Libería utilizada para usar Typescript con CAP](https://github.com/mrbandler/cds-routing-handlers#readme)
+- [Ejemplos de CAP](https://github.com/SAP-samples/cloud-cap-samples)
 - Los servicios de srv en .js son sobrescritos.
 - Todo DB debe tener información fake en la carpeta data para las pruebas.
 
