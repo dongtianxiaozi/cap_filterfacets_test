@@ -1,0 +1,113 @@
+{
+  "name": "sfc",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "watch": "npm run build && cds watch",
+    "start": "npm run build && cds run",
+    "build": "npm run build:cds && npm run build:cds2types && npm run build:ts && npm run copy_server",
+    "build:cds2types": "cds2types --cds ./srv/*.cds --output ./src/shared/Contract.ts --prefix I --debug",
+    "build:cds": "echo 'Compiling cds sources...' && cds build --clean && cp .cdsrc.json gen/srv",
+    "build:ts": "echo 'Compiling *.ts sources...' && tsc",
+    "copy_server": "cp -a ./gen/srv/srv/services/. ./srv/",
+    "start2": "cds run",
+    "build:fast": "mbt build -m=verbose -j=8",
+    "build:ui": "mbt module-build -m=sfcs_ui_deployer -m=v4orders -m=v4workcenters -m=v2orders -m=v2workcenters -a",
+    "deploy:ui": "cf deploy .//mta_archives//sfc_1.0.0.mtar -m sfc_ui_deployer -r sfcs_html_repo_host",
+    "deploy:ui+ann": "cf deploy .//mta_archives//sfc_1.0.0.mtar -m sfc_ui_deployer -m sfc-srv -m sfc-db-deployer -r sfc_html_repo_host",
+    "cf:ui": "npm run build:fast && npm run deploy:ui"
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/core": "1.37.1",
+    "@sap/audit-logging": "4.0.0",
+    "@sap/cds": "4.5.1",
+    "@sap/cds-odata-v2-adapter-proxy": "1.5.4",
+    "@sap/hana-client": "2.7.21",
+    "@sap/xsenv": "3.1.0",
+    "@sap/xssec": "3.1.0",
+    "express": "4.17.1",
+    "moment": "2.29.1",
+    "passport": "0.4.1",
+    "cds-routing-handlers": "3.0.4",
+    "cls-hooked": "4.2.2",
+    "compression": "1.7.4",
+    "dotenv": "8.2.0",
+    "helmet": "4.4.1",
+    "inversify": "5.0.5",
+    "module-alias": "2.2.2",
+    "reflect-metadata": "0.1.13",
+    "uuid": "8.3.2"
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "1.84.2",
+    "sqlite3": "5.0.1",
+    "@types/cls-hooked": "4.3.3",
+    "@types/express": "4.17.11",
+    "@types/uuid": "8.3.0",
+    "cds2types": "2.6.0",
+    "typescript": "4.1.5"
+  },
+  "_moduleAliases": {
+    "@Application": "gen/srv/srv/application",
+    "@Core": "gen/srv/srv/core",
+    "@Persistence": "gen/srv/srv/persistence",
+    "@Remote": "gen/srv/srv/remote",
+    "@Features": "gen/srv/srv/features",
+    "@Logger": "gen/srv/srv/logger",
+    "@Services": "gen/srv/srv/services",
+    "@Shared": "gen/srv/srv/shared",
+    "@Results": "gen/srv/srv/results",
+    "@Utils": "gen/srv/srv/utils"
+  },
+  "cds": {
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "auth": {
+        "passport": {
+            "strategy": "mock",
+            "users": {
+                "user": {
+                    "password": "",
+                    "ID": "user",
+                    "roles": [
+                        "user"
+                    ],
+                    "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+                    "userAttributes": {
+                        "currency": [
+                            "USD"
+                        ],
+                        "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+                        "email": "user@seidor.es"
+                    }
+                }
+            }
+        }
+    },
+    "requires": {
+      "uaa": {
+        "kind": "xsuaa"
+      },
+      "db": {
+        "kind": "sql",
+        "model": "*",
+        "credentials": {
+          "database": "sfc.db"
+        }
+      }
+    }
+  },
+  "sapux": [
+    "app\\v4_orders",
+    "app\\v4_workcenters",
+    "app\\v2_orders",
+    "app\\v2_workcenters",
+    "app\\v2_queues",
+    "app\\v2_operations",
+    "app\\v2_turns"
+  ]
+}

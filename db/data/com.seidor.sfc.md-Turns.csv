@@ -1,0 +1,4 @@
+code,description,longDescription,isNightShift
+01,Mañana,Turno de 6 a 14,false
+02,Tarde,Turno de 14 a 22,false
+03,Noche,Turno de 22 a 6,true

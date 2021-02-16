@@ -1,29 +1,53 @@
-# README #
+# README
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Para ejecutar la aplicación:
 
-### What is this repository for? ###
+- npm install
+- npm run watch
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+Si se desea trabajar con cds directamente:
 
-### How do I get set up? ###
+- npm install
+- npm run build
+- cds watch
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+Si se activa el auto-attach del debug:
 
-### Contribution guidelines ###
+- npm install
+- npm run watch
+- debug (activamos el debug)
 
-* Writing tests
-* Code review
-* Other guidelines
+### Importe
 
-### Who do I talk to? ###
+- [Nomenclaturas a utilizar en el modelado](https://seidor.sharepoint.com/:p:/t/ShopFloorControlConsultingESP/EZ6gD5IkBi9Mq_6MiRr9iXsBRCBV5vNPUTpeWju7Yn02iQ?e=YZ8Tad)
+- [Cómo realizar búsquedas en typescript contra el CDS](https://cap.cloud.sap/docs/cds/cqn)
+- [Libería utilizada para usar Typescript con CAP](https://github.com/mrbandler/cds-routing-handlers#readme)
+- [Ejemplos de CAP](https://github.com/SAP-samples/cloud-cap-samples)
+- Los servicios de srv en .js son sobrescritos.
+- Todo DB debe tener información fake en la carpeta data para las pruebas.
 
-* Repo owner or admin
-* Other community or team contact
+### Carpetas en /src
+
+- application: clases necesarias para la gestión de la aplicación
+- core: clases bases técnicas
+- features: características de la aplicación formada por Handlers (captura de eventos) + Lógica de negocio (use case) + Lógica de acceso a datos (repositorio)
+- logger: clases para los logs
+- persistence: clases relacionadas con la gestión o uso de la BBDD
+- remote: clases relacionadas con la gestión o uso de llamadas remotas
+- results: resultados (Either) disponibles
+- services: servicios CAP (CUIDADO: el contenido de esta carpeta se copia a /srv)
+- shared: clases transversales (contexto de trabajo)
+- utils: clases con utilidades
+
+### Logs
+
+Estos son los niveles de log por defecto para cada nivel:
+
+- Log.i = Handler/UseCase
+- Log.d = Repository
+- Log.v = Datasource
+- Log.w = Errores controlados
+- Log.e = Errores no controlados
+- Log.wtf = Error del programa
+
+Todos los niveles se pueden utilizar en cualquier capa si se necesita dar más detalle.

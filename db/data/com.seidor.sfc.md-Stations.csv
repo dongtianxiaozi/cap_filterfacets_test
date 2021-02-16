@@ -1,0 +1,4 @@
+ID,code,description,toWorkCenter_ID,operator,turnRequired,turnDateIsToday,quantityRequired,turnDate,pinRequired,eventNotificationRequired,multipleOperatorStartsAllowed,multipleStartsAllowed,activityAuthorizationRequired,goodReceiptAuthorizationRequired,consumptionAuthorizationRequired,ctecAuthorizationRequired
+427ef85a-aef2-464b-89f6-6a3ce64f2e01,st01,Station 001,427ef85a-aef2-464b-89f6-6a3ce64f2e01,0001,false,false,false,,false,false,false,false,false,false,false,false
+427ef85a-aef2-464b-89f6-6a3ce64f2e02,st02,Station 002,,0002,false,false,false,,false,false,false,false,false,false,false,false
+427ef85a-aef2-464b-89f6-6a3ce64f2e03,st03,Station 003,,0003,false,false,false,,false,false,false,false,false,false,false,false

@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+    <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="OrderService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="Components" EntityType="OrderService.Components">
+          <NavigationPropertyBinding Path="toOrder" Target="Orders"/>
+          <NavigationPropertyBinding Path="toOperation" Target="Operations"/>
+          <NavigationPropertyBinding Path="SiblingEntity" Target="Components"/>
+        </EntitySet>
+        <EntitySet Name="Operations" EntityType="OrderService.Operations">
+          <NavigationPropertyBinding Path="toOrder" Target="Orders"/>
+          <NavigationPropertyBinding Path="toWorkCenter" Target="WorkCenters"/>
+          <NavigationPropertyBinding Path="toComponents" Target="Components"/>
+          <NavigationPropertyBinding Path="SiblingEntity" Target="Operations"/>
+        </EntitySet>
+        <EntitySet Name="Orders" EntityType="OrderService.Orders">
+          <NavigationPropertyBinding Path="toOperations" Target="Operations"/>
+          <NavigationPropertyBinding Path="toComponents" Target="Components"/>
+          <NavigationPropertyBinding Path="SiblingEntity" Target="Orders"/>
+        </EntitySet>
+        <EntitySet Name="Queues" EntityType="OrderService.Queues">
+          <NavigationPropertyBinding Path="toOrder" Target="Orders"/>
+          <NavigationPropertyBinding Path="toWorkCenter" Target="WorkCenters"/>
+          <NavigationPropertyBinding Path="SiblingEntity" Target="Queues"/>
+        </EntitySet>
+        <EntitySet Name="Stations" EntityType="OrderService.Stations">
+          <NavigationPropertyBinding Path="toWorkCenter" Target="WorkCenters"/>
+          <NavigationPropertyBinding Path="toWorkCenters" Target="WorkCenters"/>
+        </EntitySet>
+        <EntitySet Name="VH_Orders" EntityType="OrderService.VH_Orders"/>
+        <EntitySet Name="VH_WorkCenters" EntityType="OrderService.VH_WorkCenters"/>
+        <EntitySet Name="WorkCenters" EntityType="OrderService.WorkCenters">
+          <NavigationPropertyBinding Path="toStation" Target="Stations"/>
+        </EntitySet>
+      </EntityContainer>
+      <EntityType Name="Components">
+        <Key>
+          <PropertyRef Name="ID"/>
+          <PropertyRef Name="IsActiveEntity"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="toOrder" Type="OrderService.Orders" Partner="toComponents">
+          <ReferentialConstraint Property="toOrder_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="position" Type="Edm.String" MaxLength="5"/>
+        <Property Name="material" Type="Edm.String"/>
+        <Property Name="batch" Type="Edm.String"/>
+        <Property Name="isNegative" Type="Edm.Boolean"/>
+        <Property Name="quantity" Type="Edm.Decimal" Scale="3" Precision="12"/>
+        <NavigationProperty Name="toOperation" Type="OrderService.Operations" Partner="toComponents">
+          <ReferentialConstraint Property="toOperation_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="reserve" Type="Edm.String"/>
+        <Property Name="reservePosition" Type="Edm.String"/>
+        <Property Name="indBackflush" Type="Edm.Boolean"/>
+        <Property Name="toOrder_ID" Type="Edm.Guid"/>
+        <Property Name="toOperation_ID" Type="Edm.Guid"/>
+        <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
+        <NavigationProperty Name="DraftAdministrativeData" Type="OrderService.DraftAdministrativeData" ContainsTarget="true"/>
+        <NavigationProperty Name="SiblingEntity" Type="OrderService.Components"/>
+      </EntityType>
+      <EntityType Name="DraftAdministrativeData">
+        <Key>
+          <PropertyRef Name="DraftUUID"/>
+        </Key>
+        <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+        <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="Operations">
+        <Key>
+          <PropertyRef Name="ID"/>
+          <PropertyRef Name="IsActiveEntity"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="toOrder" Type="OrderService.Orders" Partner="toOperations">
+          <ReferentialConstraint Property="toOrder_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="operation" Type="Edm.String"/>
+        <Property Name="controlKey" Type="Edm.String"/>
+        <Property Name="isExternal" Type="Edm.Boolean"/>
+        <Property Name="isNotifiable" Type="Edm.Boolean"/>
+        <Property Name="text" Type="Edm.String"/>
+        <NavigationProperty Name="toWorkCenter" Type="OrderService.WorkCenters">
+          <ReferentialConstraint Property="toWorkCenter_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="quantity" Type="Edm.Decimal" Scale="3" Precision="12"/>
+        <Property Name="baseQuantity" Type="Edm.Decimal" Scale="3" Precision="12"/>
+        <NavigationProperty Name="toComponents" Type="Collection(OrderService.Components)" Partner="toOperation"/>
+        <Property Name="queueSequence" Type="Edm.Int32"/>
+        <Property Name="semanticURLtoOrder" Type="Edm.String"/>
+        <Property Name="order_" Type="Edm.String" MaxLength="12"/>
+        <Property Name="workCenter" Type="Edm.String" MaxLength="10"/>
+        <Property Name="toOrder_ID" Type="Edm.Guid"/>
+        <Property Name="toWorkCenter_ID" Type="Edm.Guid"/>
+        <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
+        <NavigationProperty Name="DraftAdministrativeData" Type="OrderService.DraftAdministrativeData" ContainsTarget="true"/>
+        <NavigationProperty Name="SiblingEntity" Type="OrderService.Operations"/>
+      </EntityType>
+      <EntityType Name="Orders">
+        <Key>
+          <PropertyRef Name="ID"/>
+          <PropertyRef Name="IsActiveEntity"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="code" Type="Edm.String" MaxLength="12"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="plant" Type="Edm.String"/>
+        <Property Name="plannedStartDate" Type="Edm.Date"/>
+        <Property Name="plannedStartTime" Type="Edm.TimeOfDay"/>
+        <Property Name="totalQuantity" Type="Edm.Decimal" Scale="3" Precision="12"/>
+        <Property Name="unit" Type="Edm.String"/>
+        <Property Name="material" Type="Edm.String"/>
+        <Property Name="supervisor" Type="Edm.String"/>
+        <Property Name="supervisorName" Type="Edm.String"/>
+        <Property Name="importance" Type="Edm.String"/>
+        <NavigationProperty Name="toOperations" Type="Collection(OrderService.Operations)" Partner="toOrder">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="toComponents" Type="Collection(OrderService.Components)" Partner="toOrder">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
+        <NavigationProperty Name="DraftAdministrativeData" Type="OrderService.DraftAdministrativeData" ContainsTarget="true"/>
+        <NavigationProperty Name="SiblingEntity" Type="OrderService.Orders"/>
+      </EntityType>
+      <EntityType Name="Queues">
+        <Key>
+          <PropertyRef Name="ID"/>
+          <PropertyRef Name="IsActiveEntity"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="operation" Type="Edm.String"/>
+        <NavigationProperty Name="toOrder" Type="OrderService.Orders">
+          <ReferentialConstraint Property="toOrder_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="orderIdReadable" Type="Edm.String" MaxLength="12"/>
+        <NavigationProperty Name="toWorkCenter" Type="OrderService.WorkCenters">
+          <ReferentialConstraint Property="toWorkCenter_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="workCenterDescription" Type="Edm.String"/>
+        <Property Name="queueSequence" Type="Edm.Int32"/>
+        <Property Name="toOrder_ID" Type="Edm.Guid"/>
+        <Property Name="toWorkCenter_ID" Type="Edm.Guid"/>
+        <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
+        <NavigationProperty Name="DraftAdministrativeData" Type="OrderService.DraftAdministrativeData" ContainsTarget="true"/>
+        <NavigationProperty Name="SiblingEntity" Type="OrderService.Queues"/>
+      </EntityType>
+      <EntityType Name="Stations">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="code" Type="Edm.String" MaxLength="4"/>
+        <Property Name="description" Type="Edm.String" MaxLength="30"/>
+        <NavigationProperty Name="toWorkCenter" Type="OrderService.WorkCenters">
+          <ReferentialConstraint Property="toWorkCenter_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="operator" Type="Edm.String" MaxLength="4"/>
+        <Property Name="turnRequired" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="turnDateIsToday" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="quantityRequired" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="turn" Type="Edm.String" MaxLength="2"/>
+        <Property Name="turnDate" Type="Edm.Date"/>
+        <Property Name="pinRequired" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="eventNotificationRequired" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="multipleOperatorStartsAllowed" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="multipleStartsAllowed" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="activityAuthorizationRequired" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="goodReceiptAuthorizationRequired" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="consumptionAuthorizationRequired" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="ctecAuthorizationRequired" Type="Edm.Boolean" Nullable="false"/>
+        <NavigationProperty Name="toWorkCenters" Type="Collection(OrderService.WorkCenters)" Partner="toStation"/>
+        <Property Name="toWorkCenter_ID" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="VH_Orders">
+        <Key>
+          <PropertyRef Name="_ID"/>
+        </Key>
+        <Property Name="_ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="_code" Type="Edm.String" MaxLength="12"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="plant" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="VH_WorkCenters">
+        <Key>
+          <PropertyRef Name="_ID"/>
+        </Key>
+        <Property Name="_ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="_code" Type="Edm.String" MaxLength="10"/>
+        <Property Name="plant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="_text" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="WorkCenters">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="code" Type="Edm.String" MaxLength="10"/>
+        <Property Name="plant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="responsible" Type="Edm.String"/>
+        <Property Name="queueType" Type="Edm.String" MaxLength="1"/>
+        <Property Name="isOeeRelevant" Type="Edm.Boolean" Nullable="false"/>
+        <NavigationProperty Name="toStation" Type="OrderService.Stations" Partner="toWorkCenters">
+          <ReferentialConstraint Property="toStation_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="station" Type="Edm.String" MaxLength="4"/>
+        <Property Name="toStation_ID" Type="Edm.Guid"/>
+      </EntityType>
+      <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="OrderService.Components"/>
+        <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+        <ReturnType Type="OrderService.Components"/>
+      </Action>
+      <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="OrderService.Operations"/>
+        <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+        <ReturnType Type="OrderService.Operations"/>
+      </Action>
+      <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="OrderService.Orders"/>
+        <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+        <ReturnType Type="OrderService.Orders"/>
+      </Action>
+      <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="OrderService.Queues"/>
+        <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+        <ReturnType Type="OrderService.Queues"/>
+      </Action>
+      <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="OrderService.Orders"/>
+        <ReturnType Type="OrderService.Orders"/>
+      </Action>
+      <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="OrderService.Queues"/>
+        <ReturnType Type="OrderService.Queues"/>
+      </Action>
+      <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="OrderService.Orders"/>
+        <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+        <ReturnType Type="OrderService.Orders"/>
+      </Action>
+      <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="OrderService.Queues"/>
+        <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+        <ReturnType Type="OrderService.Queues"/>
+      </Action>
+      <Annotations Target="OrderService.Components">
+        <Annotation Term="Common.SemanticKey">
+          <Collection>
+            <PropertyPath>toOrder/code</PropertyPath>
+            <PropertyPath>position</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="ComponentDetails">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="material"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="batch"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="isNegative"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="quantity"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="reserve"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="reservePosition"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="indBackflush"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="Label" String="details"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="Description">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="material"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="position"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="TypeName" String="component"/>
+            <PropertyValue Property="TypeNamePlural" String="components"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="position"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="position"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="material"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="batch"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="isNegative"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="quantity"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="toOperation/operation"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="reserve"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="reservePosition"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="indBackflush"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>material</PropertyPath>
+            <PropertyPath>batch</PropertyPath>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.EntityContainer/Components">
+        <Annotation Term="Common.DraftNode">
+          <Record Type="Common.DraftNodeType">
+            <PropertyValue Property="PreparationAction" String="OrderService.draftPrepare"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.Components/ID">
+        <Annotation Term="Common.Text" Path="position">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.Components/createdAt">
+        <Annotation Term="Common.Label" String="Created On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/createdBy">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="User's unique ID"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/modifiedAt">
+        <Annotation Term="Common.Label" String="Changed On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/modifiedBy">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="User's unique ID"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/position">
+        <Annotation Term="Common.Label" String="position"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/material">
+        <Annotation Term="Common.Label" String="material"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/batch">
+        <Annotation Term="Common.Label" String="batch"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/isNegative">
+        <Annotation Term="Common.Label" String="isNegative"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/quantity">
+        <Annotation Term="Common.Label" String="quantity"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/reserve">
+        <Annotation Term="Common.Label" String="reserve"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/reservePosition">
+        <Annotation Term="Common.Label" String="reservePosition"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/indBackflush">
+        <Annotation Term="Common.Label" String="indBackflush"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/IsActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/HasActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/HasDraftEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Components/DraftAdministrativeData">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.DraftAdministrativeData">
+        <Annotation Term="Common.Label" String="Draft Administrative Data"/>
+      </Annotations>
+      <Annotations Target="OrderService.DraftAdministrativeData/DraftUUID">
+        <Annotation Term="Common.Label" String="Draft (Technical ID)"/>
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.DraftAdministrativeData/CreationDateTime">
+        <Annotation Term="Common.Label" String="Draft Created On"/>
+      </Annotations>
+      <Annotations Target="OrderService.DraftAdministrativeData/CreatedByUser">
+        <Annotation Term="Common.Label" String="Draft Created By"/>
+      </Annotations>
+      <Annotations Target="OrderService.DraftAdministrativeData/DraftIsCreatedByMe">
+        <Annotation Term="Common.Label" String="Draft Created By Me"/>
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.DraftAdministrativeData/LastChangeDateTime">
+        <Annotation Term="Common.Label" String="Draft Last Changed On"/>
+      </Annotations>
+      <Annotations Target="OrderService.DraftAdministrativeData/LastChangedByUser">
+        <Annotation Term="Common.Label" String="Draft Last Changed By"/>
+      </Annotations>
+      <Annotations Target="OrderService.DraftAdministrativeData/InProcessByUser">
+        <Annotation Term="Common.Label" String="Draft In Process By"/>
+      </Annotations>
+      <Annotations Target="OrderService.DraftAdministrativeData/DraftIsProcessedByMe">
+        <Annotation Term="Common.Label" String="Draft In Process By Me"/>
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations">
+        <Annotation Term="Common.SemanticKey">
+          <Collection>
+            <PropertyPath>toOrder/code</PropertyPath>
+            <PropertyPath>operation</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="details"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#OperationDetails"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="OperationDetails">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="controlKey"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="isExternal"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="isNotifiable"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="toWorkCenter/code"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="quantity"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="baseQuantity"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="Label" String="details"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="Description">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="text"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="operation"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="TypeName" String="operation"/>
+            <PropertyValue Property="TypeNamePlural" String="operations"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="operation"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="toOrder_ID"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="order_"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="controlKey"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="isExternal"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="isNotifiable"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="text"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="toWorkCenter/code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="toWorkCenter/plant"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="quantity"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="baseQuantity"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>toOrder_ID</PropertyPath>
+            <PropertyPath>controlKey</PropertyPath>
+            <PropertyPath>isExternal</PropertyPath>
+            <PropertyPath>isNotifiable</PropertyPath>
+            <PropertyPath>toWorkCenter_ID</PropertyPath>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.EntityContainer/Operations">
+        <Annotation Term="Common.DraftNode">
+          <Record Type="Common.DraftNodeType">
+            <PropertyValue Property="PreparationAction" String="OrderService.draftPrepare"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/ID">
+        <Annotation Term="Common.Text" Path="operation">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/createdAt">
+        <Annotation Term="Common.Label" String="Created On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/createdBy">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="User's unique ID"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/modifiedAt">
+        <Annotation Term="Common.Label" String="Changed On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/modifiedBy">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="User's unique ID"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/toOrder">
+        <Annotation Term="Common.Label" String="order"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/operation">
+        <Annotation Term="Common.Label" String="operation"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/controlKey">
+        <Annotation Term="Common.Label" String="controlKey"/>
+        <Annotation Term="Common.SemanticObject" String="order"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/isExternal">
+        <Annotation Term="Common.Label" String="isExternal"/>
+        <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/isNotifiable">
+        <Annotation Term="Common.Label" String="isNotifiable"/>
+        <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/text">
+        <Annotation Term="Common.Label" String="text"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/toWorkCenter">
+        <Annotation Term="Common.Label" String="workCenter"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/quantity">
+        <Annotation Term="Common.Label" String="quantity"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/baseQuantity">
+        <Annotation Term="Common.Label" String="baseQuantity"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/queueSequence">
+        <Annotation Term="Common.Label" String="queueSequence"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/semanticURLtoOrder">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/workCenter">
+        <Annotation Term="Common.Label" String="workCenter"/>
+        <Annotation Term="Common.Text" Path="toWorkCenter/code">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/toOrder_ID">
+        <Annotation Term="Common.Label" String="order"/>
+        <Annotation Term="Common.Text" Path="order_">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="CollectionPath" String="VH_Orders"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="toOrder_ID"/>
+                  <PropertyValue Property="ValueListProperty" String="_ID"/>
+                </Record>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="order_"/>
+                  <PropertyValue Property="ValueListProperty" String="_code"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="SearchSupported" Bool="true"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/toWorkCenter_ID">
+        <Annotation Term="Common.Label" String="workCenter"/>
+        <Annotation Term="Common.Text" Path="workCenter">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="CollectionPath" String="VH_WorkCenters"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="toWorkCenter_ID"/>
+                  <PropertyValue Property="ValueListProperty" String="_ID"/>
+                </Record>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="workCenter"/>
+                  <PropertyValue Property="ValueListProperty" String="_code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="_text"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="SearchSupported" Bool="true"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/IsActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/HasActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/HasDraftEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Operations/DraftAdministrativeData">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders">
+        <Annotation Term="Common.SemanticKey">
+          <Collection>
+            <PropertyPath>code</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="details"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#OrderDetails"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="operations"/>
+              <PropertyValue Property="Target" AnnotationPath="toOperations/@UI.LineItem"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="components"/>
+              <PropertyValue Property="Target" AnnotationPath="toComponents/@UI.LineItem"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="OrderDetails">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="type"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="category"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plant"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedStartDate"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedStartTime"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="Label" String="details"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="Description">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="description"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="code"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="TypeName" String="order"/>
+            <PropertyValue Property="TypeNamePlural" String="orders"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="code"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="type"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="category"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="plannedStartDate"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="plannedStartTime"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="totalQuantity"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="material"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>ID</PropertyPath>
+            <PropertyPath>type</PropertyPath>
+            <PropertyPath>category</PropertyPath>
+            <PropertyPath>plant</PropertyPath>
+            <PropertyPath>plannedStartDate</PropertyPath>
+            <PropertyPath>supervisor</PropertyPath>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.EntityContainer/Orders">
+        <Annotation Term="Common.DraftRoot">
+          <Record Type="Common.DraftRootType">
+            <PropertyValue Property="ActivationAction" String="OrderService.draftActivate"/>
+            <PropertyValue Property="EditAction" String="OrderService.draftEdit"/>
+            <PropertyValue Property="PreparationAction" String="OrderService.draftPrepare"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/ID">
+        <Annotation Term="Common.Text" Path="code">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/createdAt">
+        <Annotation Term="Common.Label" String="Created On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/createdBy">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="User's unique ID"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/modifiedAt">
+        <Annotation Term="Common.Label" String="Changed On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/modifiedBy">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="User's unique ID"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/code">
+        <Annotation Term="Common.Label" String="order"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/type">
+        <Annotation Term="Common.Label" String="type"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/category">
+        <Annotation Term="Common.Label" String="category"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/plant">
+        <Annotation Term="Common.Label" String="plant"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/plannedStartDate">
+        <Annotation Term="Common.Label" String="plannedStartDate"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/plannedStartTime">
+        <Annotation Term="Common.Label" String="plannedStartTime"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/totalQuantity">
+        <Annotation Term="Common.Label" String="totalQuantity"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/unit">
+        <Annotation Term="Common.Label" String="unit"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/material">
+        <Annotation Term="Common.Label" String="material"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/supervisor">
+        <Annotation Term="Common.Label" String="supervisor"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/supervisorName">
+        <Annotation Term="Common.Label" String="superviorName"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/importance">
+        <Annotation Term="Common.Label" String="importance"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/IsActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/HasActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/HasDraftEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Orders/DraftAdministrativeData">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.EntityContainer/Queues">
+        <Annotation Term="Common.DraftRoot">
+          <Record Type="Common.DraftRootType">
+            <PropertyValue Property="ActivationAction" String="OrderService.draftActivate"/>
+            <PropertyValue Property="EditAction" String="OrderService.draftEdit"/>
+            <PropertyValue Property="PreparationAction" String="OrderService.draftPrepare"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.Queues/IsActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Queues/HasActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Queues/HasDraftEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Queues/DraftAdministrativeData">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.EntityContainer/Stations">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.Stations/createdAt">
+        <Annotation Term="Common.Label" String="Created On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Stations/createdBy">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="User's unique ID"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Stations/modifiedAt">
+        <Annotation Term="Common.Label" String="Changed On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.Stations/modifiedBy">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="User's unique ID"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.EntityContainer/VH_Orders">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.VH_Orders/_ID">
+        <Annotation Term="Common.Label" String="code"/>
+        <Annotation Term="Common.Text" Path="_code">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.VH_Orders/_code">
+        <Annotation Term="Common.Label" String="order"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.EntityContainer/VH_WorkCenters">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.VH_WorkCenters/_ID">
+        <Annotation Term="Common.Text" Path="_code">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.VH_WorkCenters/_code">
+        <Annotation Term="Common.Label" String="code"/>
+        <Annotation Term="UI.Hidden" Bool="false"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.VH_WorkCenters/_text">
+        <Annotation Term="Common.Label" String="workCenter"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.WorkCenters">
+        <Annotation Term="Common.SemanticKey">
+          <Collection>
+            <PropertyPath>code</PropertyPath>
+            <PropertyPath>plant</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="Description">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="description"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="code"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="TypeName" String="workCenter"/>
+            <PropertyValue Property="TypeNamePlural" String="workCenters"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="code"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="ID"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="plant"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="responsible"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="queueType"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="isOeeRelevant"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>ID</PropertyPath>
+            <PropertyPath>code</PropertyPath>
+            <PropertyPath>plant</PropertyPath>
+            <PropertyPath>responsible</PropertyPath>
+            <PropertyPath>queueType</PropertyPath>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.EntityContainer/WorkCenters">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="OrderService.WorkCenters/ID">
+        <Annotation Term="Common.Label" String="ID"/>
+        <Annotation Term="Common.Text" Path="code">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="OrderService.WorkCenters/code">
+        <Annotation Term="Common.Label" String="workCenter"/>
+      </Annotations>
+      <Annotations Target="OrderService.WorkCenters/plant">
+        <Annotation Term="Common.Label" String="workCenterPlant"/>
+      </Annotations>
+      <Annotations Target="OrderService.WorkCenters/responsible">
+        <Annotation Term="Common.Label" String="responsible"/>
+      </Annotations>
+      <Annotations Target="OrderService.WorkCenters/queueType">
+        <Annotation Term="Common.Label" String="queueType"/>
+      </Annotations>
+      <Annotations Target="OrderService.WorkCenters/isOeeRelevant">
+        <Annotation Term="Common.Label" String="isOeeRelevant"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

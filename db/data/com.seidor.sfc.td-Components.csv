@@ -1,0 +1,4 @@
+ID;toOrder_ID;toOperation_ID;position;material;batch;isNegative;quantity;reserve;reservePosition;indBackflush
+317ef85a-aef2-464b-89f6-6a3ce64f2e01;127ef85a-aef2-464b-89f6-6a3ce64f2e01;217ef85a-aef2-464b-89f6-6a3ce64f2e01;0010;COMP_01;101010;false;10;9012;0010;true
+317ef85a-aef2-464b-89f6-6a3ce64f2e02;127ef85a-aef2-464b-89f6-6a3ce64f2e01;217ef85a-aef2-464b-89f6-6a3ce64f2e01;0020;COMP_02;A1010;false;20;9012;0020;true
+317ef85a-aef2-464b-89f6-6a3ce64f2e03;127ef85a-aef2-464b-89f6-6a3ce64f2e02;217ef85a-aef2-464b-89f6-6a3ce64f2e04;0010;COMP_01;101010;false;10;9012;0010;true

@@ -1,0 +1,7 @@
+ID,toStation_ID,code,plant,description,responsible,queueType,isOeeRelevant
+427ef85a-aef2-464b-89f6-6a3ce64f2e01,427ef85a-aef2-464b-89f6-6a3ce64f2e01,M1-MPI01,2410,puesto A,,S,true
+427ef85a-aef2-464b-89f6-6a3ce64f2e02,427ef85a-aef2-464b-89f6-6a3ce64f2e01,M1-MPI02,2410,puesto B,,S,true
+427ef85a-aef2-464b-89f6-6a3ce64f2e03,427ef85a-aef2-464b-89f6-6a3ce64f2e01,M1-MPI03,2410,puesto C,,S,true
+427ef85a-aef2-464b-89f6-6a3ce64f2e04,427ef85a-aef2-464b-89f6-6a3ce64f2e01,M1-MPI04,2410,puesto D,,S,true
+427ef85a-aef2-464b-89f6-6a3ce64f2e05,427ef85a-aef2-464b-89f6-6a3ce64f2e01,M1-MPI05,2410,puesto E,,S,true
+427ef85a-aef2-464b-89f6-6a3ce64f2e06,427ef85a-aef2-464b-89f6-6a3ce64f2e01,M1-MPI06,2410,puesto F,,S,true
