@@ -15,22 +15,34 @@ export class DBDatasource {
     this.contextManager = contextManager;
   }
 
-  async executeInTransaction<T>(sqlStatement: Query): Promise<T> {
+  async executeOrThrow<T>(sqlStatement: Query): Promise<T> {
     this.logger.v(DBDatasource.name, () => `trying to execute in tx: ${JSON.stringify(sqlStatement)}`);
     const tx: Transaction = this.contextManager.getCurrentTransaction();
-    if (tx) {
-      this.logger.v(DBDatasource.name, () => `executing in current tx.`);
-      return tx.run(sqlStatement);
-    } else {
-      this.logger.v(DBDatasource.name, () => `cannot execute in current tx. It isn't active.`);
-      return this.execute(sqlStatement);
+    try {
+      if (tx) {
+        this.logger.v(DBDatasource.name, () => `executing in current tx.`);
+        return tx.run(sqlStatement);
+      } else {
+        this.logger.v(DBDatasource.name, () => `cannot execute in current tx. It isn't active.`);
+        return this.execute(sqlStatement);
+      }
+    } catch (e) {
+      throw e;
     }
   }
 
   private async execute<T>(sqlStatement: Query): Promise<T> {
     this.logger.v(DBDatasource.name, () => `executing statemant: ${JSON.stringify(sqlStatement)}`);
     const environment: IEnvironment = this.contextManager.getEnvironment();
-    const tx = cds.tx(environment.__REQUEST);
-    return tx.run(sqlStatement);
+    let tx: Transaction;
+    try {
+      tx = cds.tx(environment.__REQUEST);
+      const data = tx.run(sqlStatement);
+      tx.commit();
+      return data;
+    } catch (e) {
+      if (tx) tx.rollback();
+      throw e;
+    }
   }
 }
