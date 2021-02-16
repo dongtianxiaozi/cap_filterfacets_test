@@ -37,7 +37,7 @@ export class PersonRepository {
   async getPersonById(id: string): Promise<Either<UnexpectedError | EmptyResult, ReadResult<TestService.IPerson>>> {
     this.logger.d(PersonRepository.name, () => `get persons by ID=${id}`);
     try {
-      const result: TestService.IPerson[] = await this.dbDatasource.execute({
+      const result: TestService.IPerson[] = await this.dbDatasource.executeInTransaction({
         SELECT: {
           from: { ref: [TestService.Entity.Person] },
           where: [{ ref: ['ID'] }, '=', { val: id }],

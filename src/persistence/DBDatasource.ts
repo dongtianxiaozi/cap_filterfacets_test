@@ -3,6 +3,7 @@ import { inject, injectable } from 'inversify';
 import { ContextManager } from '@Application/ContextManager';
 import { Transaction } from '@sap/cds/apis/services';
 import { Query } from '@sap/cds/apis/cqn';
+import { IEnvironment } from '@Shared/IEnvironment';
 
 @injectable()
 export class DBDatasource {
@@ -26,8 +27,10 @@ export class DBDatasource {
     }
   }
 
-  async execute<T>(sqlStatement: Query): Promise<T> {
-    this.logger.v(DBDatasource.name, () => `executing statemant without tx: ${JSON.stringify(sqlStatement)}`);
-    return cds.run(sqlStatement);
+  private async execute<T>(sqlStatement: Query): Promise<T> {
+    this.logger.v(DBDatasource.name, () => `executing statemant: ${JSON.stringify(sqlStatement)}`);
+    const environment: IEnvironment = this.contextManager.getEnvironment();
+    const tx = cds.tx(environment.__REQUEST);
+    return tx.run(sqlStatement);
   }
 }
