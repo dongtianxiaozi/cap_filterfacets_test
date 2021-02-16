@@ -16,6 +16,12 @@ export class PersonRepository {
     this.dbDatasource = dbDatasource;
   }
 
+  /**
+   * 
+   * @param top 
+   * @param limit 
+   * @param select 
+   */
   async getPersons(
     top?: number,
     limit?: number,
@@ -23,7 +29,7 @@ export class PersonRepository {
   ): Promise<Either<UnexpectedError | EmptyResult, QueryResult<TestService.IPerson>>> {
     this.logger.d(PersonRepository.name, () => `get persons with: top=${top}, limit=${limit}, select=${select}`);
     try {
-      const result: TestService.IPerson[] = await this.dbDatasource.executeInTransaction({
+      const result: TestService.IPerson[] = await this.dbDatasource.executeOrThrow({
         SELECT: {
           from: { ref: [TestService.Entity.Person] },
         },
@@ -34,10 +40,15 @@ export class PersonRepository {
       return Left(new UnexpectedError());
     }
   }
+
+  /**
+   * 
+   * @param id 
+   */
   async getPersonById(id: string): Promise<Either<UnexpectedError | EmptyResult, ReadResult<TestService.IPerson>>> {
     this.logger.d(PersonRepository.name, () => `get persons by ID=${id}`);
     try {
-      const result: TestService.IPerson[] = await this.dbDatasource.executeInTransaction({
+      const result: TestService.IPerson[] = await this.dbDatasource.executeOrThrow({
         SELECT: {
           from: { ref: [TestService.Entity.Person] },
           where: [{ ref: ['ID'] }, '=', { val: id }],

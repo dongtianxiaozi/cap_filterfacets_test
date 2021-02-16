@@ -20,7 +20,7 @@ cds.on('bootstrap', (app: Router) => {
         __UUID: uuidv4(),
         __REQUEST: req,
       };
-      res.setHeader('TokenApi-UUID', environment.__UUID);
+      res.setHeader('UUID', environment.__UUID);
       contextManager.setEnvironment(environment);
       next();
     });

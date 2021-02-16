@@ -1,4 +1,17 @@
-import { Handler, AfterRead, Entities, OnRead, Srv, Req, BeforeRead, OnCreate, Data, Param, User } from 'cds-routing-handlers';
+import {
+  Handler,
+  AfterRead,
+  Entities,
+  OnRead,
+  Srv,
+  Req,
+  BeforeRead,
+  OnCreate,
+  Data,
+  Param,
+  User,
+  Action,
+} from 'cds-routing-handlers';
 import { TestService } from '@Shared/Contract';
 import { DIContainer } from '@Application/DIContainer';
 import { GetPersonsUseCase, GetPersonsUseCaseParams } from '@Features/tests/usecases/GetPersonUseCase';
@@ -15,6 +28,10 @@ export class PersonHandler {
 
   constructor() {
     this.logger = DIContainer.get('Logger');
+  }
+
+  bondedActionTest(@Param('ID') id: string) {
+    // TODO: Pendiente revisar Bounded Actions
   }
 
   /**
