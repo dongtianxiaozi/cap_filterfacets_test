@@ -32,6 +32,9 @@ context md {
         description : String(255);
   }
 
+  @assert.unique: {
+    code: [ code ],
+  }
   entity Turns : managed {
     key code            : Turn;
         description     : String(12);
@@ -79,9 +82,13 @@ context md {
     toStation     : Association to Stations;
   }
 
+
+  @assert.unique: {
+    code: [ code ],
+  }
   entity Plants : cuid {
         @mandatory
-    key code        : String(4);
+        code        : String(4);
         description : String(35);
   }
 }
