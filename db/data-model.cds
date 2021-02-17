@@ -80,8 +80,8 @@ context md {
   }
 
   entity Roles : cuid {
-    code        : String(1);
-    description : localized String(35);
+    key code        : String(1);
+        description : localized String(35);
   }
 }
 
