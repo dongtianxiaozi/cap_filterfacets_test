@@ -78,6 +78,12 @@ context md {
     isOeeRelevant : Boolean not null default false;
     toStation     : Association to Stations;
   }
+
+  entity Plants : cuid {
+        @mandatory
+    key code        : String(4);
+        description : String(35);
+  }
 }
 
 context td {

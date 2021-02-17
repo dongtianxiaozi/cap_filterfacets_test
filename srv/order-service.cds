@@ -73,4 +73,11 @@ service OrderService @(requires : ['user']) {
         plant,
         description as _text
     };
+
+    @odata.draft.enabled
+    entity Plants as select from md.Plants{
+        ID,
+        code,
+        description,
+    };
 }
