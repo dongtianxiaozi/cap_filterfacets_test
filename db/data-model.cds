@@ -78,6 +78,11 @@ context md {
     isOeeRelevant : Boolean not null default false;
     toStation     : Association to Stations;
   }
+
+  entity Roles : cuid {
+    code        : String(1);
+    description : localized String(35);
+  }
 }
 
 context td {
