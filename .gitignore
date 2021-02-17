@@ -1,3 +1,6 @@
+#Sonar Scanner
+.scannerwork/
+
 # CAP sfc
 _out
 *.db
