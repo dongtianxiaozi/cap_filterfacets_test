@@ -81,6 +81,15 @@ service OrderService @(requires : ['user']) {
         code,
         description
     };
+
+    @readonly
+    entity VH_Roles as select from md.Roles{
+        ID as _ID,
+        code as _code,
+        description as _text
+    };
+
+
     @odata.draft.enabled
     entity Plants as select from md.Plants{
         ID,
