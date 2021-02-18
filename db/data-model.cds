@@ -78,6 +78,14 @@ context md {
     isOeeRelevant : Boolean not null default false;
     toStation     : Association to Stations;
   }
+
+  @assert.unique: {
+    code: [ code ],
+  }
+  entity Roles : cuid {
+    code        : String(1);
+        description : localized String(35);
+  }
 }
 
 context td {
