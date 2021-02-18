@@ -103,6 +103,14 @@ context md {
     code        : String(1);
     description : localized String(35);
   }
+
+  @assert.unique: {
+    code: [ code ],
+  }
+  entity GrantedTypes : cuid {
+    code        : String(3);
+    description : localized String(80);
+  }
 }
 
 context td {

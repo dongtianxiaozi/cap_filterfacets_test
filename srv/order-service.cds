@@ -104,4 +104,11 @@ service OrderService @(requires : ['user']) {
         description
     };
 
+    @odata.draft.enabled
+    entity GrantedTypes as select from md.GrantedTypes{
+        ID,
+        code,
+        description
+    };
+
 }
