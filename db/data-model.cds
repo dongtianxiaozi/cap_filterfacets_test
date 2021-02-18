@@ -79,6 +79,13 @@ context md {
     toStation     : Association to Stations;
   }
 
+  @assert.unique: {
+    code: [ code ],
+  }
+  entity Roles : cuid {
+    code        : String(1);
+        description : localized String(35);
+  }
 
   @assert.unique: {
     code: [ code ],
