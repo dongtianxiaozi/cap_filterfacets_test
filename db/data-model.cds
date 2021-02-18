@@ -84,7 +84,7 @@ context md {
   }
   entity Roles : cuid {
     code        : String(1);
-        description : localized String(35);
+    description : localized String(35);
   }
 
   @assert.unique: {
@@ -94,6 +94,14 @@ context md {
         @mandatory
         code        : String(4);
         description : String(35);
+  }
+
+  @assert.unique: {
+    code: [ code ],
+  }
+  entity ActivityPhases : cuid {
+    code        : String(1);
+    description : localized String(35);
   }
 }
 
