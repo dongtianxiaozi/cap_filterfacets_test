@@ -97,4 +97,11 @@ service OrderService @(requires : ['user']) {
         description,
     };
 
+    @odata.draft.enabled
+    entity ActivityPhases as select from md.ActivityPhases{
+        ID,
+        code,
+        description
+    };
+
 }
