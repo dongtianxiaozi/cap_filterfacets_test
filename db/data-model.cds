@@ -86,6 +86,15 @@ context md {
     code        : String(1);
         description : localized String(35);
   }
+
+  @assert.unique: {
+    code: [ code ],
+  }
+  entity Plants : cuid {
+        @mandatory
+        code        : String(4);
+        description : String(35);
+  }
 }
 
 context td {

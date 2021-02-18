@@ -80,5 +80,12 @@ service OrderService @(requires : ['user']) {
         @mandatory
         code,
         description
-    }
+    };
+    @odata.draft.enabled
+    entity Plants as select from md.Plants{
+        ID,
+        code,
+        description,
+    };
+
 }
