@@ -109,7 +109,7 @@ context md {
   }
   entity GrantedTypes : cuid {
     code        : String(3);
-    description : localized String(35);
+    description : localized String(80);
   }
 }
 
