@@ -118,4 +118,11 @@ service OrderService @(requires : ['user']) {
         description
     };
 
+    @odata.draft.enabled
+    entity Units as select from md.Units{
+        ID,
+        code,
+        description
+    };
+
 }
