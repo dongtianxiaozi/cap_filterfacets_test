@@ -1,5 +1,7 @@
 #Sonar Scanner
 .scannerwork/
+.sonar-scanner/bin
+.sonar-scanner/lib
 
 # CAP sfc
 _out
