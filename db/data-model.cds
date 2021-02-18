@@ -111,6 +111,14 @@ context md {
     code        : String(3);
     description : localized String(80);
   }
+
+  @assert.unique: {
+    code: [ code ],
+  }
+  entity OeeRelevancies : cuid {
+    code        : String(1);
+    description : localized String(150);
+  }
 }
 
 context td {

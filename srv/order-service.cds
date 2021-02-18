@@ -111,4 +111,11 @@ service OrderService @(requires : ['user']) {
         description
     };
 
+    @odata.draft.enabled
+    entity OeeRelevancies as select from md.OeeRelevancies{
+        ID,
+        code,
+        description
+    };
+
 }
