@@ -18,7 +18,8 @@
     "build:ui": "mbt module-build -m=sfcs_ui_deployer -m=v4orders -m=v4workcenters -m=v2orders -m=v2workcenters -a",
     "deploy:ui": "cf deploy .//mta_archives//sfc_1.0.0.mtar -m sfc_ui_deployer -r sfcs_html_repo_host",
     "deploy:ui+ann": "cf deploy .//mta_archives//sfc_1.0.0.mtar -m sfc_ui_deployer -m sfc-srv -m sfc-db-deployer -r sfc_html_repo_host",
-    "cf:ui": "npm run build:fast && npm run deploy:ui"
+    "cf:ui": "npm run build:fast && npm run deploy:ui",
+    "sonarscanner_osx": "./sonar_scanner_osx.sh"
   },
   "dependencies": {
     "@sap-cloud-sdk/core": "1.37.1",
@@ -67,26 +68,26 @@
       "deploy-format": "hdbtable"
     },
     "auth": {
-        "passport": {
-            "strategy": "mock",
-            "users": {
-                "user": {
-                    "password": "",
-                    "ID": "user",
-                    "roles": [
-                        "user"
-                    ],
-                    "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
-                    "userAttributes": {
-                        "currency": [
-                            "USD"
-                        ],
-                        "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
-                        "email": "user@seidor.es"
-                    }
-                }
+      "passport": {
+        "strategy": "mock",
+        "users": {
+          "user": {
+            "password": "",
+            "ID": "user",
+            "roles": [
+              "user"
+            ],
+            "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+            "userAttributes": {
+              "currency": [
+                "USD"
+              ],
+              "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+              "email": "user@seidor.es"
             }
+          }
         }
+      }
     },
     "requires": {
       "uaa": {
