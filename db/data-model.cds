@@ -32,13 +32,16 @@ context md {
         description : String(255);
   }
 
-  entity Turns : managed {
-    key code            : Turn;
-        description     : String(12);
-        longDescription : String(30);
-        isNightShift    : Boolean not null default false;
-        toStations      : Association to many Stations_Turns
-                            on toStations.toTurn = $self;
+  @assert.unique: {
+    code: [ code ],
+  }
+  entity Turns : cuid, managed {
+    code            : String(2);
+    description     : String(49);
+    longDescription : String(80);
+    isNightShift    : Boolean not null default false;
+    toStations      : Association to many Stations_Turns
+                        on toStations.toTurn = $self;
   }
 
   entity Stations_Turns : cuid {

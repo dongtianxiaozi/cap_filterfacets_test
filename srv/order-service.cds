@@ -32,8 +32,17 @@ service OrderService @(requires : ['user']) {
         toOperation: redirected to Operations
     }    
 
-    entity Turns as projection on md.Turns
-    entity Stations_Turns as projection on md.Stations_Turns
+    @odata.draft.enabled
+    entity Turns as select from md.Turns{
+        ID,
+        code,
+        description,
+        longDescription,
+        isNightShift,
+        toStations: redirected to Stations_Turns,
+    };
+
+    entity Stations_Turns as projection on md.Stations_Turns;
 
     @readonly
     entity WorkCenters as
