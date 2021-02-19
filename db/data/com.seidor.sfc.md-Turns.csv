@@ -1,4 +1,4 @@
-code,description,longDescription,isNightShift
-01,Mañana,Turno de 6 a 14,false
-02,Tarde,Turno de 14 a 22,false
-03,Noche,Turno de 22 a 6,true
+ID,code,description,longDescription,isNightShift
+427ef85a-aef2-464b-89f6-6a3ce64f2e01,01,Mañana,Turno de 6 a 14,false
+427ef85a-aef2-464b-89f6-6a3ce64f2e02,02,Tarde,Turno de 14 a 22,false
+427ef85a-aef2-464b-89f6-6a3ce64f2e03,03,Noche,Turno de 22 a 6,true
