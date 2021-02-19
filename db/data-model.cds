@@ -119,6 +119,14 @@ context md {
     code        : String(1);
     description : localized String(150);
   }
+
+  @assert.unique: {
+    code: [ code ],
+  }
+  entity Units : cuid {
+    code        : String(3);
+    description : localized String(80);
+  }
 }
 
 context td {
