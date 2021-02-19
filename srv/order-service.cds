@@ -132,4 +132,13 @@ service OrderService @(requires : ['user']) {
         description as _text
     };
 
+    @odata.draft.enabled
+    entity Users as select from md.Users{
+        ID,
+        code,
+        toType: redirected to Roles,
+        name,
+        toPlant: redirected to Plants
+    };
+
 }

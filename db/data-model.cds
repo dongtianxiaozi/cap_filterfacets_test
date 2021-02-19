@@ -127,6 +127,17 @@ context md {
     code        : String(3);
     description : localized String(80);
   }
+
+  @assert.unique: {
+    code: [ code ],
+  }
+  entity Users : cuid, managed {
+    code : String(8);
+    toType : Association to Roles;
+    name: String(150);
+    toPlant : Association to Plants;
+  }
+
 }
 
 context td {
