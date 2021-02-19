@@ -125,4 +125,11 @@ service OrderService @(requires : ['user']) {
         description
     };
 
+    @readonly
+    entity VH_Plants as select from md.Plants{
+        ID as _ID,
+        code as _code,
+        description as _text
+    };
+
 }
