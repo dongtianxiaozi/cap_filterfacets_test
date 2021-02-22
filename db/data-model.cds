@@ -148,6 +148,15 @@ context md {
   entity Stations_WorkCenters : cuid {
   }
 
+  @assert.unique: {
+    code: [ code, toPlant ],
+  }
+  entity Responsibles : cuid {
+    toPlant : Association to Plants;
+    code : String(3);
+    description: localized String(80);
+  }
+
 }
 
 context td {

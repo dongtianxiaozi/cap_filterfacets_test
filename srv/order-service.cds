@@ -150,4 +150,13 @@ service OrderService @(requires : ['user']) {
         toPlant: redirected to Plants
     };
 
+    @readonly
+    @odata.draft.enabled
+    entity Responsibles as select from md.Responsibles{
+        ID,
+        code,
+        description,
+        toPlant: redirected to Plants
+    };
+
 }
