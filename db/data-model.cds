@@ -32,9 +32,7 @@ context md {
         description : String(255);
   }
 
-  @assert.unique: {
-    code: [ code ],
-  }
+  @assert.unique : {code : [code], }
   entity Turns : cuid, managed {
     code            : String(2);
     description     : String(49);
@@ -82,79 +80,74 @@ context md {
     toStation     : Association to Stations;
   }
 
-  @assert.unique: {
-    code: [ code ],
-  }
+  @assert.unique : {code : [code], }
   entity Roles : cuid {
     code        : String(1);
     description : localized String(35);
   }
 
-  @assert.unique: {
-    code: [ code ],
-  }
+  @assert.unique : {code : [code], }
   entity Plants : cuid {
-        @mandatory
-        code        : String(4);
-        description : String(35);
+    @mandatory
+    code        : String(4);
+    description : String(35);
   }
 
-  @assert.unique: {
-    code: [ code ],
-  }
+  @assert.unique : {code : [code], }
   entity ActivityPhases : cuid {
     code        : String(1);
     description : localized String(35);
   }
 
-  @assert.unique: {
-    code: [ code ],
-  }
+  @assert.unique : {code : [code], }
   entity GrantedTypes : cuid {
     code        : String(3);
     description : localized String(80);
   }
 
-  @assert.unique: {
-    code: [ code ],
-  }
+  @assert.unique : {code : [code], }
   entity OeeRelevancies : cuid {
     code        : String(1);
     description : localized String(150);
   }
 
-  @assert.unique: {
-    code: [ code ],
-  }
+  @assert.unique : {code : [code], }
   entity Units : cuid {
     code        : String(3);
     description : localized String(80);
   }
 
-  @assert.unique: {
-    code: [ code ],
-  }
+  @assert.unique : {code : [code], }
   entity Users : cuid, managed {
-    code : String(8);
-    toType : Association to Roles;
-    name: String(150);
+    code    : String(8);
+    toType  : Association to Roles;
+    name    : String(150);
     toPlant : Association to Plants;
   }
 
   entity Stations_Operators : cuid {
-    
+
   }
 
-  entity Stations_WorkCenters : cuid {
-  }
+  entity Stations_WorkCenters : cuid {}
 
-  @assert.unique: {
-    code: [ code, toPlant ],
-  }
+  @assert.unique : {code : [
+    code,
+    toPlant
+  ], }
   entity Responsibles : cuid {
+    toPlant     : Association to Plants;
+    code        : String(3);
+    description : localized String(80);
+  }
+
+  @assert.unique : {code : [
+    code,
+    toPlant
+  ], }
+  entity OrderClasses : cuid, managed {
+    code    : String(4);
     toPlant : Association to Plants;
-    code : String(3);
-    description: localized String(80);
   }
 
 }

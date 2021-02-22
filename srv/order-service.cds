@@ -159,4 +159,11 @@ service OrderService @(requires : ['user']) {
         toPlant: redirected to Plants
     };
 
+    @odata.draft.enabled
+    entity OrderClasses as select from md.OrderClasses{
+        ID,
+        code,
+        toPlant: redirected to Plants
+    };
+
 }
