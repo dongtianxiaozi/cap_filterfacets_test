@@ -141,6 +141,10 @@ context md {
     toPlant : Association to Plants;
   }
 
+  entity Stations_Operators : cuid {
+    
+  }
+
 }
 
 context td {
