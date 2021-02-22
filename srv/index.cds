@@ -12,3 +12,4 @@ using from './annotations/vh-annotations';
 using from './annotations/turns-annotations';
 using from './annotations/stations-annotations';
 using from './annotations/stations_turns-annotations';
+using from './annotations/roles-annotations';

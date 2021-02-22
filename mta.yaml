@@ -143,7 +143,11 @@ modules:
      - artifacts:
        - v2turns-content.zip
        name: v2turns
-       target-path: resources/  
+       target-path: resources/
+     - artifacts:
+       - manage_roles-content.zip
+       name: manage_roles
+       target-path: resources/ 
 
  # -------------------- V4ORDERS APP MODULE -------------------
  - name: v4orders
@@ -216,6 +220,17 @@ modules:
  # ------------------------------------------------------------
    type: html5
    path: app/v2_turns
+   build-parameters:
+     builder: custom
+     commands:
+     - npm run build
+     supported-platforms: []
+
+# -------------------- MANAGE_ROLES APP MODULE -------------------
+ - name: manage_roles
+ # ------------------------------------------------------------
+   type: html5
+   path: app/manage_roles
    build-parameters:
      builder: custom
      commands:

@@ -12,6 +12,16 @@ export namespace com.seidor.sfc {
         description: string;
     }
 
+    export interface IPlants extends ICuid {
+        code: string;
+        description: string;
+    }
+
+    export interface IRoles extends ICuid {
+        code: string;
+        description: string;
+    }
+
     export interface IStations extends ICuid, IManaged {
         code: string;
         description: string;
@@ -124,6 +134,8 @@ export namespace com.seidor.sfc {
 
     export enum Entity {
         Person = "com.seidor.sfc.md.Person",
+        Plants = "com.seidor.sfc.md.Plants",
+        Roles = "com.seidor.sfc.md.Roles",
         Stations = "com.seidor.sfc.md.Stations",
         Stations_Turns = "com.seidor.sfc.md.Stations_Turns",
         Turns = "com.seidor.sfc.md.Turns",
@@ -136,6 +148,8 @@ export namespace com.seidor.sfc {
 
     export enum SanitizedEntity {
         Person = "Person",
+        Plants = "Plants",
+        Roles = "Roles",
         Stations = "Stations",
         Stations_Turns = "Stations_Turns",
         Turns = "Turns",
