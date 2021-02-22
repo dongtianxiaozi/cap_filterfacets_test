@@ -145,6 +145,9 @@ context md {
     
   }
 
+  entity Stations_WorkCenters : cuid {
+  }
+
 }
 
 context td {
