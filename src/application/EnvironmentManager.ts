@@ -1,4 +1,4 @@
-import { Level } from '@Logger/ILogger';
+import { Level } from '../logger/ILogger';
 import { injectable } from 'inversify';
 
 @injectable()

@@ -3,12 +3,12 @@ import 'reflect-metadata';
 import proxy from '@sap/cds-odata-v2-adapter-proxy';
 import cds from '@sap/cds';
 import express, { Request, Response, NextFunction } from 'express';
-import * as TestService from '@Services/TestService';
+import * as TestService from './services/TestService';
 import helmet from 'helmet';
 import { v4 as uuidv4 } from 'uuid';
-import { IEnvironment } from '@Shared/IEnvironment';
-import { ContextManager } from '@Application/ContextManager';
-import { DIContainer } from '@Application/DIContainer';
+import { IEnvironment } from './shared/IEnvironment';
+import { ContextManager } from './application/ContextManager';
+import { DIContainer } from './application/DIContainer';
 
 const contextManager: ContextManager = DIContainer.get(ContextManager);
 contextManager.initContext();

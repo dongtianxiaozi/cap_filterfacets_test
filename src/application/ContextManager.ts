@@ -1,5 +1,5 @@
 import cls from 'cls-hooked';
-import { IEnvironment } from '@Shared/IEnvironment';
+import { IEnvironment } from '../shared/IEnvironment';
 import { Transaction } from '@sap/cds/apis/services';
 import { injectable } from 'inversify';
 

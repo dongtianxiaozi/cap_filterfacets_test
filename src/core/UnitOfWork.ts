@@ -1,10 +1,10 @@
-import { IUnitOfWork } from '@Core/IUnitOfWork';
-import { Either, Left, Right } from '@Core/Either';
+import { IUnitOfWork } from '../core/IUnitOfWork';
+import { Either, Left, Right } from '../core/Either';
 import { inject, injectable } from 'inversify';
-import { ILogger } from '@Logger/ILogger';
+import { ILogger } from '../logger/ILogger';
 import { Transaction } from '@sap/cds/apis/services';
-import { UnexpectedError } from '@Results/GlobalResults';
-import { ContextManager } from '@Application/ContextManager';
+import { UnexpectedError } from '../results/GlobalResults';
+import { ContextManager } from '../application/ContextManager';
 
 /**
  * Clase para permitir realizar transacciones entre multiples Repositorios/Casos de Uso. Para ello, antes de lanzar el flujo

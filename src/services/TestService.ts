@@ -2,8 +2,8 @@ import cds from '@sap/cds';
 import { createCombinedHandler } from 'cds-routing-handlers';
 import path from 'path';
 import { Service } from '@sap/cds/apis/services';
-import { EnvironmentMiddleware } from '@Application/GlobalMiddleware';
-import { SFCUserChecker } from '@Application/SFCUserChecker';
+import { EnvironmentMiddleware } from '../application/GlobalMiddleware';
+import { SFCUserChecker } from '../application/SFCUserChecker';
 
 export class TestService extends cds.ApplicationService {
   async init() {
@@ -11,7 +11,7 @@ export class TestService extends cds.ApplicationService {
     await super.init();
   }
 
-  static configRoutes(service: Service, baseDir: string = 'gen/srv/srv') {
+  static configRoutes(service: Service, baseDir: string = '') {
     const options = {
       handler: [
         path.join(__dirname, '..', baseDir, 'features', 'tests', '/handlers/entities/**/*.js'),

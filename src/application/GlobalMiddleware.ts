@@ -1,5 +1,5 @@
 import { ICdsMiddleware, Middleware, Req, Jwt } from 'cds-routing-handlers';
-import { IEnvironment } from '@Shared/IEnvironment';
+import { IEnvironment } from '../shared/IEnvironment';
 import { DIContainer } from './DIContainer';
 import { ContextManager } from './ContextManager';
 

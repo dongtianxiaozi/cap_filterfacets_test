@@ -1,9 +1,9 @@
-import { ILogger } from '@Logger/ILogger';
+import { ILogger } from '../logger/ILogger';
 import { inject, injectable } from 'inversify';
-import { ContextManager } from '@Application/ContextManager';
+import { ContextManager } from '../application/ContextManager';
 import { Transaction } from '@sap/cds/apis/services';
 import { Query } from '@sap/cds/apis/cqn';
-import { IEnvironment } from '@Shared/IEnvironment';
+import { IEnvironment } from '../shared/IEnvironment';
 
 @injectable()
 export class DBDatasource {

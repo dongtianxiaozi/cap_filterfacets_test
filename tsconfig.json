@@ -27,6 +27,6 @@
       "@Utils/*": ["src/utils/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "Server.ts"],
   "exclude": ["node_modules"]
 }

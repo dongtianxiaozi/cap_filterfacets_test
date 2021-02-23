@@ -1,4 +1,4 @@
-import { Result } from '@Core/Results';
+import { Result } from '../core/Results';
 
 export class CreatedResult<T> extends Result<T> {
   constructor(value: T) {

@@ -1,5 +1,5 @@
 import { Handler, Req, Param, Action } from 'cds-routing-handlers';
-import { TestService } from '@Shared/Contract';
+import { TestService } from '../../../../shared/Contract';
 
 /**
  * Action handler.

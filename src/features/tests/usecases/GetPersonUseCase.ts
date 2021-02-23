@@ -1,11 +1,11 @@
-import { IUseCase } from '@Core/IUseCase';
-import { TestService } from '@Shared/Contract';
+import { IUseCase } from '../../../core/IUseCase';
+import { TestService } from '../../../shared/Contract';
 import { PersonRepository } from '../repository/PersonRepository';
 import { injectable, inject } from 'inversify';
-import { Either } from '@Core/Either';
-import { UnexpectedError } from '@Results/GlobalResults';
-import { EmptyResult, QueryResult } from '@Results/CrudResults';
-import { ILogger } from '@Logger/ILogger';
+import { Either } from '../../../core/Either';
+import { UnexpectedError } from '../../../results/GlobalResults';
+import { EmptyResult, QueryResult } from '../../../results/CrudResults';
+import { ILogger } from '../../../logger/ILogger';
 
 export interface GetPersonsUseCaseParams {
   id?: string;

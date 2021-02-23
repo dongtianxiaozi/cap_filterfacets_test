@@ -8,11 +8,10 @@
   "scripts": {
     "watch": "npm run build && cds watch",
     "start": "npm run build && cds run",
-    "build": "npm run build:cds && npm run build:cds2types && npm run build:ts && npm run copy_server",
+    "build": "npm run build:cds && npm run build:cds2types && npm run build:ts",
     "build:cds2types": "cds2types --cds ./srv/*.cds --output ./src/shared/Contract.ts --prefix I --debug",
     "build:cds": "echo 'Compiling cds sources...' && cds build --clean && cp .cdsrc.json gen/srv",
     "build:ts": "echo 'Compiling *.ts sources...' && tsc",
-    "copy_server": "cp -a ./gen/srv/srv/services/. ./srv/",
     "start2": "cds run",
     "build:fast": "mbt build -m=verbose -j=8",
     "build:ui": "mbt module-build -m=sfcs_ui_deployer -m=v4orders -m=v4workcenters -m=v2orders -m=v2workcenters -a",
@@ -38,7 +37,6 @@
     "dotenv": "8.2.0",
     "helmet": "4.4.1",
     "inversify": "5.0.5",
-    "module-alias": "2.2.2",
     "reflect-metadata": "0.1.13",
     "uuid": "8.3.2"
   },
