@@ -88,7 +88,8 @@ service OrderService @(requires : ['user']) {
         ID,
         @mandatory
         code,
-        description
+        description,
+        toUsers: redirected to Users
     };
 
     @readonly
@@ -172,6 +173,15 @@ service OrderService @(requires : ['user']) {
         toUser: redirected to Users,
         toPlant: redirected to Plants,
         toResponsible: redirected to Responsibles
+    };
+
+    @odata.draft.enabled
+    entity Supervisors as select from md.Supervisors{
+        ID,
+        code,
+        toType: redirected to Roles,
+        name,
+        toPlant: redirected to Plants
     };
 
 }
