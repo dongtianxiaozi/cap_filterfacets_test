@@ -167,6 +167,12 @@ service OrderService @(requires : ['user']) {
         toPlant: redirected to Plants
     };
 
-    entity Supervisors as select from md.Supervisors;
+    entity Supervisors as select from md.Supervisors{
+        ID,
+        code,
+        toType: redirected to Roles,
+        name,
+        toPlant: redirected to Plants
+    };
 
 }

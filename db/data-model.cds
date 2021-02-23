@@ -129,7 +129,7 @@ context md {
 
   entity Supervisors as
     select from md.Roles[code = 'S'
-  ].toUsers;
+  ]:toUsers;
 
   entity Stations_Operators : cuid {
 
