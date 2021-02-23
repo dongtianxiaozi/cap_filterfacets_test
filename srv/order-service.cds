@@ -88,7 +88,8 @@ service OrderService @(requires : ['user']) {
         ID,
         @mandatory
         code,
-        description
+        description,
+        toUsers: redirected to Users
     };
 
     @readonly
@@ -163,6 +164,14 @@ service OrderService @(requires : ['user']) {
     entity OrderClasses as select from md.OrderClasses{
         ID,
         code,
+        toPlant: redirected to Plants
+    };
+
+    entity Supervisors as select from md.Supervisors{
+        ID,
+        code,
+        toType: redirected to Roles,
+        name,
         toPlant: redirected to Plants
     };
 
