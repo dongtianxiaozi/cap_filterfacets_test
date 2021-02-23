@@ -84,6 +84,7 @@ context md {
   entity Roles : cuid {
     code        : String(1);
     description : localized String(35);
+    toUsers     : Association to many Users on toUsers.toType = $self;
   }
 
   @assert.unique : {code : [code], }

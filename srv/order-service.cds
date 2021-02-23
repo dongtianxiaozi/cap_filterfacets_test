@@ -88,7 +88,8 @@ service OrderService @(requires : ['user']) {
         ID,
         @mandatory
         code,
-        description
+        description,
+        toUsers: redirected to Users
     };
 
     @readonly
@@ -166,10 +167,10 @@ service OrderService @(requires : ['user']) {
         toPlant: redirected to Plants
     };
 
-    entity Supervisors as select from md.Users as users {
-        users.ID
-    } where exists (
-        select 1 as result from md.Roles as roles //where  roles.code = 'S' //and roles.ID =  '427ef85a-aef2-464b-89f6-6a3ce64f2e01'
-    );
+    entity Supervisors as select from Roles[code='S'].toUsers {
+        *,
+        toPlant : redirected to Plants,
+        toType  : redirected to Roles
+    }
 
 }
