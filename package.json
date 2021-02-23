@@ -109,6 +109,7 @@
     "app\\v2_workcenters",
     "app\\v2_queues",
     "app\\v2_operations",
-    "app\\v2_turns"
+    "app\\v2_turns",
+    "app\\manage_plants"
   ]
 }

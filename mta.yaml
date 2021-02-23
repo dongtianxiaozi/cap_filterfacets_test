@@ -143,7 +143,11 @@ modules:
      - artifacts:
        - v2turns-content.zip
        name: v2turns
-       target-path: resources/  
+       target-path: resources/ 
+    - artifacts:
+       - manage_plants-content.zip
+       name: manage_plants
+       target-path: resources/   
 
  # -------------------- V4ORDERS APP MODULE -------------------
  - name: v4orders
@@ -221,6 +225,18 @@ modules:
      commands:
      - npm run build
      supported-platforms: []  
+
+# -------------------- MANAGE_PLANTS APP MODULE -------------------
+ - name: manage_plants
+ # ------------------------------------------------------------
+   type: html5
+   path: app/manage_plants
+   build-parameters:
+     builder: custom
+     commands:
+     - npm run build
+     supported-platforms: [] 
+
 
 resources:
  # services extracted from CAP configuration
