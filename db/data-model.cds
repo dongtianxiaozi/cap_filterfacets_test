@@ -84,7 +84,8 @@ context md {
   entity Roles : cuid {
     code        : String(1);
     description : localized String(35);
-    toUsers     : Association to many Users on toUsers.toType = $self;
+    toUsers     : Association to many Users
+                    on toUsers.toType = $self;
   }
 
   @assert.unique : {code : [code], }
@@ -125,6 +126,10 @@ context md {
     name    : String(150);
     toPlant : Association to Plants;
   }
+
+  entity Supervisors as
+    select from md.Roles[code = 'S'
+  ].toUsers;
 
   entity Stations_Operators : cuid {
 
