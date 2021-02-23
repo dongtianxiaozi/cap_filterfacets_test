@@ -150,6 +150,17 @@ context md {
     toPlant : Association to Plants;
   }
 
+  @assert.unique : {toUser : [
+    toUser,
+    toPlant,
+    toResponsible
+  ], }
+  entity Supervisors_Responsibles : cuid {
+    toUser : Association to Users;
+    toPlant : Association to Plants;
+    toResponsible : Association to Responsibles;
+  }
+
 }
 
 context td {
