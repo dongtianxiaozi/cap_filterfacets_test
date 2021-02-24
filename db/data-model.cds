@@ -50,13 +50,13 @@ context md {
   entity Stations : cuid, managed {
     code                             : String(4);
     description                      : String(30);
-    toWorkCenter                     : Association to WorkCenters;
-    operator                         : String(4);
+    // toWorkCenter                     : Association to WorkCenters;
+    toOperator                       : Association to Operators;
     turnRequired                     : Boolean not null default false;
     turnDateIsToday                  : Boolean not null default false;
     quantityRequired                 : Boolean not null default false;
-    toTurns                          : Association to many Stations_Turns
-                                         on toTurns.toStation = $self;
+    // toTurns                          : Association to many Stations_Turns
+    //                                      on toTurns.toStation = $self;
     turnDate                         : Date;
     pinRequired                      : Boolean not null default false;
     eventNotificationRequired        : Boolean not null default false;
