@@ -173,7 +173,7 @@ context md {
   }
 
   @assert.unique : {code : [code], }
-  entity Stoppages_Types : cuid, managed {
+  entity Stoppages_Types : cuid {
     code        : String(1);
     description : String(80);
   }
