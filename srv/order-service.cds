@@ -210,6 +210,13 @@ service OrderService @(requires : ['user']) {
         ID,
         code,
         toPlant: redirected to Plants
+    };
+
+    @odata.draft.enabled
+    entity Stoppages_Types as select from md.Stoppages_Types{
+        ID,
+        code,
+        description
     }
 
 }
