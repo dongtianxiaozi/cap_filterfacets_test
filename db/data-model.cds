@@ -166,6 +166,12 @@ context md {
     toPlant : Association to Plants;
   }
 
+  @assert.unique : {code : [code], }
+  entity MaterialsToSync : cuid, managed {
+    code    : String(4);
+    toPlant : Association to Plants;
+  }
+
 }
 
 context td {
