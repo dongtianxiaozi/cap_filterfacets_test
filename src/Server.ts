@@ -7,5 +7,5 @@ const getDirectories = source =>
 
 console.log(`current files: ${getDirectories(__dirname)}`)
 const cdss = require('@sap/cds');
-require('../gen/srv/srv/services/Server');
+require('./services/server');
 module.exports = cdss.server;
