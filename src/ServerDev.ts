@@ -1,4 +1,4 @@
-import 'module-alias/register';
+//import 'module-alias/register';
 import 'reflect-metadata';
 import proxy from '@sap/cds-odata-v2-adapter-proxy';
 import cds from '@sap/cds';
