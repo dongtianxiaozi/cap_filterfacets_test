@@ -172,6 +172,13 @@ context md {
     toPlant : Association to Plants;
   }
 
+  @assert.unique : {code : [code], }
+  entity Stoppages_Types : cuid, managed {
+    code        : String(1);
+    description : String(80);
+  }
+
+
 }
 
 context td {
