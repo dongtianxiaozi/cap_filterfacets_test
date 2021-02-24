@@ -21,6 +21,7 @@ export class TestService extends cds.ApplicationService {
       middlewares: [EnvironmentMiddleware],
       userChecker: SFCUserChecker,
     };
+    console.log(JSON.stringify(options.handler))
     const hdl = createCombinedHandler(options);
     hdl(service);
   }
