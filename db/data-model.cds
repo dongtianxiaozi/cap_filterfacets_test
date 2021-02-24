@@ -89,7 +89,7 @@ context md {
   }
 
   @assert.unique : {code : [code], }
-  entity Plants : cuid {
+  entity Plants : cuid, managed {
     @mandatory
     code        : String(4);
     description : String(35);
@@ -122,14 +122,33 @@ context md {
   @assert.unique : {code : [code], }
   entity Users : cuid, managed {
     code    : String(8);
-    toType  : Association to Roles;
+    toType  : Association to Roles ;
     name    : String(150);
     toPlant : Association to Plants;
   }
 
+@assert.unique : {code : [code], }
   entity Supervisors as
     select from md.Roles[code = 'S'
-  ]:toUsers;
+  ]:toUsers {
+    key ID,
+    code,
+    toType,
+    name,
+    toPlant
+  };
+
+
+  @assert.unique : {toUser : [
+    toUser,
+    toPlant,
+    toResponsible
+  ], }
+  entity Supervisors_Responsibles : cuid {
+    toUser : Association to Supervisors;
+    toPlant : Association to Plants;
+    toResponsible : Association to Responsibles;
+  }
 
   entity Stations_Operators : cuid {
 
@@ -154,17 +173,6 @@ context md {
   entity OrderClasses : cuid, managed {
     code    : String(4);
     toPlant : Association to Plants;
-  }
-
-  @assert.unique : {toUser : [
-    toUser,
-    toPlant,
-    toResponsible
-  ], }
-  entity Supervisors_Responsibles : cuid {
-    toUser : Association to Users;
-    toPlant : Association to Plants;
-    toResponsible : Association to Responsibles;
   }
 
 }

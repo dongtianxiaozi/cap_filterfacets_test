@@ -170,12 +170,11 @@ service OrderService @(requires : ['user']) {
     @odata.draft.enabled
     entity Supervisors_Responsibles as select from md.Supervisors_Responsibles{
         ID,
-        toUser: redirected to Users,
+        toUser: redirected to Supervisors,
         toPlant: redirected to Plants,
         toResponsible: redirected to Responsibles
     };
 
-    @odata.draft.enabled
     entity Supervisors as select from md.Supervisors{
         ID,
         code,
