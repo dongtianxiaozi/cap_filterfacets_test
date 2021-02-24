@@ -42,7 +42,19 @@ service OrderService @(requires : ['user']) {
         toStations: redirected to Stations_Turns,
     };
 
-    entity Stations_Turns as projection on md.Stations_Turns;
+    @readonly
+    entity VH_Turns as select from md.Turns{
+        ID as _ID,
+        code as _code,
+        description as _text,
+        isNightShift
+    };
+
+    entity Stations_Turns as select from md.Stations_Turns{
+        ID,
+        toStation,
+        toTurn: redirected to Turns
+    };
 
     @readonly
     entity WorkCenters as
@@ -90,7 +102,7 @@ service OrderService @(requires : ['user']) {
         name,
         personalNumber,
         pin,
-        toTurn,
+        toTurn: redirected to Turns,
         currentDate
     };
 
