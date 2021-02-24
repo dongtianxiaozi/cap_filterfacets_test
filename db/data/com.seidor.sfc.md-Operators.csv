@@ -1,0 +1,4 @@
+ID;code;name;personalNumber;pin;toTurn_ID;currentDate
+de25c55f-df3e-4e11-a2fb-a6071d92f61b;op01;Operator 01;12345678;1000;427ef85a-aef2-464b-89f6-6a3ce64f2e01;2020-02-01
+9ebc5d91-3a20-46f0-8fbc-0f2b9890130b;op02;Operator 02;12345678;1001;427ef85a-aef2-464b-89f6-6a3ce64f2e03;2020-02-03
+9a7145ed-9535-4366-9cca-b539bb88c8be;op03;Operator 03;12345678;1002;427ef85a-aef2-464b-89f6-6a3ce64f2e03;2020-02-02

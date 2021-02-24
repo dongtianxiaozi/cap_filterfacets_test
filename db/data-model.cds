@@ -81,6 +81,16 @@ context md {
   }
 
   @assert.unique : {code : [code], }
+  entity Operators : cuid, managed {
+    code           : String(4);
+    name           : String(100);
+    personalNumber : String(8);
+    pin            : String(4);
+    toTurn         : Association to Turns;
+    currentDate    : Date
+  }
+
+  @assert.unique : {code : [code], }
   entity Roles : cuid {
     code        : String(1);
     description : localized String(35);
@@ -129,7 +139,7 @@ context md {
 
   entity Supervisors as
     select from md.Roles[code = 'S'
-  ]:toUsers;
+  ] : toUsers;
 
   entity Stations_Operators : cuid {
 

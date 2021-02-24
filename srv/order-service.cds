@@ -84,6 +84,17 @@ service OrderService @(requires : ['user']) {
     };
 
     @odata.draft.enabled
+    entity Operators as select from md.Operators{
+        ID,
+        code,
+        name,
+        personalNumber,
+        pin,
+        toTurn,
+        currentDate
+    };
+
+    @odata.draft.enabled
     entity Roles as select from md.Roles{
         ID,
         @mandatory
