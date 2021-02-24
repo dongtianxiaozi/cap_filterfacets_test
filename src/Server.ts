@@ -1,3 +1,6 @@
-const cdss = require('@sap/cds');
+import cds from '@sap/cds';
+console.log("INIT");
 require('./services/Server');
-module.exports = cdss.server;
+console.log("SERVER INIT");
+// @ts-ignore
+module.exports = cds.server;
