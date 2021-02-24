@@ -198,4 +198,11 @@ service OrderService @(requires : ['user']) {
         toPlant: redirected to Plants
     };
 
+    @odata.draft.enabled
+    entity MaterialsToSync as select from md.MaterialsToSync{
+        ID,
+        code,
+        toPlant: redirected to Plants
+    }
+
 }
