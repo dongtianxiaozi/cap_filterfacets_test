@@ -22,7 +22,7 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity Stations    as projection on md.Stations {
         *,
-        toWorkCenter: redirected to WorkCenters,
+        // toWorkCenter: redirected to WorkCenters,
         toWorkCenters: redirected to WorkCenters,
     }
 
