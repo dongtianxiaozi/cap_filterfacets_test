@@ -190,6 +190,13 @@ service OrderService @(requires : ['user']) {
         toPlant: redirected to Plants
     };
 
+    @readonly
+    entity VH_OrderClasses as select from md.OrderClasses{
+        ID as _ID,
+        code as _code,
+        toPlant.code as plant
+    };
+
     entity Supervisors as select from md.Supervisors{
         ID,
         code,
