@@ -196,6 +196,8 @@ context md {
     description : String(80);
   }
 
+  entity Stations_Stoppages : cuid {}
+
 
 }
 
