@@ -1,3 +1,3 @@
 ID;code;type;category;description;plant;plannedStartDate;plannedStartTime;totalQuantity;unit;material;supervisor;supervisorName;importance
-127ef85a-aef2-464b-89f6-6a3ce64f2e01;10000001;YBM1;10;Fabricación inicial;2410;2018-01-07;08:53:16;100;PI;M3-PO01;YB1;Supervisor A;1
-127ef85a-aef2-464b-89f6-6a3ce64f2e02;10000002;YBM1;10;Fabricación inicial 2;2410;2018-01-07;08:53:16;100;PI;ACA-P01;YB1;Supervisor A;1
+ea53a345-ed80-4272-8926-7e9eabc33730;10000001;YBM1;10;Fabricación inicial;2410;2018-01-07;08:53:16;100;PI;M3-PO01;YB1;Supervisor A;1
+ad94a0ef-a440-4ae3-9a54-e3f4c44c5b82;YBM1;10;Fabricación inicial 2;2410;2018-01-07;08:53:16;100;PI;ACA-P01;YB1;Supervisor A;1

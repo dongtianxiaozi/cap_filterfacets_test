@@ -50,13 +50,13 @@ context md {
   entity Stations : cuid, managed {
     code                             : String(4);
     description                      : String(30);
-    toWorkCenter                     : Association to WorkCenters;
-    operator                         : String(4);
+    // toWorkCenter                     : Association to WorkCenters;
+    toOperator                       : Association to Operators;
     turnRequired                     : Boolean not null default false;
     turnDateIsToday                  : Boolean not null default false;
     quantityRequired                 : Boolean not null default false;
-    toTurns                          : Association to many Stations_Turns
-                                         on toTurns.toStation = $self;
+    // toTurns                          : Association to many Stations_Turns
+    //                                      on toTurns.toStation = $self;
     turnDate                         : Date;
     pinRequired                      : Boolean not null default false;
     eventNotificationRequired        : Boolean not null default false;
@@ -99,7 +99,7 @@ context md {
   }
 
   @assert.unique : {code : [code], }
-  entity Plants : cuid {
+  entity Plants : cuid, managed {
     @mandatory
     code        : String(4);
     description : String(35);
@@ -137,9 +137,27 @@ context md {
     toPlant : Association to Plants;
   }
 
+  @assert.unique : {code : [code], }
   entity Supervisors as
     select from md.Roles[code = 'S'
-  ] : toUsers;
+  ] : toUsers {
+    key ID,
+        code,
+        toType,
+        name,
+        toPlant
+  };
+
+  @assert.unique : {toUser : [
+    toUser,
+    toPlant,
+    toResponsible
+  ], }
+  entity Supervisors_Responsibles : cuid {
+    toUser        : Association to Supervisors;
+    toPlant       : Association to Plants;
+    toResponsible : Association to Responsibles;
+  }
 
   entity Stations_Operators : cuid {
 
@@ -165,6 +183,19 @@ context md {
     code    : String(4);
     toPlant : Association to Plants;
   }
+
+  @assert.unique : {code : [code], }
+  entity MaterialsToSync : cuid, managed {
+    code    : String(4);
+    toPlant : Association to Plants;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Stoppages_Types : cuid {
+    code        : String(1);
+    description : String(80);
+  }
+
 
 }
 

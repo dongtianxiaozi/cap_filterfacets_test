@@ -22,7 +22,7 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity Stations    as projection on md.Stations {
         *,
-        toWorkCenter: redirected to WorkCenters,
+        // toWorkCenter: redirected to WorkCenters,
         toWorkCenters: redirected to WorkCenters,
     }
 
@@ -198,6 +198,21 @@ service OrderService @(requires : ['user']) {
         toPlant: redirected to Plants
     };
 
+    @odata.draft.enabled
+    entity Supervisors_Responsibles as select from md.Supervisors_Responsibles{
+        ID,
+        toUser: redirected to Supervisors,
+        toPlant: redirected to Plants,
+        toResponsible: redirected to Responsibles
+    };
+
+    @readonly
+    entity VH_OrderClasses as select from md.OrderClasses{
+        ID as _ID,
+        code as _code,
+        toPlant.code as plant
+    };
+
     entity Supervisors as select from md.Supervisors{
         ID,
         code,
@@ -205,5 +220,19 @@ service OrderService @(requires : ['user']) {
         name,
         toPlant: redirected to Plants
     };
+
+    @odata.draft.enabled
+    entity MaterialsToSync as select from md.MaterialsToSync{
+        ID,
+        code,
+        toPlant: redirected to Plants
+    };
+
+    @odata.draft.enabled
+    entity Stoppages_Types as select from md.Stoppages_Types{
+        ID,
+        code,
+        description
+    }
 
 }
