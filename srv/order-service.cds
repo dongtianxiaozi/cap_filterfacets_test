@@ -22,7 +22,7 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity Stations    as projection on md.Stations {
         *,
-        toWorkCenter: redirected to WorkCenters,
+        // toWorkCenter: redirected to WorkCenters,
         toWorkCenters: redirected to WorkCenters,
     }
 
@@ -42,7 +42,19 @@ service OrderService @(requires : ['user']) {
         toStations: redirected to Stations_Turns,
     };
 
-    entity Stations_Turns as projection on md.Stations_Turns;
+    @readonly
+    entity VH_Turns as select from md.Turns{
+        ID as _ID,
+        code as _code,
+        description as _text,
+        isNightShift
+    };
+
+    entity Stations_Turns as select from md.Stations_Turns{
+        ID,
+        toStation,
+        toTurn: redirected to Turns
+    };
 
     @readonly
     entity WorkCenters as
@@ -81,6 +93,17 @@ service OrderService @(requires : ['user']) {
         code as _code,
         plant,
         description as _text
+    };
+
+    @odata.draft.enabled
+    entity Operators as select from md.Operators{
+        ID,
+        code,
+        name,
+        personalNumber,
+        pin,
+        toTurn: redirected to Turns,
+        currentDate
     };
 
     @odata.draft.enabled
@@ -175,6 +198,13 @@ service OrderService @(requires : ['user']) {
         toResponsible: redirected to Responsibles
     };
 
+    @readonly
+    entity VH_OrderClasses as select from md.OrderClasses{
+        ID as _ID,
+        code as _code,
+        toPlant.code as plant
+    };
+
     entity Supervisors as select from md.Supervisors{
         ID,
         code,
@@ -182,5 +212,19 @@ service OrderService @(requires : ['user']) {
         name,
         toPlant: redirected to Plants
     };
+
+    @odata.draft.enabled
+    entity MaterialsToSync as select from md.MaterialsToSync{
+        ID,
+        code,
+        toPlant: redirected to Plants
+    };
+
+    @odata.draft.enabled
+    entity Stoppages_Types as select from md.Stoppages_Types{
+        ID,
+        code,
+        description
+    }
 
 }
