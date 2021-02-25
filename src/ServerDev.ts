@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import proxy from '@sap/cds-odata-v2-adapter-proxy';
 import cds from '@sap/cds';
 import express, { Request, Response, NextFunction } from 'express';
-import * as TestService from './services/TestService';
+import * as TestService from './TestService';
 import helmet from 'helmet';
 import { v4 as uuidv4 } from 'uuid';
 import { IEnvironment } from './shared/IEnvironment';
@@ -52,7 +52,7 @@ export class ServerDev {
       .in(app)
       .with((srv) => {
         try {
-          TestService.TestService.configRoutes(srv, '');
+          TestService.TestService.configRoutes(srv);
         } catch (e) {
           console.log(e.message);
         }
