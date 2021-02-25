@@ -15,13 +15,13 @@
     "baseUrl": "./",
     "paths": {
       "*": ["node_modules/*"],
+      "@Root/*": ["src/*"],
       "@Application/*": ["src/application/*"],
       "@Core/*": ["src/core/*"],
       "@Persistence/*": ["src/persistence/*"],
       "@Remote/*": ["src/remote/*"],
       "@Features/*": ["src/features/*"],
       "@Logger/*": ["src/logger/*"],
-      "@Services/*": ["src/services/*"],
       "@Shared/*": ["src/shared/*"],
       "@Results/*": ["src/results/*"],
       "@Utils/*": ["src/utils/*"]

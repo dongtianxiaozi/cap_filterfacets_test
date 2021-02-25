@@ -1,13 +1,14 @@
-// import 'module-alias/register';
+import 'module-alias/register';
 import 'reflect-metadata';
+import './RegisterModules';
 import cds from '@sap/cds';
 import proxy from '@sap/cds-odata-v2-adapter-proxy';
 import helmet from 'helmet';
 import { v4 as uuidv4 } from 'uuid';
 import { Router, Request, Response, NextFunction } from 'express';
-import { IEnvironment } from './shared/IEnvironment';
-import { ContextManager } from './application/ContextManager';
-import { DIContainer } from './application/DIContainer';
+import { IEnvironment } from '@Shared/IEnvironment';
+import { ContextManager } from '@Application/ContextManager';
+import { DIContainer } from '@Application/DIContainer';
 
 const contextManager: ContextManager = DIContainer.get(ContextManager);
 contextManager.initContext()

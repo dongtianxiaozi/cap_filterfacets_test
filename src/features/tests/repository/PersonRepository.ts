@@ -1,10 +1,10 @@
 import { injectable, inject } from 'inversify';
-import { TestService } from '../../../shared/Contract';
-import { Either, Left, Right } from '../../../core/Either';
-import { UnexpectedError } from '../../../results/GlobalResults';
-import { EmptyResult, QueryResult, ReadResult } from '../../../results/CrudResults';
-import { DBDatasource } from '../../../persistence/DBDatasource';
-import { ILogger } from '../../../logger/ILogger';
+import { TestService } from '@Shared/Contract';
+import { Either, Left, Right } from '@Core/Either';
+import { UnexpectedError } from '@Results/GlobalResults';
+import { EmptyResult, QueryResult, ReadResult } from '@Results/CrudResults';
+import { DBDatasource } from '@Persistence/DBDatasource';
+import { ILogger } from '@Logger/ILogger';
 
 @injectable()
 export class PersonRepository {

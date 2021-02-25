@@ -36,6 +36,7 @@
     "express": "4.17.1",
     "helmet": "4.4.1",
     "inversify": "5.0.5",
+    "module-alias": "^2.2.2",
     "moment": "2.29.1",
     "passport": "0.4.1",
     "reflect-metadata": "0.1.13",
@@ -50,18 +51,6 @@
     "cds2types": "2.6.0",
     "sqlite3": "5.0.1",
     "typescript": "4.1.5"
-  },
-  "_moduleAliases": {
-    "@Application": "gen/srv/srv/application",
-    "@Core": "gen/srv/srv/core",
-    "@Persistence": "gen/srv/srv/persistence",
-    "@Remote": "gen/srv/srv/remote",
-    "@Features": "gen/srv/srv/features",
-    "@Logger": "gen/srv/srv/logger",
-    "@Services": "gen/srv/srv/services",
-    "@Shared": "gen/srv/srv/shared",
-    "@Results": "gen/srv/srv/results",
-    "@Utils": "gen/srv/srv/utils"
   },
   "cds": {
     "hana": {

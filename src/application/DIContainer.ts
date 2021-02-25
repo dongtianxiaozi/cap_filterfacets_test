@@ -1,8 +1,8 @@
 import { Container, interfaces } from 'inversify';
-import { ILogger } from '../logger/ILogger';
-import { Logger } from '../logger/Logger';
+import { ILogger } from '@Logger/ILogger';
+import { Logger } from '@Logger/Logger';
 import { EnvironmentManager } from './EnvironmentManager';
-import { IUseCase } from '../core/IUseCase';
+import { IUseCase } from '@Core/IUseCase';
 import { ContextManager } from './ContextManager';
 
 export const DIContainer = new Container({ autoBindInjectable: true });

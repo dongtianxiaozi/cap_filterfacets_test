@@ -1,6 +1,6 @@
 import { IUserChecker, UserChecker, Jwt } from 'cds-routing-handlers';
-import { IUser } from '../shared/IUser';
-import { IEnvironment } from '../shared/IEnvironment';
+import { IUser } from '@Shared/IUser';
+import { IEnvironment } from '@Shared/IEnvironment';
 import { DIContainer } from './DIContainer';
 import { ContextManager } from './ContextManager';
 

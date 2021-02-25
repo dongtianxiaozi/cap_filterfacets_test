@@ -17,6 +17,21 @@ Si se activa el auto-attach del debug:
 - npm run watch
 - debug (activamos el debug)
 
+Deploy (Node 12)
+
+- npm install -g npm
+- npm install -g mbt
+- brew install cloudfoundry/tap/cf-cli@7
+- cf install-plugin multiapps
+- npm install app/**/package.json
+- mbt build
+- cf login (API Endpoint: api.cf.eu10.hana.ondemand.com)
+- cf deploy mta_archives/sfc_1.0.0.mtar
+
+Logs SCF
+- cf logs sfc-srv --recent
+
+
 ### Importe
 
 - [Nomenclaturas a utilizar en el modelado](https://seidor.sharepoint.com/:p:/t/ShopFloorControlConsultingESP/EZ6gD5IkBi9Mq_6MiRr9iXsBRCBV5vNPUTpeWju7Yn02iQ?e=YZ8Tad)

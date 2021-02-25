@@ -6,9 +6,9 @@ import express, { Request, Response, NextFunction } from 'express';
 import * as TestService from './TestService';
 import helmet from 'helmet';
 import { v4 as uuidv4 } from 'uuid';
-import { IEnvironment } from './shared/IEnvironment';
-import { ContextManager } from './application/ContextManager';
-import { DIContainer } from './application/DIContainer';
+import { IEnvironment } from '@Shared/IEnvironment';
+import { ContextManager } from '@Application/ContextManager';
+import { DIContainer } from '@Application/DIContainer';
 
 const contextManager: ContextManager = DIContainer.get(ContextManager);
 contextManager.initContext();

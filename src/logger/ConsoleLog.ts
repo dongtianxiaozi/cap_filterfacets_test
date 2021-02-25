@@ -1,7 +1,7 @@
 import { Level, LogMessage, getLevel, now } from './ILogger';
 import { injectable } from 'inversify';
-import { IEnvironment } from '../shared/IEnvironment';
-import { ContextManager } from '../application/ContextManager';
+import { IEnvironment } from '@Shared/IEnvironment';
+import { ContextManager } from '@Application/ContextManager';
 
 @injectable()
 export class ConsoleLog {

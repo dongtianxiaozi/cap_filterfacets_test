@@ -1,12 +1,12 @@
-import { UnitOfWork } from '../../../core/UnitOfWork';
-import { QueryResult } from '../../../results/CrudResults';
-import { UnexpectedError } from '../../../results/GlobalResults';
-import { Either } from '../../../core/Either';
+import { UnitOfWork } from '@Core/UnitOfWork';
+import { QueryResult } from '@Results/CrudResults';
+import { UnexpectedError } from '@Results/GlobalResults';
+import { Either } from '@Core/Either';
 import { inject, injectable, interfaces } from 'inversify';
-import { ILogger } from '../../../logger/ILogger';
-import { IUseCase } from '../../../core/IUseCase';
+import { ILogger } from '@Logger/ILogger';
+import { IUseCase } from '@Core/IUseCase';
 import { GetPersonsUseCase, GetPersonsUseCaseParams } from '../usecases/GetPersonUseCase';
-import { ContextManager } from '../../../application/ContextManager';
+import { ContextManager } from '@Application/ContextManager';
 
 @injectable()
 export class GetPersonsUnitWork extends UnitOfWork<GetPersonsUseCaseParams, UnexpectedError, QueryResult<any>> {

@@ -2,8 +2,8 @@ import cds from '@sap/cds';
 import { createCombinedHandler } from 'cds-routing-handlers';
 import path from 'path';
 import { Service } from '@sap/cds/apis/services';
-import { EnvironmentMiddleware } from './application/GlobalMiddleware';
-import { SFCUserChecker } from './application/SFCUserChecker';
+import { EnvironmentMiddleware } from '@Application/GlobalMiddleware';
+import { SFCUserChecker } from '@Application/SFCUserChecker';
 
 export class TestService extends cds.ApplicationService {
   async init() {

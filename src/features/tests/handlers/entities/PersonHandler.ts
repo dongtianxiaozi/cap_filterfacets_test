@@ -12,13 +12,13 @@ import {
   User,
   Action,
 } from 'cds-routing-handlers';
-import { TestService } from '../../../../shared/Contract';
-import { DIContainer } from '../../../../application/DIContainer';
-import { GetPersonsUseCase, GetPersonsUseCaseParams } from '../../../../features/tests/usecases/GetPersonUseCase';
-import * as TestServiceImpl from '../../../../TestService';
+import { TestService } from '@Shared/Contract';
+import { DIContainer } from '@Application/DIContainer';
+import { GetPersonsUseCase, GetPersonsUseCaseParams } from '@Features/tests/usecases/GetPersonUseCase';
+import * as TestServiceImpl from '@Root/TestService';
 import { Request } from '@sap/cds/apis/services';
-import { IUser } from '../../../../shared/IUser';
-import { ILogger } from '../../../../logger/ILogger';
+import { IUser } from '@Shared/IUser';
+import { ILogger } from '@Logger/ILogger';
 /**
  * Person handler
  */

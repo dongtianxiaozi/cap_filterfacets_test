@@ -1,5 +1,5 @@
 import { Handler, Req, Func, Param } from 'cds-routing-handlers';
-import { TestService } from '../../../../shared/Contract';
+import { TestService } from '@Shared/Contract';
 
 /**
  * Function handler.
