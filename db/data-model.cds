@@ -196,6 +196,14 @@ context md {
     description : String(80);
   }
 
+  entity Stations_Stoppages : cuid {}
+
+  @assert.unique : {code : [code], }
+  entity Incidents : cuid {
+    code        : String(4);
+    description : String(80);
+  }
+
 
 }
 

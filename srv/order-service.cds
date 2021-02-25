@@ -233,6 +233,13 @@ service OrderService @(requires : ['user']) {
         ID,
         code,
         description
-    }
+    };
+
+    @odata.draft.enabled
+    entity Incidents as select from md.Incidents{
+        ID,
+        code,
+        description
+    };
 
 }
