@@ -22,7 +22,7 @@ annotate OrderService.Plants with @(
             $Type : 'UI.DataField',
             Value : code,
         }],
-        SelectionFields : [code],
+        SelectionFields : [],
         LineItem        : [
             {Value : code},
             {Value : description},
