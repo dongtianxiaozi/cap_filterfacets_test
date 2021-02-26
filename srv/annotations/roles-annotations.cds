@@ -17,13 +17,13 @@ annotate OrderService.Roles with {
 }
 
 annotate OrderService.Roles with @(
-    Common.SemanticKey : [code, ],
+    Common.SemanticKey : [code],
     UI                 : {
         Identification           : [{
             $Type : 'UI.DataField',
             Value : code
         }],
-        SelectionFields          : [code],
+        SelectionFields          : [],
         LineItem                 : [
             {Value : code},
             {Value : description},
