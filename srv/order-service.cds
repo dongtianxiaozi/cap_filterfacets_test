@@ -40,6 +40,7 @@ service OrderService @(requires : ['user']) {
         longDescription,
         isNightShift,
         toStations: redirected to Stations_Turns,
+        toSupervisors   : redirected to Supervisors_Turns,
     };
 
     @readonly
@@ -213,12 +214,21 @@ service OrderService @(requires : ['user']) {
         toPlant.code as plant
     };
 
-    entity Supervisors as select from md.Supervisors{
+    @odata.draft.enabled
+    entity Supervisors as select from view.Supervisors{
         ID,
         code,
         toType: redirected to Roles,
         name,
-        toPlant: redirected to Plants
+        toPlant: redirected to Plants,
+        toTurns: redirected to  Supervisors_Turns
+    };
+
+    @odata.draft.enabled
+    entity Supervisors_Turns as select from md.Supervisors_Turns{
+        ID,
+        toSupervisor: redirected to Supervisors,
+        toTurn: redirected to Turns
     };
 
     @odata.draft.enabled

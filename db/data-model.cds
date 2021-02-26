@@ -40,6 +40,8 @@ context md {
     isNightShift    : Boolean not null default false;
     toStations      : Association to many Stations_Turns
                         on toStations.toTurn = $self;
+    toSupervisors   : Association to many Supervisors_Turns
+                        on toSupervisors.toTurn = $self;
   }
 
   entity Stations_Turns : cuid {
@@ -135,18 +137,21 @@ context md {
     toType  : Association to Roles;
     name    : String(150);
     toPlant : Association to Plants;
+    toTurns   : Association to many Supervisors_Turns
+                        on toTurns.toSupervisor = $self;
   }
 
-  @assert.unique : {code : [code], }
-  entity Supervisors as
-    select from md.Roles[code = 'S'
-  ] : toUsers {
-    key ID,
-        code,
-        toType,
-        name,
-        toPlant
-  };
+  // @assert.unique : {code : [code], }
+  // entity Supervisors as
+  //   select from md.Roles[code = 'S'
+  // ] : toUsers {
+  //   key ID,
+  //       code,
+  //       toType,
+  //       name,
+  //       toPlant,
+  //       toTurns
+  // };
 
   @assert.unique : {toUser : [
     toUser,
@@ -154,7 +159,7 @@ context md {
     toResponsible
   ], }
   entity Supervisors_Responsibles : cuid {
-    toUser        : Association to Supervisors;
+    toUser        : Association to view.Supervisors;
     toPlant       : Association to Plants;
     toResponsible : Association to Responsibles;
   }
@@ -202,6 +207,12 @@ context md {
   entity Incidents : cuid {
     code        : String(4);
     description : String(80);
+  }
+
+  @assert.unique : {toSupervisor : [toSupervisor, toTurn], }
+  entity Supervisors_Turns : cuid {
+    toSupervisor : Association to Users;
+    toTurn       : Association to Turns;
   }
 
 
@@ -281,5 +292,12 @@ entity Queues : cuid, managed {
 }
 
 context view {
+  @assert.unique : {code : [code], }
+  view Supervisors as
+    select from md.Users {
+      *,
+      // toType @cds.on.insert :  md.Roles[code = 'S']
+    }
+    where toType.code = 'S';
 
 }
