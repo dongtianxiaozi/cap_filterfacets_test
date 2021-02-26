@@ -41,3 +41,23 @@ annotate OrderService.VH_WorkCenters with {
         UI    : {HiddenFilter : true}
     );
 }
+
+annotate OrderService.VH_Plants with {
+    _ID @(
+        UI     : {
+            Hidden       : true
+        },
+        Common : {Text : {
+            $value                 : _text,
+            ![@UI.TextArrangement] : #TextOnly
+        }}
+    );
+    _code @(
+        title : '{i18n>code}',
+        UI    : {HiddenFilter : true}
+    );
+    _text @(
+        title : '{i18n>plant}',
+        UI    : {HiddenFilter : true}
+    );
+};
