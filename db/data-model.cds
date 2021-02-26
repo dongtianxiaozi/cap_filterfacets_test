@@ -132,26 +132,26 @@ context md {
   }
 
   @assert.unique : {code : [code], }
-  entity Users : cuid, managed {
+  entity Users : cuid {
     code    : String(8);
     toType  : Association to Roles;
     name    : String(150);
     toPlant : Association to Plants;
-    toTurns   : Association to many Supervisors_Turns
-                        on toTurns.toSupervisor = $self;
+    toTurns : Association to many Supervisors_Turns
+                on toTurns.toSupervisor = $self;
   }
 
-  // @assert.unique : {code : [code], }
-  // entity Supervisors as
-  //   select from md.Roles[code = 'S'
-  // ] : toUsers {
-  //   key ID,
-  //       code,
-  //       toType,
-  //       name,
-  //       toPlant,
-  //       toTurns
-  // };
+  @assert.unique : {code : [code], }
+  entity Supervisors as
+    select from md.Roles[code = 'S'
+  ] : toUsers {
+    key ID,
+        code,
+        toType,
+        name,
+        toPlant,
+        toTurns
+  };
 
   @assert.unique : {toUser : [
     toUser,
@@ -159,7 +159,7 @@ context md {
     toResponsible
   ], }
   entity Supervisors_Responsibles : cuid {
-    toUser        : Association to view.Supervisors;
+    toUser        : Association to Supervisors;
     toPlant       : Association to Plants;
     toResponsible : Association to Responsibles;
   }
@@ -209,7 +209,10 @@ context md {
     description : String(80);
   }
 
-  @assert.unique : {toSupervisor : [toSupervisor, toTurn], }
+  @assert.unique : {toSupervisor : [
+    toSupervisor,
+    toTurn
+  ], }
   entity Supervisors_Turns : cuid {
     toSupervisor : Association to Users;
     toTurn       : Association to Turns;
@@ -292,12 +295,5 @@ entity Queues : cuid, managed {
 }
 
 context view {
-  @assert.unique : {code : [code], }
-  view Supervisors as
-    select from md.Users {
-      *,
-      // toType @cds.on.insert :  md.Roles[code = 'S']
-    }
-    where toType.code = 'S';
 
 }

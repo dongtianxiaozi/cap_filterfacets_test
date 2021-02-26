@@ -168,11 +168,10 @@ service OrderService @(requires : ['user']) {
 
     @odata.draft.enabled
     entity Users as select from md.Users{
-        ID,
-        code,
+        *,
         toType: redirected to Roles,
-        name,
-        toPlant: redirected to Plants
+        toPlant: redirected to Plants,
+        toTurns: redirected to Supervisors_Turns,
     };
 
     @readonly
@@ -215,7 +214,7 @@ service OrderService @(requires : ['user']) {
     };
 
     @odata.draft.enabled
-    entity Supervisors as select from view.Supervisors{
+    entity Supervisors as select from md.Supervisors{
         ID,
         code,
         toType: redirected to Roles,
@@ -227,7 +226,7 @@ service OrderService @(requires : ['user']) {
     @odata.draft.enabled
     entity Supervisors_Turns as select from md.Supervisors_Turns{
         ID,
-        toSupervisor: redirected to Supervisors,
+        toSupervisor: redirected to Users,
         toTurn: redirected to Turns
     };
 
