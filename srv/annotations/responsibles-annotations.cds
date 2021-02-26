@@ -10,15 +10,16 @@ annotate OrderService.Responsibles with {
     @title: '{i18n>plants}';
 
     description
-    @title : '{i18n>description}';
+    @title : '{i18n>description}';   
 
     code
-    @title : '{i18n>responsible}';
+    @title : '{i18n>responsible}';    
 
 };
 
 annotate OrderService.Responsibles with @(
-    Common.SemanticKey : [toPlant.code, ],
+    Common.SemanticKey : [toPlant.code, 
+                          code],
     UI                 : {
         Identification           : [{
             $Type : 'UI.DataField',
@@ -27,8 +28,9 @@ annotate OrderService.Responsibles with @(
         SelectionFields          : [toPlant_ID],
         LineItem                 : [
             {Value : toPlant.code},
-            {Value : description},
             {Value : code},
+            {Value : description},
+            {Value : toPlant.description},
         ],
         HeaderInfo               : {
             TypeName       : '{i18n>responsible}',
@@ -52,13 +54,17 @@ annotate OrderService.Responsibles with @(
                 },
                 {
                     $Type : 'UI.DataField',
+                    Value : description
+
+                },                
+                {
+                    $Type : 'UI.DataField',
                     Value : code
                 },
                 {
                     $Type : 'UI.DataField',
-                    Value : description
-
-                }
+                    Value : toPlant.description,
+                },
             ]
         },
     }
