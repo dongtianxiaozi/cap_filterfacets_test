@@ -218,6 +218,14 @@ context md {
     toTurn       : Association to Turns;
   }
 
+  @assert.unique : {code : [code], }
+  entity Stoppages : cuid {
+    code          : String(4);
+    description   : String(25);
+    type          : Association to Stoppages_Types;
+    isOverlapping : Boolean not null default false;
+  }
+
 
 }
 

@@ -264,4 +264,12 @@ service OrderService @(requires : ['user']) {
             description
         };
 
+
+    @odata.draft.enabled
+    entity Stoppages                as
+        select from md.Stoppages {
+            *,
+            type : redirected to Stoppages_Types
+        };
+
 }
