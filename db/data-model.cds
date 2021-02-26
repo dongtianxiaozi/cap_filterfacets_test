@@ -40,6 +40,8 @@ context md {
     isNightShift    : Boolean not null default false;
     toStations      : Association to many Stations_Turns
                         on toStations.toTurn = $self;
+    toSupervisors   : Association to many Supervisors_Turns
+                        on toSupervisors.toTurn = $self;
   }
 
   entity Stations_Turns : cuid {
@@ -130,11 +132,13 @@ context md {
   }
 
   @assert.unique : {code : [code], }
-  entity Users : cuid, managed {
+  entity Users : cuid {
     code    : String(8);
     toType  : Association to Roles;
     name    : String(150);
     toPlant : Association to Plants;
+    toTurns : Association to many Supervisors_Turns
+                on toTurns.toSupervisor = $self;
   }
 
   @assert.unique : {code : [code], }
@@ -145,7 +149,8 @@ context md {
         code,
         toType,
         name,
-        toPlant
+        toPlant,
+        toTurns
   };
 
   @assert.unique : {toUser : [
@@ -202,6 +207,15 @@ context md {
   entity Incidents : cuid {
     code        : String(4);
     description : String(80);
+  }
+
+  @assert.unique : {toSupervisor : [
+    toSupervisor,
+    toTurn
+  ], }
+  entity Supervisors_Turns : cuid {
+    toSupervisor : Association to Users;
+    toTurn       : Association to Turns;
   }
 
 
