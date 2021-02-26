@@ -57,8 +57,8 @@ context md {
     turnRequired                     : Boolean not null default false;
     turnDateIsToday                  : Boolean not null default false;
     quantityRequired                 : Boolean not null default false;
-    // toTurns                          : Association to many Stations_Turns
-    //                                      on toTurns.toStation = $self;
+    toTurns                          : Association to many Stations_Turns
+                                         on toTurns.toStation = $self;
     turnDate                         : Date;
     pinRequired                      : Boolean not null default false;
     eventNotificationRequired        : Boolean not null default false;
