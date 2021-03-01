@@ -40,6 +40,8 @@ context md {
     isNightShift    : Boolean not null default false;
     toStations      : Association to many Stations_Turns
                         on toStations.toTurn = $self;
+    toSupervisors   : Association to many Supervisors_Turns
+                        on toSupervisors.toTurn = $self;
   }
 
   entity Stations_Turns : cuid {
@@ -55,8 +57,8 @@ context md {
     turnRequired                     : Boolean not null default false;
     turnDateIsToday                  : Boolean not null default false;
     quantityRequired                 : Boolean not null default false;
-    // toTurns                          : Association to many Stations_Turns
-    //                                      on toTurns.toStation = $self;
+    toTurns                          : Association to many Stations_Turns
+                                         on toTurns.toStation = $self;
     turnDate                         : Date;
     pinRequired                      : Boolean not null default false;
     eventNotificationRequired        : Boolean not null default false;
@@ -99,7 +101,7 @@ context md {
   }
 
   @assert.unique : {code : [code], }
-  entity Plants : cuid {
+  entity Plants : cuid, managed {
     @mandatory
     code        : String(4);
     description : String(35);
@@ -130,16 +132,38 @@ context md {
   }
 
   @assert.unique : {code : [code], }
-  entity Users : cuid, managed {
+  entity Users : cuid {
     code    : String(8);
     toType  : Association to Roles;
     name    : String(150);
     toPlant : Association to Plants;
+    toTurns : Association to many Supervisors_Turns
+                on toTurns.toSupervisor = $self;
+    toStation : Association to Stations;
   }
 
+  @assert.unique : {code : [code], }
   entity Supervisors as
     select from md.Roles[code = 'S'
-  ] : toUsers;
+  ] : toUsers {
+    key ID,
+        code,
+        toType,
+        name,
+        toPlant,
+        toTurns
+  };
+
+  @assert.unique : {toUser : [
+    toUser,
+    toPlant,
+    toResponsible
+  ], }
+  entity Supervisors_Responsibles : cuid {
+    toUser        : Association to Supervisors;
+    toPlant       : Association to Plants;
+    toResponsible : Association to Responsibles;
+  }
 
   entity Stations_Operators : cuid {
 
@@ -176,6 +200,31 @@ context md {
   entity Stoppages_Types : cuid {
     code        : String(1);
     description : String(80);
+  }
+
+  entity Stations_Stoppages : cuid {}
+
+  @assert.unique : {code : [code], }
+  entity Incidents : cuid {
+    code        : String(4);
+    description : String(80);
+  }
+
+  @assert.unique : {toSupervisor : [
+    toSupervisor,
+    toTurn
+  ], }
+  entity Supervisors_Turns : cuid {
+    toSupervisor : Association to Users;
+    toTurn       : Association to Turns;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Stoppages : cuid {
+    code          : String(4);
+    description   : String(25);
+    type          : Association to Stoppages_Types;
+    isOverlapping : Boolean not null default false;
   }
 
 
