@@ -175,6 +175,7 @@ service OrderService @(requires : ['user']) {
             toType  : redirected to Roles,
             toPlant : redirected to Plants,
             toTurns : redirected to Supervisors_Turns,
+            toStation : redirected to Stations,
         };
 
     @readonly

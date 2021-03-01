@@ -139,6 +139,7 @@ context md {
     toPlant : Association to Plants;
     toTurns : Association to many Supervisors_Turns
                 on toTurns.toSupervisor = $self;
+    toStation : Association to Stations;
   }
 
   @assert.unique : {code : [code], }
