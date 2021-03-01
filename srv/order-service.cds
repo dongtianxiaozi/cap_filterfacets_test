@@ -18,8 +18,8 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity Stations                 as projection on md.Stations {
         * ,
-        // toWorkCenter: redirected to WorkCenters,
-        toWorkCenters : redirected to WorkCenters,
+    // toWorkCenter: redirected to WorkCenters,
+    // toWorkCenters : redirected to WorkCenters,
     }
 
     entity Components               as projection on td.Components {
@@ -50,20 +50,12 @@ service OrderService @(requires : ['user']) {
             toTurn    : redirected to Turns
         };
 
-    @readonly
+    @odata.draft.enabled
     entity WorkCenters              as
         select from md.WorkCenters {
-            ID,
-            //        An alias for a key field provokes an sqlite error, so workaround invalid
-            //        ID as toWorkCenterID,     //Enables navigation from LR to workCenter-display semantic object
-            code,
-            plant,
-            description,
-            responsible,
-            queueType,
-            isOeeRelevant,
-            toStation,
-            toStation.code as station
+            *,
+            toPlant       : redirected to Plants,
+            toResponsible : redirected to Responsibles
         };
 
     @odata.draft.enabled
