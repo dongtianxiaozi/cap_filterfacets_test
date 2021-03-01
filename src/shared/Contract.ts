@@ -171,6 +171,8 @@ export namespace com.seidor.sfc {
         toPlant?: IPlants;
         toPlant_ID?: string;
         toTurns?: ISupervisors_Turns[];
+        toStation?: IStations;
+        toStation_ID?: string;
     }
 
     export interface IWorkCenters extends ICuid, IManaged {
