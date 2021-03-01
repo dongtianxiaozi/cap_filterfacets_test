@@ -4,7 +4,7 @@ using {
     com.seidor.sfc.view as view
 } from '../db/data-model';
 
-service OrderService @(requires : ['user']) {
+service OrderService @(requires : 'user') {
 
     @odata.draft.enabled
     entity Orders                   as projection on td.Orders {
@@ -167,6 +167,7 @@ service OrderService @(requires : ['user']) {
             toType  : redirected to Roles,
             toPlant : redirected to Plants,
             toTurns : redirected to Supervisors_Turns,
+            toStation : redirected to Stations,
         };
 
     @readonly

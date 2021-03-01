@@ -15,7 +15,7 @@ import {
 import { TestService } from '@Shared/Contract';
 import { DIContainer } from '@Application/DIContainer';
 import { GetPersonsUseCase, GetPersonsUseCaseParams } from '@Features/tests/usecases/GetPersonUseCase';
-import * as TestServiceImpl from '@Services/TestService';
+import * as TestServiceImpl from '@Root/TestService';
 import { Request } from '@sap/cds/apis/services';
 import { IUser } from '@Shared/IUser';
 import { ILogger } from '@Logger/ILogger';
