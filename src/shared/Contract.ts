@@ -90,7 +90,6 @@ export namespace com.seidor.sfc {
         goodReceiptAuthorizationRequired?: boolean;
         consumptionAuthorizationRequired?: boolean;
         ctecAuthorizationRequired?: boolean;
-        toWorkCenters?: IWorkCenters[];
     }
 
     export interface IStations_Operators extends ICuid {
@@ -171,6 +170,8 @@ export namespace com.seidor.sfc {
         toPlant?: IPlants;
         toPlant_ID?: string;
         toTurns?: ISupervisors_Turns[];
+        toStation?: IStations;
+        toStation_ID?: string;
     }
 
     export interface IWorkCenters extends ICuid, IManaged {
@@ -180,8 +181,10 @@ export namespace com.seidor.sfc {
         responsible: string;
         queueType: string;
         isOeeRelevant?: boolean;
-        toStation?: IStations;
-        toStation_ID?: string;
+        toPlant?: IPlants;
+        toPlant_ID?: string;
+        toResponsible?: IResponsibles;
+        toResponsible_ID?: string;
     }
 
     export interface IComponents extends ICuid, IManaged {
@@ -309,6 +312,19 @@ export namespace com.seidor.sfc {
         Orders = "Orders",
         Queues = "Queues"
     }
+
+    export interface IWorkCenters extends ICuid, IManaged {
+        code: WorkCenter;
+        plant: WorkCenterPlant;
+        description: string;
+        responsible: string;
+        queueType: string;
+        isOeeRelevant?: boolean;
+        toPlant?: IPlants;
+        toPlant_ID?: string;
+        toResponsible?: IResponsibles;
+        toResponsible_ID?: string;
+    }
 }
 
 export namespace sap.common {
@@ -415,4 +431,404 @@ export enum SanitizedEntity {
     Cuid = "Cuid",
     Managed = "Managed",
     Temporal = "Temporal"
+}
+
+export namespace OrderService {
+    export interface IActivityPhases {
+        ID: string;
+        code: string;
+        description: string;
+    }
+
+    export interface IComponents {
+        ID: string;
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
+        toOrder?: IOrders;
+        toOrder_ID?: string;
+        position: string;
+        material: com.seidor.sfc.Material;
+        batch: string;
+        isNegative?: boolean;
+        quantity: com.seidor.sfc.Quantity;
+        toOperation?: IOperations;
+        toOperation_ID?: string;
+        reserve: string;
+        reservePosition: string;
+        indBackflush?: boolean;
+    }
+
+    export interface IGrantedTypes {
+        ID: string;
+        code: string;
+        description: string;
+    }
+
+    export interface IIncidents {
+        ID: string;
+        code: string;
+        description: string;
+    }
+
+    export interface IMaterialsToSync {
+        ID: string;
+        code: string;
+        toPlant?: IPlants;
+        toPlant_ID?: string;
+    }
+
+    export interface IOeeRelevancies {
+        ID: string;
+        code: string;
+        description: string;
+    }
+
+    export interface IOperations {
+        ID: string;
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
+        toOrder?: IOrders;
+        toOrder_ID?: string;
+        operation: string;
+        controlKey: string;
+        isExternal?: boolean;
+        isNotifiable?: boolean;
+        text: string;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
+        quantity: com.seidor.sfc.Quantity;
+        baseQuantity: com.seidor.sfc.Quantity;
+        toComponents?: IComponents[];
+        queueSequence: number;
+        semanticURLtoOrder?: string;
+        order_: com.seidor.sfc.OrderId;
+        workCenter: com.seidor.sfc.WorkCenter;
+    }
+
+    export interface IOperators {
+        ID: string;
+        code: string;
+        name: string;
+        personalNumber: string;
+        pin: string;
+        toTurn?: ITurns;
+        toTurn_ID?: string;
+        currentDate: Date;
+    }
+
+    export interface IOrderClasses {
+        ID: string;
+        code: string;
+        toPlant?: IPlants;
+        toPlant_ID?: string;
+    }
+
+    export interface IOrders {
+        ID: string;
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
+        code: com.seidor.sfc.OrderId;
+        type: string;
+        category: string;
+        description: string;
+        plant: string;
+        plannedStartDate: Date;
+        plannedStartTime: Date;
+        totalQuantity: com.seidor.sfc.Quantity;
+        unit: string;
+        material: com.seidor.sfc.Material;
+        supervisor: string;
+        supervisorName: string;
+        importance: string;
+        toOperations: IOperations[];
+        toComponents: IComponents[];
+    }
+
+    export interface IPlants {
+        ID: string;
+        code: string;
+        description: string;
+    }
+
+    export interface IQueues {
+        ID: string;
+        operation: string;
+        toOrder?: IOrders;
+        toOrder_ID?: string;
+        orderIdReadable: com.seidor.sfc.OrderId;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
+        workCenterDescription: string;
+        queueSequence: number;
+    }
+
+    export interface IResponsibles {
+        ID: string;
+        code: string;
+        description: string;
+        toPlant?: IPlants;
+        toPlant_ID?: string;
+    }
+
+    export interface IRoles {
+        ID: string;
+        code: string;
+        description: string;
+        toUsers?: IUsers[];
+    }
+
+    export interface IStations {
+        ID: string;
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
+        code: string;
+        description: string;
+        toOperator?: IOperators;
+        toOperator_ID?: string;
+        turnRequired?: boolean;
+        turnDateIsToday?: boolean;
+        quantityRequired?: boolean;
+        toTurns?: IStations_Turns[];
+        turnDate: Date;
+        pinRequired?: boolean;
+        eventNotificationRequired?: boolean;
+        multipleOperatorStartsAllowed?: boolean;
+        multipleStartsAllowed?: boolean;
+        activityAuthorizationRequired?: boolean;
+        goodReceiptAuthorizationRequired?: boolean;
+        consumptionAuthorizationRequired?: boolean;
+        ctecAuthorizationRequired?: boolean;
+    }
+
+    export interface IStations_Turns {
+        ID: string;
+        toStation?: IStations;
+        toStation_ID?: string;
+        toTurn?: ITurns;
+        toTurn_ID?: string;
+    }
+
+    export interface IStoppages {
+        ID: string;
+        code: string;
+        description: string;
+        type?: IStoppages_Types;
+        type_ID?: string;
+        isOverlapping?: boolean;
+    }
+
+    export interface IStoppages_Types {
+        ID: string;
+        code: string;
+        description: string;
+    }
+
+    export interface ISupervisors {
+        ID: string;
+        code: string;
+        toType?: IRoles;
+        toType_ID?: string;
+        name: string;
+        toPlant?: IPlants;
+        toPlant_ID?: string;
+        toTurns?: ISupervisors_Turns[];
+    }
+
+    export interface ISupervisors_Responsibles {
+        ID: string;
+        toUser?: ISupervisors;
+        toUser_ID?: string;
+        toPlant?: IPlants;
+        toPlant_ID?: string;
+        toResponsible?: IResponsibles;
+        toResponsible_ID?: string;
+    }
+
+    export interface ISupervisors_Turns {
+        ID: string;
+        toSupervisor?: IUsers;
+        toSupervisor_ID?: string;
+        toTurn?: ITurns;
+        toTurn_ID?: string;
+    }
+
+    export interface ITurns {
+        ID: string;
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
+        code: string;
+        description: string;
+        longDescription: string;
+        isNightShift?: boolean;
+        toStations?: IStations_Turns[];
+        toSupervisors?: ISupervisors_Turns[];
+    }
+
+    export interface IUnits {
+        ID: string;
+        code: string;
+        description: string;
+    }
+
+    export interface IUsers {
+        ID: string;
+        code: string;
+        toType?: IRoles;
+        toType_ID?: string;
+        name: string;
+        toPlant?: IPlants;
+        toPlant_ID?: string;
+        toTurns?: ISupervisors_Turns[];
+        toStation?: IStations;
+        toStation_ID?: string;
+    }
+
+    export interface IVH_OrderClasses {
+        _ID: string;
+        _code: string;
+        plant: string;
+    }
+
+    export interface IVH_Orders {
+        _ID: string;
+        _code: com.seidor.sfc.OrderId;
+        type: string;
+        plant: string;
+    }
+
+    export interface IVH_Plants {
+        _ID: string;
+        _code: string;
+        _text: string;
+    }
+
+    export interface IVH_Responsibles {
+        _ID: string;
+        _code: string;
+        _text: string;
+        toPlant?: IPlants;
+        toPlant_ID?: string;
+    }
+
+    export interface IVH_Roles {
+        _ID: string;
+        _code: string;
+        _text: string;
+    }
+
+    export interface IVH_Turns {
+        _ID: string;
+        _code: string;
+        _text: string;
+        isNightShift?: boolean;
+    }
+
+    export interface IVH_WorkCenters {
+        _ID: string;
+        _code: com.seidor.sfc.WorkCenter;
+        plant: com.seidor.sfc.WorkCenterPlant;
+        _text: string;
+    }
+
+    export interface IWorkCenters {
+        ID: string;
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
+        code: com.seidor.sfc.WorkCenter;
+        plant: com.seidor.sfc.WorkCenterPlant;
+        description: string;
+        responsible: string;
+        queueType: string;
+        isOeeRelevant?: boolean;
+        toPlant?: IPlants;
+        toPlant_ID?: string;
+        toResponsible?: IResponsibles;
+        toResponsible_ID?: string;
+    }
+
+    export enum Entity {
+        ActivityPhases = "OrderService.ActivityPhases",
+        Components = "OrderService.Components",
+        GrantedTypes = "OrderService.GrantedTypes",
+        Incidents = "OrderService.Incidents",
+        MaterialsToSync = "OrderService.MaterialsToSync",
+        OeeRelevancies = "OrderService.OeeRelevancies",
+        Operations = "OrderService.Operations",
+        Operators = "OrderService.Operators",
+        OrderClasses = "OrderService.OrderClasses",
+        Orders = "OrderService.Orders",
+        Plants = "OrderService.Plants",
+        Queues = "OrderService.Queues",
+        Responsibles = "OrderService.Responsibles",
+        Roles = "OrderService.Roles",
+        Stations = "OrderService.Stations",
+        Stations_Turns = "OrderService.Stations_Turns",
+        Stoppages = "OrderService.Stoppages",
+        Stoppages_Types = "OrderService.Stoppages_Types",
+        Supervisors = "OrderService.Supervisors",
+        Supervisors_Responsibles = "OrderService.Supervisors_Responsibles",
+        Supervisors_Turns = "OrderService.Supervisors_Turns",
+        Turns = "OrderService.Turns",
+        Units = "OrderService.Units",
+        Users = "OrderService.Users",
+        VH_OrderClasses = "OrderService.VH_OrderClasses",
+        VH_Orders = "OrderService.VH_Orders",
+        VH_Plants = "OrderService.VH_Plants",
+        VH_Responsibles = "OrderService.VH_Responsibles",
+        VH_Roles = "OrderService.VH_Roles",
+        VH_Turns = "OrderService.VH_Turns",
+        VH_WorkCenters = "OrderService.VH_WorkCenters",
+        WorkCenters = "OrderService.WorkCenters"
+    }
+
+    export enum SanitizedEntity {
+        ActivityPhases = "ActivityPhases",
+        Components = "Components",
+        GrantedTypes = "GrantedTypes",
+        Incidents = "Incidents",
+        MaterialsToSync = "MaterialsToSync",
+        OeeRelevancies = "OeeRelevancies",
+        Operations = "Operations",
+        Operators = "Operators",
+        OrderClasses = "OrderClasses",
+        Orders = "Orders",
+        Plants = "Plants",
+        Queues = "Queues",
+        Responsibles = "Responsibles",
+        Roles = "Roles",
+        Stations = "Stations",
+        Stations_Turns = "Stations_Turns",
+        Stoppages = "Stoppages",
+        Stoppages_Types = "Stoppages_Types",
+        Supervisors = "Supervisors",
+        Supervisors_Responsibles = "Supervisors_Responsibles",
+        Supervisors_Turns = "Supervisors_Turns",
+        Turns = "Turns",
+        Units = "Units",
+        Users = "Users",
+        VH_OrderClasses = "VH_OrderClasses",
+        VH_Orders = "VH_Orders",
+        VH_Plants = "VH_Plants",
+        VH_Responsibles = "VH_Responsibles",
+        VH_Roles = "VH_Roles",
+        VH_Turns = "VH_Turns",
+        VH_WorkCenters = "VH_WorkCenters",
+        WorkCenters = "WorkCenters"
+    }
+
+
+
+
 }
