@@ -4,7 +4,7 @@ using {
     com.seidor.sfc.view as view
 } from '../db/data-model';
 
-service UserService @(requires:'authenticated-user') {
+service UserService {
 
 
     @cds.persistence.skip
@@ -20,6 +20,7 @@ service UserService @(requires:'authenticated-user') {
         is_authenticated_user: Boolean;
         token: String;
         tenant: UUID;
+        environment: String;
     }
     entity roles {
         key roleName: String;

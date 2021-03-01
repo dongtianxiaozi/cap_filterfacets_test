@@ -67,6 +67,13 @@
           "database": "sfc.db"
         }
       }
+    },
+    "[production]": {
+      "auth": {
+        "passport": {
+          "strategy": "JWT"
+        }
+      }
     }
   },
   "sapux": [

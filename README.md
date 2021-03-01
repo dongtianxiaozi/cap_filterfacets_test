@@ -31,7 +31,51 @@ Deploy (Node 12)
 Logs SCF
 - cf logs sfc-srv --recent
 
+Mock de autentication xsuaa cloud en local
+- en .cdsrc.json:
+```
+{
+    "auth": {
+        "passport": {
+            "strategy": "JWT"
+        }
+    }
+}
+```
+- en default-env.json, actualizar VCAP_SERVICES > xsuaa > credentials con las credenciales obtenidas de ejecutar:
+```
+cf service-key sfc-xsuaa-service sfc-uaa-key
+```
 
+
+Usuarios mocked en local
+- en .cdsrc.json:
+```
+{
+  "auth": {
+      "passport": {
+          "strategy": "mock",
+          "users": {
+              "user": {
+                  "password": "",
+                  "ID": "user",
+                  "roles": [
+                      "user"
+                  ],
+                  "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+                  "userAttributes": {
+                      "currency": [
+                          "USD"
+                      ],
+                      "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+                      "email": "user@seidor.es"
+                  }
+              }
+          }
+      }
+  }
+}
+```
 ### Importe
 
 - [Nomenclaturas a utilizar en el modelado](https://seidor.sharepoint.com/:p:/t/ShopFloorControlConsultingESP/EZ6gD5IkBi9Mq_6MiRr9iXsBRCBV5vNPUTpeWju7Yn02iQ?e=YZ8Tad)
