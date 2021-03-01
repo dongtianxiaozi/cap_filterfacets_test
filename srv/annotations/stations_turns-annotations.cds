@@ -10,7 +10,7 @@ annotate OrderService.Stations_Turns with {
 
 annotate OrderService.Stations_Turns with @(UI : {LineItem : [
 {Value : toStation.code},
-{Value : toStation.toWorkCenter.code},
-{Value : toStation.toWorkCenter.description},
-{Value : toStation.operator}
+// {Value : toStation.toWorkCenter.code},
+// {Value : toStation.toWorkCenter.description},
+// {Value : toStation.operator}
 ]});
