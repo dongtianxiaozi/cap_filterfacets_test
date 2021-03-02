@@ -137,12 +137,12 @@ context md {
 
   @assert.unique : {code : [code], }
   entity Users : cuid {
-    code    : String(8);
-    toType  : Association to Roles;
-    name    : String(150);
-    toPlant : Association to Plants;
-    toTurns : Association to many Supervisors_Turns
-                on toTurns.toSupervisor = $self;
+    code      : String(8);
+    toType    : Association to Roles;
+    name      : String(150);
+    toPlant   : Association to Plants;
+    toTurns   : Association to many Supervisors_Turns
+                  on toTurns.toSupervisor = $self;
     toStation : Association to Stations;
   }
 
