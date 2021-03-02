@@ -9,16 +9,13 @@ annotate OrderService.OrderClasses with {
     code
     @title     : '{i18n>orderClassCode}';
 
-    description
-    @title     : '{i18n>orderClass}';
-
     toPlant
     @title     : '{i18n>Plant}';
 
 }
 
 annotate OrderService.OrderClasses with @(
-    /*Common.SemanticKey : [
+    Common.SemanticKey : [
         code,
     ],
     UI                 : {
@@ -30,13 +27,51 @@ annotate OrderService.OrderClasses with @(
         ],
         LineItem        : [
             {Value : code},
-            {Value : toPlant_ID},
+            {Value : toPlant.code},
         ],
         HeaderInfo      : {
             TypeName       : '{i18n>workCenter}',
             TypeNamePlural : '{i18n>workCenters}',
             Title          : {Value : code},
             Description    : {Value : toPlant_ID}
-        }
-    }*/
+        },
+        Facets : [{
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>details}',
+            Target : '@UI.FieldGroup#OrderClassesDetails'
+        }],
+
+        FieldGroup #OrderClassesDetails : {
+            Label : '{i18n>details}',
+            Data  : [
+                {
+                    $Type : 'UI.DataField',
+                    Value : code
+                },                
+                {
+                    $Type : 'UI.DataField',
+                    Value : toPlant_ID
+                },
+            ]
+        },
+
+    }
 );
+
+annotate OrderService.OrderClasses with {
+    toPlant @(
+        Common : {            
+            ValueListWithFixedValues,
+            ValueList : {
+                SearchSupported : true,
+                CollectionPath  : 'VH_Plants',
+                Parameters      : [{
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : toPlant_ID,
+                    ValueListProperty : '_text'
+                    },
+                ]
+            }
+        }
+    );
+};
