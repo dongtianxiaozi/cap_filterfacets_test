@@ -15,7 +15,7 @@
         "resources": "resources.json",
         "dataSources": {
             "mainService": {
-                "uri": "/v2/order/",
+                "uri": "v2/order/",
                 "type": "OData",
                 "settings": {
                     "annotations": [
@@ -36,8 +36,27 @@
         "sourceTemplate": {
             "id": "ui5template.smartTemplate",
             "version": "1.40.12"
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "fe-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "units",
+                    "action": "display"
+                }
+            }   
         }
+
     },
+
+    "sap.cloud": {
+        "public": true,
+        "service": "sfcservice"
+    }, 
+
     "sap.ui": {
         "technology": "UI5",
         "icons": {

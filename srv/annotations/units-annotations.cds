@@ -7,52 +7,50 @@ annotate OrderService.Units with {
     @UI.Hidden : true;
 
     code
-    @title     : '{i18n>workCenter}';
+    @title     : '{i18n>unitCode}';
 
     description
-    @title     : '{i18n>workCenterDescription}';
+    @title     : '{i18n>unitDescription}';
 
 }
 
 annotate OrderService.Units with @(
-    Common.SemanticKey : [
-        code,
-    ],
+    Common.SemanticKey : [code, ],
     UI                 : {
-        Identification  : [{
+        Identification           : [{
             $Type : 'UI.DataField',
-            Value : code,
+            Value : code
         }],
-        SelectionFields : [
-        ],
-        LineItem        : [
+        SelectionFields          : [],
+        LineItem                 : [
             {Value : description},
             {Value : code},
+
         ],
-        HeaderInfo      : {
-            TypeName       : '{i18n>workCenter}',
-            TypeNamePlural : '{i18n>workCenters}',
+        HeaderInfo               : {
+            TypeName       : '{i18n>unit}',
+            TypeNamePlural : '{i18n>units}',
             Title          : {Value : code},
             Description    : {Value : description}
-        }
-    },
-            Facets : [{
+        },
+        Facets                   : [{
             $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>details}',
             Target : '@UI.FieldGroup#UnitsDetails'
         }],
-
         FieldGroup #UnitsDetails : {
             Label : '{i18n>details}',
             Data  : [
                 {
                     $Type : 'UI.DataField',
                     Value : code
+                    
                 },
                 {
                     $Type : 'UI.DataField',
                     Value : description
                 },
             ]
-        },
+        }
+    }
 );
