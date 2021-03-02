@@ -116,7 +116,23 @@ modules:
        content-target: true
    build-parameters:
      build-result: resources
-     requires:  
+     requires:
+   - artifacts:
+       - granted_types-content.zip
+       name: granted_types
+       target-path: resources/  
+
+ # -------------------- MANAGE_GRANTED_TYPES APP MODULE -------------------
+ - name: manage_granted_types
+ # ------------------------------------------------------------
+   type: html5
+   path: app/manage_granted_types
+   build-parameters:
+     builder: custom
+     commands:
+     - npm run build
+     supported-platforms: []  
+      
 
 resources:
  # services extracted from CAP configuration
