@@ -140,6 +140,8 @@ context md {
     toTurns : Association to many Supervisors_Turns
                 on toTurns.toSupervisor = $self;
     toStation : Association to Stations;
+    toResponsibles : Association to many Supervisors_Responsibles
+                on toResponsibles.toUser = $self;
   }
 
   @assert.unique : {code : [code], }
@@ -151,7 +153,8 @@ context md {
         toType,
         name,
         toPlant,
-        toTurns
+        toTurns,
+        toResponsibles
   };
 
   @assert.unique : {toUser : [
@@ -160,7 +163,7 @@ context md {
     toResponsible
   ], }
   entity Supervisors_Responsibles : cuid {
-    toUser        : Association to Supervisors;
+    toUser        : Association to Users;
     toPlant       : Association to Plants;
     toResponsible : Association to Responsibles;
   }

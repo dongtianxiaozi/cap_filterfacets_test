@@ -209,7 +209,7 @@ service OrderService @(requires : 'user') {
     entity Supervisors_Responsibles as
         select from md.Supervisors_Responsibles {
             ID,
-            toUser        : redirected to Supervisors,
+            toUser        : redirected to Users,
             toPlant       : redirected to Plants,
             toResponsible : redirected to Responsibles
         };
@@ -230,7 +230,8 @@ service OrderService @(requires : 'user') {
             toType  : redirected to Roles,
             name,
             toPlant : redirected to Plants,
-            toTurns : redirected to Supervisors_Turns
+            toTurns : redirected to Supervisors_Turns,
+            toResponsibles: redirected to Supervisors_Responsibles
         };
 
     @odata.draft.enabled
