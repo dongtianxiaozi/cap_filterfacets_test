@@ -116,7 +116,22 @@ modules:
        content-target: true
    build-parameters:
      build-result: resources
-     requires:  
+     requires:
+   - artifacts:
+       - order_classes-content.zip
+       name: order_classes
+       target-path: resources/
+
+ # -------------------- MANAGE_ORDER_CLASSES APP MODULE -------------------
+ - name: manage_order_classes
+ # ------------------------------------------------------------
+   type: html5
+   path: app/manage_order_classes
+   build-parameters:
+     builder: custom
+     commands:
+     - npm run build
+     supported-platforms: []  
 
 resources:
  # services extracted from CAP configuration
