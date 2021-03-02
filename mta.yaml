@@ -117,6 +117,21 @@ modules:
    build-parameters:
      build-result: resources
      requires:  
+  - artifacts:
+    - activity_phases-content.zip
+       name: activity_phases
+       target-path: resources/  
+
+# -------------------- MANAGE_ACTIVITY_PHASES APP MODULE -------------------
+ - name: manage_activity_phases
+ # ------------------------------------------------------------
+   type: html5
+   path: app/mnage_activity_phases
+   build-parameters:
+     builder: custom
+     commands:
+
+
 
 resources:
  # services extracted from CAP configuration

@@ -40,7 +40,6 @@
     "moment": "2.29.1",
     "passport": "0.4.1",
     "reflect-metadata": "0.1.13",
-    "tsc": "^1.20150623.0",
     "uuid": "8.3.2"
   },
   "devDependencies": {
@@ -83,6 +82,7 @@
     "app\\v2_workcenters",
     "app\\v2_queues",
     "app\\v2_operations",
-    "app\\v2_turns"
+    "app\\v2_turns",
+    "app\\manage_activity_phases"
   ]
 }
