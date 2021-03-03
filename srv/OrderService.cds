@@ -200,7 +200,7 @@ service OrderService @(requires : ['user']) {
     entity Supervisors_Responsibles as
         select from md.Supervisors_Responsibles {
             ID,
-            toUser        : redirected to Supervisors,
+            toUser        : redirected to Users,
             toPlant       : redirected to Plants,
             toResponsible : redirected to Responsibles
         };
