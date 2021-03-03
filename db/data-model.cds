@@ -241,6 +241,17 @@ context md {
     toUnit      : Association to Units;
   }
 
+  @assert.unique : {objectClass : [
+    objectClass,
+    documentClass,
+    application
+  ], }
+  entity DocumentClasses : cuid {
+    objectClass   : String(10);
+    documentClass : String(3);
+    application   : String(3);
+  }
+
 
 }
 

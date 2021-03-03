@@ -270,4 +270,10 @@ service OrderService @(requires : ['user']) {
             toUnit : redirected to Units
         };
 
+    @odata.draft.enabled
+    entity DocumentClasses          as
+        select from md.DocumentClasses {
+            *
+        };
+
 }
