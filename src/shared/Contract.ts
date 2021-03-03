@@ -53,6 +53,7 @@ export namespace com.seidor.sfc {
         toTurn?: ITurns;
         toTurn_ID?: string;
         currentDate: Date;
+        toStations?: IStations_Operators[];
     }
 
     export interface IOrderClasses extends ICuid, IManaged {
@@ -103,9 +104,14 @@ export namespace com.seidor.sfc {
         goodReceiptAuthorizationRequired?: boolean;
         consumptionAuthorizationRequired?: boolean;
         ctecAuthorizationRequired?: boolean;
+        toOperators?: IStations_Operators[];
     }
 
     export interface IStations_Operators extends ICuid {
+        toStation?: IStations;
+        toStation_ID?: string;
+        toOperator?: IOperators;
+        toOperator_ID?: string;
     }
 
     export interface IStations_Stoppages extends ICuid {
@@ -537,6 +543,10 @@ export namespace OrderService {
 
     export interface IOperators {
         ID: string;
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
         code: string;
         name: string;
         personalNumber: string;
@@ -544,6 +554,7 @@ export namespace OrderService {
         toTurn?: ITurns;
         toTurn_ID?: string;
         currentDate: Date;
+        toStations?: IStations_Operators[];
     }
 
     export interface IOrderClasses {
@@ -632,6 +643,15 @@ export namespace OrderService {
         goodReceiptAuthorizationRequired?: boolean;
         consumptionAuthorizationRequired?: boolean;
         ctecAuthorizationRequired?: boolean;
+        toOperators?: IStations_Operators[];
+    }
+
+    export interface IStations_Operators {
+        ID: string;
+        toStation?: IStations;
+        toStation_ID?: string;
+        toOperator?: IOperators;
+        toOperator_ID?: string;
     }
 
     export interface IStations_Turns {
@@ -803,6 +823,7 @@ export namespace OrderService {
         Responsibles = "OrderService.Responsibles",
         Roles = "OrderService.Roles",
         Stations = "OrderService.Stations",
+        Stations_Operators = "OrderService.Stations_Operators",
         Stations_Turns = "OrderService.Stations_Turns",
         Stoppages = "OrderService.Stoppages",
         Stoppages_Types = "OrderService.Stoppages_Types",
@@ -840,6 +861,7 @@ export namespace OrderService {
         Responsibles = "Responsibles",
         Roles = "Roles",
         Stations = "Stations",
+        Stations_Operators = "Stations_Operators",
         Stations_Turns = "Stations_Turns",
         Stoppages = "Stoppages",
         Stoppages_Types = "Stoppages_Types",
