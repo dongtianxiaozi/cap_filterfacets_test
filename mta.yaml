@@ -117,6 +117,11 @@ modules:
    build-parameters:
      build-result: resources
      requires:  
+    - artifacts:
+       - materials_sync-content.zip
+       name: v2workcenters
+       target-path: resources/  
+
 
 resources:
  # services extracted from CAP configuration
