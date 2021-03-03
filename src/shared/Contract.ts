@@ -11,6 +11,12 @@ export namespace com.seidor.sfc {
         description: string;
     }
 
+    export interface IDocumentClasses extends ICuid {
+        objectClass: string;
+        documentClass: string;
+        application: string;
+    }
+
     export interface IGrantedTypes extends ICuid {
         code: string;
         description: string;
@@ -253,6 +259,7 @@ export namespace com.seidor.sfc {
 
     export enum Entity {
         ActivityPhases = "com.seidor.sfc.md.ActivityPhases",
+        DocumentClasses = "com.seidor.sfc.md.DocumentClasses",
         GrantedTypes = "com.seidor.sfc.md.GrantedTypes",
         Incidents = "com.seidor.sfc.md.Incidents",
         MaterialsToSync = "com.seidor.sfc.md.MaterialsToSync",
@@ -285,6 +292,7 @@ export namespace com.seidor.sfc {
 
     export enum SanitizedEntity {
         ActivityPhases = "ActivityPhases",
+        DocumentClasses = "DocumentClasses",
         GrantedTypes = "GrantedTypes",
         Incidents = "Incidents",
         MaterialsToSync = "MaterialsToSync",
@@ -460,6 +468,13 @@ export namespace OrderService {
         reserve: string;
         reservePosition: string;
         indBackflush?: boolean;
+    }
+
+    export interface IDocumentClasses {
+        ID: string;
+        objectClass: string;
+        documentClass: string;
+        application: string;
     }
 
     export interface IGrantedTypes {
@@ -764,6 +779,7 @@ export namespace OrderService {
     export enum Entity {
         ActivityPhases = "OrderService.ActivityPhases",
         Components = "OrderService.Components",
+        DocumentClasses = "OrderService.DocumentClasses",
         GrantedTypes = "OrderService.GrantedTypes",
         Incidents = "OrderService.Incidents",
         MaterialsToSync = "OrderService.MaterialsToSync",
@@ -799,6 +815,7 @@ export namespace OrderService {
     export enum SanitizedEntity {
         ActivityPhases = "ActivityPhases",
         Components = "Components",
+        DocumentClasses = "DocumentClasses",
         GrantedTypes = "GrantedTypes",
         Incidents = "Incidents",
         MaterialsToSync = "MaterialsToSync",
