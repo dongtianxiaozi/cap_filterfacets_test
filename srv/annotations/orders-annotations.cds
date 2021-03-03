@@ -1,6 +1,6 @@
 namespace com.seidor.sfc;
 
-using {OrderService} from '../OrdeService';
+using {OrderService} from '../OrderService';
 
 annotate OrderService.Orders with {
     ID               @Common : {
