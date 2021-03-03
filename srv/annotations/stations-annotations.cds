@@ -1,6 +1,6 @@
 namespace com.seidor.sfc;
 
-using {OrderService} from '../order-service';
+using {OrderService} from '../OrdeService';
 
 annotate OrderService.Stations with {
     code        @title : '{i18n>station}';

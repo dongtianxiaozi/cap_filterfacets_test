@@ -1,6 +1,6 @@
 namespace com.seidor.sfc;
 
-using {OrderService} from '../order-service';
+using {OrderService} from '../OrdeService';
 
 annotate OrderService.Plants with {
     ID
