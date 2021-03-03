@@ -264,9 +264,16 @@ service OrderService @(requires : ['user']) {
         };
 
     @odata.draft.enabled
+    entity Activities                as
+        select from md.Activities {
+            *,
+            toUnit : redirected to Units
+        };
+
+    @odata.draft.enabled
     entity DocumentClasses          as
         select from md.DocumentClasses {
             *
-        }
+        };
 
 }
