@@ -38,3 +38,4 @@ Makefile_*
 # .idea
 /package-lock.json
 **/package-lock.json
+/src/shared/Contract.temp.ts

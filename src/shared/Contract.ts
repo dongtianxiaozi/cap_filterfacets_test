@@ -136,10 +136,11 @@ export namespace com.seidor.sfc {
         toPlant?: IPlants;
         toPlant_ID?: string;
         toTurns?: ISupervisors_Turns[];
+        toResponsibles?: ISupervisors_Responsibles[];
     }
 
     export interface ISupervisors_Responsibles extends ICuid {
-        toUser?: ISupervisors;
+        toUser?: IUsers;
         toUser_ID?: string;
         toPlant?: IPlants;
         toPlant_ID?: string;
@@ -178,6 +179,7 @@ export namespace com.seidor.sfc {
         toTurns?: ISupervisors_Turns[];
         toStation?: IStations;
         toStation_ID?: string;
+        toResponsibles?: ISupervisors_Responsibles[];
     }
 
     export interface IWorkCenters extends ICuid, IManaged {
@@ -659,7 +661,7 @@ export namespace OrderService {
 
     export interface ISupervisors_Responsibles {
         ID: string;
-        toUser?: ISupervisors;
+        toUser?: IUsers;
         toUser_ID?: string;
         toPlant?: IPlants;
         toPlant_ID?: string;
@@ -706,6 +708,7 @@ export namespace OrderService {
         toTurns?: ISupervisors_Turns[];
         toStation?: IStations;
         toStation_ID?: string;
+        toResponsibles?: ISupervisors_Responsibles[];
     }
 
     export interface IVH_OrderClasses {

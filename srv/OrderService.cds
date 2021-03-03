@@ -50,7 +50,6 @@ service OrderService @(requires : ['user']) {
             toTurn    : redirected to Turns
         };
 
-    @odata.draft.enabled
     entity WorkCenters              as
         select from md.WorkCenters {
             *,
@@ -200,7 +199,7 @@ service OrderService @(requires : ['user']) {
     entity Supervisors_Responsibles as
         select from md.Supervisors_Responsibles {
             ID,
-            toUser        : redirected to Supervisors,
+            toUser        : redirected to Users,
             toPlant       : redirected to Plants,
             toResponsible : redirected to Responsibles
         };
