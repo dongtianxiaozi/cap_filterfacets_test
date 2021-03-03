@@ -50,7 +50,6 @@ service OrderService @(requires : ['user']) {
             toTurn    : redirected to Turns
         };
 
-    @odata.draft.enabled
     entity WorkCenters              as
         select from md.WorkCenters {
             *,
