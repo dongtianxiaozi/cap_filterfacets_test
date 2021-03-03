@@ -1,6 +1,6 @@
 namespace com.seidor.sfc;
 
-using {OrderService} from '../order-service';
+using {OrderService} from '../OrderService';
 
 annotate OrderService.Stations_Turns with {
     ID          @Core.Computed;
