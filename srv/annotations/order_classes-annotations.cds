@@ -10,7 +10,7 @@ annotate OrderService.OrderClasses with {
     @title     : '{i18n>orderClassCode}';
 
     toPlant
-    @title     : '{i18n>Plant}';
+    @title     : '{i18n>plant}';
 
 }
 
@@ -30,8 +30,8 @@ annotate OrderService.OrderClasses with @(
             {Value : toPlant.code},
         ],
         HeaderInfo      : {
-            TypeName       : '{i18n>workCenter}',
-            TypeNamePlural : '{i18n>workCenters}',
+            TypeName       : '{i18n>orderClass}',
+            TypeNamePlural : '{i18n>orderClasses}',
             Title          : {Value : code},
             Description    : {Value : toPlant_ID}
         },
