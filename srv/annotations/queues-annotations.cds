@@ -1,6 +1,6 @@
 namespace com.seidor.sfc;
 
-using { OrderService } from '../order-service';
+using { OrderService } from '../OrdeService';
 
 /* les anotacions d'aquesta entitat estan a la propia app */
 
