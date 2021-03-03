@@ -58,7 +58,7 @@ annotate OrderService.MaterialsToSync with @(
         }
     }
 );
-annotate OrderService.Users with {
+annotate OrderService.MaterialsToSync with {
     toPlant @(
         Common : {            
             ValueListWithFixedValues,
