@@ -1,6 +1,6 @@
 namespace com.seidor.sfc;
 
-using {OrderService} from '../order-service';
+using {OrderService} from '../OrderService';
 
 annotate OrderService.Turns with {
     code            @title : '{i18n>turn}';
