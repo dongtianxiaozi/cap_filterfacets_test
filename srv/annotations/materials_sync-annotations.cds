@@ -28,13 +28,50 @@ annotate OrderService.MaterialsToSync with @(
         LineItem        : [
             {Value : ID},
             {Value : code},
-            {Value : toPlant_ID},
+            {Value : toPlant.code},
         ],
         HeaderInfo      : {
             TypeName       : '{i18n>material}',
             TypeNamePlural : '{i18n>materials}',
             Title          : {Value : code},
-            Description    : {Value : toPlant_ID}
+            Description    : {Value : toPlant.code}
+        },
+        Facets                   : [
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>details}',
+            Target : '@UI.FieldGroup#MaterialsDetails'
+        },
+        ],
+        FieldGroup #MaterialsDetails : {
+            Label : '{i18n>details}',
+            Data  : [
+            {
+                $Type : 'UI.DataField',
+                Value : code
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : toPlant_ID
+            },
+            ]
         }
     }
 );
+annotate OrderService.Users with {
+    toPlant @(
+        Common : {            
+            ValueListWithFixedValues,
+            ValueList : {
+                SearchSupported : true,
+                CollectionPath  : 'VH_Plants',
+                Parameters      : [{
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : toPlant_ID,
+                    ValueListProperty : '_ID'
+                    },
+                ]
+            }
+        }
+    );
+};
