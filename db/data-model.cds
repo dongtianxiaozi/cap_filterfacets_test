@@ -68,10 +68,13 @@ context md {
     goodReceiptAuthorizationRequired : Boolean not null default false;
     consumptionAuthorizationRequired : Boolean not null default false;
     ctecAuthorizationRequired        : Boolean not null default false;
-    toWorkCenters                    : Association to many WorkCenters
-                                         on toWorkCenters.toStation = $self;
   }
 
+  @assert.unique : {code : [
+    code,
+    toPlant,
+    toResponsible
+  ], }
   entity WorkCenters : cuid, managed {
     code          : WorkCenter;
     plant         : WorkCenterPlant;
@@ -79,7 +82,8 @@ context md {
     responsible   : String;
     queueType     : String(1);
     isOeeRelevant : Boolean not null default false;
-    toStation     : Association to Stations;
+    toPlant       : Association to Plants;
+    toResponsible : Association to Responsibles;
   }
 
   @assert.unique : {code : [code], }
@@ -133,12 +137,12 @@ context md {
 
   @assert.unique : {code : [code], }
   entity Users : cuid {
-    code    : String(8);
-    toType  : Association to Roles;
-    name    : String(150);
-    toPlant : Association to Plants;
-    toTurns : Association to many Supervisors_Turns
-                on toTurns.toSupervisor = $self;
+    code      : String(8);
+    toType    : Association to Roles;
+    name      : String(150);
+    toPlant   : Association to Plants;
+    toTurns   : Association to many Supervisors_Turns
+                  on toTurns.toSupervisor = $self;
     toStation : Association to Stations;
     toResponsibles : Association to many Supervisors_Responsibles
                 on toResponsibles.toUser = $self;

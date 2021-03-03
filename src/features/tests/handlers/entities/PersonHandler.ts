@@ -9,8 +9,7 @@ import {
   OnCreate,
   Data,
   Param,
-  User,
-  Action,
+  User
 } from 'cds-routing-handlers';
 import { TestService } from '@Shared/Contract';
 import { DIContainer } from '@Application/DIContainer';
@@ -18,17 +17,12 @@ import { GetPersonsUseCase, GetPersonsUseCaseParams } from '@Features/tests/usec
 import * as TestServiceImpl from '@Root/TestService';
 import { Request } from '@sap/cds/apis/services';
 import { IUser } from '@Shared/IUser';
-import { ILogger } from '@Logger/ILogger';
+import { BaseHandler } from '@Core/BaseHandler';
 /**
  * Person handler
  */
 @Handler(TestService.SanitizedEntity.Person)
-export class PersonHandler {
-  private readonly logger: ILogger;
-
-  constructor() {
-    this.logger = DIContainer.get('Logger');
-  }
+export class PersonHandler extends BaseHandler {
 
   bondedActionTest(@Param('ID') id: string) {
     // TODO: Pendiente revisar Bounded Actions
@@ -36,20 +30,24 @@ export class PersonHandler {
 
   /**
    *
+   * @param req
    * @param persons
+   * @param incommingUser
    */
   @AfterRead()
-  async addLastName(@Entities() persons: TestService.IPerson[], @User() incommingUser: Promise<IUser>): Promise<any> {
-    const user: IUser = await incommingUser;
-    this.logger.i(
-      PersonHandler.name,
-      () => `@AfterRead addLastName with user=${JSON.stringify(user)} and personList=${JSON.stringify(persons)}`
-    );
-    if (persons) {
-      for (const person of persons) {
-        person.title += ` -- 11% discount!`;
+  async addLastName(@Req() req, @Entities() persons: TestService.IPerson[], @User() incommingUser: Promise<IUser>): Promise<any> {
+    return this.runWithContext(req, async () => {
+      const user: IUser = await incommingUser;
+      this.logger.i(
+        PersonHandler.name,
+        () => `@AfterRead addLastName with user=${JSON.stringify(user)} and personList=${JSON.stringify(persons)}`
+      );
+      if (persons) {
+        for (const person of persons) {
+          person.title += ` -- 11% discount!`;
+        }
       }
-    }
+    });
   }
 
   /**
@@ -62,44 +60,48 @@ export class PersonHandler {
     @Param('ID') id: string,
     @User() incommingUser: Promise<IUser>
   ): Promise<any> {
-    const user: IUser = await incommingUser;
-    this.logger.i(
-      PersonHandler.name,
-      () => `@OnRead queryPersons with user=${JSON.stringify(user)} and ID=${id} and request=${JSON.stringify(req.query)}`
-    );
-    let params: GetPersonsUseCaseParams;
-    if (id) {
-      params = {
-        id: id,
-      };
-    } else {
-      // TODO: Utilizar una función para extraer los datos de búsqueda (@Utils)
-      const columns: string[] = req.query['SELECT'].columns.map((value: any) => {
-        return value.ref[0];
-      });
-      const limit: number = req.query['SELECT'].limit.rows.val;
-      const top: number = req.query['SELECT'].top;
-      params = {
-        top: top,
-        limit: limit,
-        select: columns,
-      };
-    }
-    const result = await DIContainer.get(GetPersonsUseCase).execute(params);
-    if (result.isRight()) {
-      return result.rightValue().data;
-    } else {
-      throw req.reject();
-    }
+    return this.runWithContext(req, async () => {
+      const user: IUser = await incommingUser;
+      this.logger.i(
+        PersonHandler.name,
+        () => `@OnRead queryPersons with user=${JSON.stringify(user)} and ID=${id} and request=${JSON.stringify(req.query)}`
+      );
+      let params: GetPersonsUseCaseParams;
+      if (id) {
+        params = {
+          id: id,
+        };
+      } else {
+        // TODO: Utilizar una función para extraer los datos de búsqueda (@Utils)
+        const columns: string[] = req.query['SELECT'].columns.map((value: any) => {
+          return value.ref[0];
+        });
+        const limit: number = req.query['SELECT'].limit.rows.val;
+        const top: number = req.query['SELECT'].top;
+        params = {
+          top: top,
+          limit: limit,
+          select: columns,
+        };
+      }
+      const result = await DIContainer.get(GetPersonsUseCase).execute(params);
+      if (result.isRight()) {
+        return result.rightValue().data;
+      } else {
+        req.reject();
+      }
+    });
   }
 
   /**
    *
    */
   @BeforeRead()
-  async test(@User() incommingUser: Promise<IUser>): Promise<any> {
-    const user: IUser = await incommingUser;
-    this.logger.i(PersonHandler.name, () => `@BeforeRead test with user=${JSON.stringify(user)}`);
+  async test(@Req() req, @User() incommingUser: Promise<IUser>): Promise<any> {
+    return this.runWithContext(req, async () => {
+      const user: IUser = await incommingUser;
+      this.logger.i(PersonHandler.name, () => `@BeforeRead test with user=${JSON.stringify(user)}`);
+    });
   }
 
   /**
@@ -112,8 +114,10 @@ export class PersonHandler {
     @Data() data: any,
     @User() incommingUser: Promise<IUser>
   ): Promise<any> {
-    const user: IUser = await incommingUser;
-    this.logger.i(PersonHandler.name, () => `@OnCreate createPerson with user=${JSON.stringify(user)}`);
-    throw new Error('NOPE');
+    return this.runWithContext(req, async () => {
+      const user: IUser = await incommingUser;
+      this.logger.i(PersonHandler.name, () => `@OnCreate createPerson with user=${JSON.stringify(user)}`);
+      throw new Error('NOPE');
+    });
   }
 }
