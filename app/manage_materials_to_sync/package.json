@@ -20,7 +20,6 @@
 		"build": "npm run clean && ui5 build --include-task=generateManifestBundle generateCachebusterInfo && npm run zip",
 		"zip": "cd dist && npx bestzip ../materials_sync-content.zip *",
 		"clean": "npx rimraf materials_sync-content.zip dist"
-	
 	},
 	"devDependencies": {
 		"@ui5/cli": "2.7.1",
@@ -29,15 +28,13 @@
 		"@sap/ux-ui5-tooling": "1",
 		"@sap/ux-specification": "latest",
 		"@sap/ui5-builder-webide-extension": "1.0.x",
-        "ui5-task-zipper": "^0.3.1"
-
+		"ui5-task-zipper": "^0.3.1"
 	},
 	"ui5": {
 		"dependencies": [
 			"@sap/ux-ui5-tooling",
 			"@sap/ui5-builder-webide-extension",
-            "ui5-task-zipper"
-
+			"ui5-task-zipper"
 		]
 	}
 }

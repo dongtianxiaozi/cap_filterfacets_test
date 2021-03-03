@@ -119,9 +119,19 @@ modules:
      requires:  
     - artifacts:
        - materials_sync-content.zip
-       name: v2workcenters
+       name: materials_sync
        target-path: resources/  
 
+ # -------------------- MANAGE_MATERIALS_TO_SYNC APP MODULE -------------------
+ - name: manage_materials_to_sync
+ # ----------------------------------------------------------------------------
+   type: html5
+   path: app/manage_materials_to_sync
+   build-parameters:
+     builder: custom
+     commands:
+     - npm run build
+     supported-platforms: []  
 
 resources:
  # services extracted from CAP configuration
