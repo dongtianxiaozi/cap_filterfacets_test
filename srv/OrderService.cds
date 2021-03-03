@@ -263,4 +263,11 @@ service OrderService @(requires : ['user']) {
             type : redirected to Stoppages_Types
         };
 
+    @odata.draft.enabled
+    entity Activities                as
+        select from md.Activities {
+            *,
+            toUnit : redirected to Units
+        };
+
 }

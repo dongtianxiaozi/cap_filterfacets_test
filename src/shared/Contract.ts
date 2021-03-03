@@ -6,6 +6,13 @@ export namespace com.seidor.sfc {
     export type WorkCenter = string;
     export type WorkCenterPlant = string;
 
+    export interface IActivities extends ICuid {
+        code: string;
+        description: string;
+        toUnit?: IUnits;
+        toUnit_ID?: string;
+    }
+
     export interface IActivityPhases extends ICuid {
         code: string;
         description: string;
@@ -252,6 +259,7 @@ export namespace com.seidor.sfc {
     }
 
     export enum Entity {
+        Activities = "com.seidor.sfc.md.Activities",
         ActivityPhases = "com.seidor.sfc.md.ActivityPhases",
         GrantedTypes = "com.seidor.sfc.md.GrantedTypes",
         Incidents = "com.seidor.sfc.md.Incidents",
@@ -284,6 +292,7 @@ export namespace com.seidor.sfc {
     }
 
     export enum SanitizedEntity {
+        Activities = "Activities",
         ActivityPhases = "ActivityPhases",
         GrantedTypes = "GrantedTypes",
         Incidents = "Incidents",
@@ -762,6 +771,7 @@ export namespace OrderService {
     }
 
     export enum Entity {
+        Activities = "OrderService.Activities",
         ActivityPhases = "OrderService.ActivityPhases",
         Components = "OrderService.Components",
         GrantedTypes = "OrderService.GrantedTypes",
@@ -797,6 +807,7 @@ export namespace OrderService {
     }
 
     export enum SanitizedEntity {
+        Activities = "Activities",
         ActivityPhases = "ActivityPhases",
         Components = "Components",
         GrantedTypes = "GrantedTypes",

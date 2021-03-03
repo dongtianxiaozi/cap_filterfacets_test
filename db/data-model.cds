@@ -137,15 +137,15 @@ context md {
 
   @assert.unique : {code : [code], }
   entity Users : cuid {
-    code      : String(8);
-    toType    : Association to Roles;
-    name      : String(150);
-    toPlant   : Association to Plants;
-    toTurns   : Association to many Supervisors_Turns
-                  on toTurns.toSupervisor = $self;
-    toStation : Association to Stations;
+    code           : String(8);
+    toType         : Association to Roles;
+    name           : String(150);
+    toPlant        : Association to Plants;
+    toTurns        : Association to many Supervisors_Turns
+                       on toTurns.toSupervisor = $self;
+    toStation      : Association to Stations;
     toResponsibles : Association to many Supervisors_Responsibles
-                on toResponsibles.toUser = $self;
+                       on toResponsibles.toUser = $self;
   }
 
   @assert.unique : {code : [code], }
@@ -232,6 +232,13 @@ context md {
     description   : String(25);
     type          : Association to Stoppages_Types;
     isOverlapping : Boolean not null default false;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Activities : cuid {
+    code        : String(6);
+    description : localized String(20);
+    toUnit      : Association to Units;
   }
 
 
