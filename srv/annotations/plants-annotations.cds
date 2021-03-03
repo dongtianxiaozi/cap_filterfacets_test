@@ -2,7 +2,7 @@ namespace com.seidor.sfc;
 
 using {OrderService} from '../order-service';
 
-//@title: 'PEPE'
+@title: '{i18n>plant}'
 annotate OrderService.Plants with {
     code @title: '{i18n>plant}';
     description @title: '{i18n>description}';
