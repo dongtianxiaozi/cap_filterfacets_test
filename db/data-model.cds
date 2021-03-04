@@ -70,6 +70,8 @@ context md {
     ctecAuthorizationRequired        : Boolean not null default false;
     toOperators                      : Association to many Stations_Operators
                                          on toOperators.toStation = $self;
+    toStoppages                      : Association to many Stations_Stoppages
+                                         on toStoppages.toStation = $self;
   }
 
   @assert.unique : {code : [
@@ -218,7 +220,10 @@ context md {
     description : String(80);
   }
 
-  entity Stations_Stoppages : cuid {}
+  entity Stations_Stoppages : cuid {
+    toStation  : Association to Stations;
+    toStoppage : Association to Stoppages;
+  }
 
   @assert.unique : {code : [code], }
   entity Incidents : cuid {
@@ -241,6 +246,8 @@ context md {
     description   : String(25);
     type          : Association to Stoppages_Types;
     isOverlapping : Boolean not null default false;
+    toStations    : Association to many Stations_Stoppages
+                      on toStations.toStoppage = $self;
   }
 
   @assert.unique : {code : [code], }

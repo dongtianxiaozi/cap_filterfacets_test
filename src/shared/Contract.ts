@@ -105,6 +105,7 @@ export namespace com.seidor.sfc {
         consumptionAuthorizationRequired?: boolean;
         ctecAuthorizationRequired?: boolean;
         toOperators?: IStations_Operators[];
+        toStoppages?: IStations_Stoppages[];
     }
 
     export interface IStations_Operators extends ICuid {
@@ -115,6 +116,10 @@ export namespace com.seidor.sfc {
     }
 
     export interface IStations_Stoppages extends ICuid {
+        toStation?: IStations;
+        toStation_ID?: string;
+        toStoppage?: IStoppages;
+        toStoppage_ID?: string;
     }
 
     export interface IStations_Turns extends ICuid {
@@ -133,6 +138,7 @@ export namespace com.seidor.sfc {
         type?: IStoppages_Types;
         type_ID?: string;
         isOverlapping?: boolean;
+        toStations?: IStations_Stoppages[];
     }
 
     export interface IStoppages_Types extends ICuid {
@@ -386,79 +392,15 @@ export namespace sap.common {
     }
 }
 
-export namespace TestService {
-    export interface IPerson {
-        createdAt?: Date;
-        createdBy?: string;
-        modifiedAt?: Date;
-        modifiedBy?: string;
-        ID: number;
-        title: string;
-        description: string;
-    }
-
-    export enum FuncHello {
-        name = "hello",
-        paramTo = "to"
-    }
-
-    export interface IFuncHelloParams {
-        to: string;
-    }
-
-    export type FuncHelloReturn = string;
-
-    export enum ActionHello2 {
-        name = "hello2",
-        paramTo = "to"
-    }
-
-    export interface IActionHello2Params {
-        to: string;
-    }
-
-    export type ActionHello2Return = string;
-
-    export enum Entity {
-        Person = "TestService.Person"
-    }
-
-    export enum SanitizedEntity {
-        Person = "Person"
-    }
-}
-
-export type User = string;
-
-export interface ICuid {
-    ID: string;
-}
-
-export interface IManaged {
-    createdAt?: Date;
-    createdBy?: string;
-    modifiedAt?: Date;
-    modifiedBy?: string;
-}
-
-export interface ITemporal {
-    validFrom: Date;
-    validTo: Date;
-}
-
-export enum Entity {
-    Cuid = "cuid",
-    Managed = "managed",
-    Temporal = "temporal"
-}
-
-export enum SanitizedEntity {
-    Cuid = "Cuid",
-    Managed = "Managed",
-    Temporal = "Temporal"
-}
-
 export namespace OrderService {
+    export interface IActivities {
+        ID: string;
+        code: string;
+        description: string;
+        toUnit?: IUnits;
+        toUnit_ID?: string;
+    }
+
     export interface IActivityPhases {
         ID: string;
         code: string;
@@ -644,6 +586,7 @@ export namespace OrderService {
         consumptionAuthorizationRequired?: boolean;
         ctecAuthorizationRequired?: boolean;
         toOperators?: IStations_Operators[];
+        toStoppages?: IStations_Stoppages[];
     }
 
     export interface IStations_Operators {
@@ -652,6 +595,14 @@ export namespace OrderService {
         toStation_ID?: string;
         toOperator?: IOperators;
         toOperator_ID?: string;
+    }
+
+    export interface IStations_Stoppages {
+        ID: string;
+        toStation?: IStations;
+        toStation_ID?: string;
+        toStoppage?: IStoppages;
+        toStoppage_ID?: string;
     }
 
     export interface IStations_Turns {
@@ -669,6 +620,7 @@ export namespace OrderService {
         type?: IStoppages_Types;
         type_ID?: string;
         isOverlapping?: boolean;
+        toStations?: IStations_Stoppages[];
     }
 
     export interface IStoppages_Types {
@@ -824,6 +776,7 @@ export namespace OrderService {
         Roles = "OrderService.Roles",
         Stations = "OrderService.Stations",
         Stations_Operators = "OrderService.Stations_Operators",
+        Stations_Stoppages = "OrderService.Stations_Stoppages",
         Stations_Turns = "OrderService.Stations_Turns",
         Stoppages = "OrderService.Stoppages",
         Stoppages_Types = "OrderService.Stoppages_Types",
@@ -862,6 +815,7 @@ export namespace OrderService {
         Roles = "Roles",
         Stations = "Stations",
         Stations_Operators = "Stations_Operators",
+        Stations_Stoppages = "Stations_Stoppages",
         Stations_Turns = "Stations_Turns",
         Stoppages = "Stoppages",
         Stoppages_Types = "Stoppages_Types",
@@ -880,8 +834,76 @@ export namespace OrderService {
         VH_WorkCenters = "VH_WorkCenters",
         WorkCenters = "WorkCenters"
     }
+}
 
+export type User = string;
 
+export interface ICuid {
+    ID: string;
+}
 
+export interface IManaged {
+    createdAt?: Date;
+    createdBy?: string;
+    modifiedAt?: Date;
+    modifiedBy?: string;
+}
 
+export interface ITemporal {
+    validFrom: Date;
+    validTo: Date;
+}
+
+export enum Entity {
+    Cuid = "cuid",
+    Managed = "managed",
+    Temporal = "temporal"
+}
+
+export enum SanitizedEntity {
+    Cuid = "Cuid",
+    Managed = "Managed",
+    Temporal = "Temporal"
+}
+
+export namespace TestService {
+    export interface IPerson {
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
+        ID: number;
+        title: string;
+        description: string;
+    }
+
+    export enum FuncHello {
+        name = "hello",
+        paramTo = "to"
+    }
+
+    export interface IFuncHelloParams {
+        to: string;
+    }
+
+    export type FuncHelloReturn = string;
+
+    export enum ActionHello2 {
+        name = "hello2",
+        paramTo = "to"
+    }
+
+    export interface IActionHello2Params {
+        to: string;
+    }
+
+    export type ActionHello2Return = string;
+
+    export enum Entity {
+        Person = "TestService.Person"
+    }
+
+    export enum SanitizedEntity {
+        Person = "Person"
+    }
 }
