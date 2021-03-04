@@ -68,6 +68,8 @@ context md {
     goodReceiptAuthorizationRequired : Boolean not null default false;
     consumptionAuthorizationRequired : Boolean not null default false;
     ctecAuthorizationRequired        : Boolean not null default false;
+    toOperators                      : Association to many Stations_Operators
+                                         on toOperators.toStation = $self;
   }
 
   @assert.unique : {code : [
@@ -93,7 +95,9 @@ context md {
     personalNumber : String(8);
     pin            : String(4);
     toTurn         : Association to Turns;
-    currentDate    : Date
+    currentDate    : Date;
+    toStations     : Association to many Stations_Operators
+                       on toStations.toOperator = $self;
   }
 
   @assert.unique : {code : [code], }
@@ -172,8 +176,13 @@ context md {
     toResponsible : Association to Responsibles;
   }
 
+  @assert.unique : {toStation : [
+    toStation,
+    toOperator
+  ], }
   entity Stations_Operators : cuid {
-
+    toStation  : Association to Stations;
+    toOperator : Association to Operators;
   }
 
   entity Stations_WorkCenters : cuid {}
