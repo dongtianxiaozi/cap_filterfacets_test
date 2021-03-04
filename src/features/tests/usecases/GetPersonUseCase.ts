@@ -28,7 +28,7 @@ export class GetPersonsUseCase
   async execute(
     params: GetPersonsUseCaseParams
   ): Promise<Either<UnexpectedError | EmptyResult, QueryResult<TestService.IPerson>>> {
-    this.logger.i(PersonRepository.name, () => `start get persons Use Case with params=${JSON.stringify(params)}`);
+    this.logger.i(GetPersonsUseCase.name, () => `start get persons Use Case with params=${JSON.stringify(params)}`);
     if (params.id) {
       return this.personRepository.getPersonById(params.id);
     } else {
