@@ -6,9 +6,22 @@ export namespace com.seidor.sfc {
     export type WorkCenter = string;
     export type WorkCenterPlant = string;
 
+    export interface IActivities extends ICuid {
+        code: string;
+        description: string;
+        toUnit?: IUnits;
+        toUnit_ID?: string;
+    }
+
     export interface IActivityPhases extends ICuid {
         code: string;
         description: string;
+    }
+
+    export interface IDocumentClasses extends ICuid {
+        objectClass: string;
+        documentClass: string;
+        application: string;
     }
 
     export interface IGrantedTypes extends ICuid {
@@ -40,6 +53,7 @@ export namespace com.seidor.sfc {
         toTurn?: ITurns;
         toTurn_ID?: string;
         currentDate: Date;
+        toStations?: IStations_Operators[];
     }
 
     export interface IOrderClasses extends ICuid, IManaged {
@@ -90,12 +104,22 @@ export namespace com.seidor.sfc {
         goodReceiptAuthorizationRequired?: boolean;
         consumptionAuthorizationRequired?: boolean;
         ctecAuthorizationRequired?: boolean;
+        toOperators?: IStations_Operators[];
+        toStoppages?: IStations_Stoppages[];
     }
 
     export interface IStations_Operators extends ICuid {
+        toStation?: IStations;
+        toStation_ID?: string;
+        toOperator?: IOperators;
+        toOperator_ID?: string;
     }
 
     export interface IStations_Stoppages extends ICuid {
+        toStation?: IStations;
+        toStation_ID?: string;
+        toStoppage?: IStoppages;
+        toStoppage_ID?: string;
     }
 
     export interface IStations_Turns extends ICuid {
@@ -114,6 +138,7 @@ export namespace com.seidor.sfc {
         type?: IStoppages_Types;
         type_ID?: string;
         isOverlapping?: boolean;
+        toStations?: IStations_Stoppages[];
     }
 
     export interface IStoppages_Types extends ICuid {
@@ -130,10 +155,11 @@ export namespace com.seidor.sfc {
         toPlant?: IPlants;
         toPlant_ID?: string;
         toTurns?: ISupervisors_Turns[];
+        toResponsibles?: ISupervisors_Responsibles[];
     }
 
     export interface ISupervisors_Responsibles extends ICuid {
-        toUser?: ISupervisors;
+        toUser?: IUsers;
         toUser_ID?: string;
         toPlant?: IPlants;
         toPlant_ID?: string;
@@ -172,6 +198,7 @@ export namespace com.seidor.sfc {
         toTurns?: ISupervisors_Turns[];
         toStation?: IStations;
         toStation_ID?: string;
+        toResponsibles?: ISupervisors_Responsibles[];
     }
 
     export interface IWorkCenters extends ICuid, IManaged {
@@ -250,7 +277,9 @@ export namespace com.seidor.sfc {
     }
 
     export enum Entity {
+        Activities = "com.seidor.sfc.md.Activities",
         ActivityPhases = "com.seidor.sfc.md.ActivityPhases",
+        DocumentClasses = "com.seidor.sfc.md.DocumentClasses",
         GrantedTypes = "com.seidor.sfc.md.GrantedTypes",
         Incidents = "com.seidor.sfc.md.Incidents",
         MaterialsToSync = "com.seidor.sfc.md.MaterialsToSync",
@@ -282,7 +311,9 @@ export namespace com.seidor.sfc {
     }
 
     export enum SanitizedEntity {
+        Activities = "Activities",
         ActivityPhases = "ActivityPhases",
+        DocumentClasses = "DocumentClasses",
         GrantedTypes = "GrantedTypes",
         Incidents = "Incidents",
         MaterialsToSync = "MaterialsToSync",
@@ -361,79 +392,15 @@ export namespace sap.common {
     }
 }
 
-export namespace TestService {
-    export interface IPerson {
-        createdAt?: Date;
-        createdBy?: string;
-        modifiedAt?: Date;
-        modifiedBy?: string;
-        ID: number;
-        title: string;
-        description: string;
-    }
-
-    export enum FuncHello {
-        name = "hello",
-        paramTo = "to"
-    }
-
-    export interface IFuncHelloParams {
-        to: string;
-    }
-
-    export type FuncHelloReturn = string;
-
-    export enum ActionHello2 {
-        name = "hello2",
-        paramTo = "to"
-    }
-
-    export interface IActionHello2Params {
-        to: string;
-    }
-
-    export type ActionHello2Return = string;
-
-    export enum Entity {
-        Person = "TestService.Person"
-    }
-
-    export enum SanitizedEntity {
-        Person = "Person"
-    }
-}
-
-export type User = string;
-
-export interface ICuid {
-    ID: string;
-}
-
-export interface IManaged {
-    createdAt?: Date;
-    createdBy?: string;
-    modifiedAt?: Date;
-    modifiedBy?: string;
-}
-
-export interface ITemporal {
-    validFrom: Date;
-    validTo: Date;
-}
-
-export enum Entity {
-    Cuid = "cuid",
-    Managed = "managed",
-    Temporal = "temporal"
-}
-
-export enum SanitizedEntity {
-    Cuid = "Cuid",
-    Managed = "Managed",
-    Temporal = "Temporal"
-}
-
 export namespace OrderService {
+    export interface IActivities {
+        ID: string;
+        code: string;
+        description: string;
+        toUnit?: IUnits;
+        toUnit_ID?: string;
+    }
+
     export interface IActivityPhases {
         ID: string;
         code: string;
@@ -458,6 +425,13 @@ export namespace OrderService {
         reserve: string;
         reservePosition: string;
         indBackflush?: boolean;
+    }
+
+    export interface IDocumentClasses {
+        ID: string;
+        objectClass: string;
+        documentClass: string;
+        application: string;
     }
 
     export interface IGrantedTypes {
@@ -511,6 +485,10 @@ export namespace OrderService {
 
     export interface IOperators {
         ID: string;
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
         code: string;
         name: string;
         personalNumber: string;
@@ -518,6 +496,7 @@ export namespace OrderService {
         toTurn?: ITurns;
         toTurn_ID?: string;
         currentDate: Date;
+        toStations?: IStations_Operators[];
     }
 
     export interface IOrderClasses {
@@ -606,6 +585,24 @@ export namespace OrderService {
         goodReceiptAuthorizationRequired?: boolean;
         consumptionAuthorizationRequired?: boolean;
         ctecAuthorizationRequired?: boolean;
+        toOperators?: IStations_Operators[];
+        toStoppages?: IStations_Stoppages[];
+    }
+
+    export interface IStations_Operators {
+        ID: string;
+        toStation?: IStations;
+        toStation_ID?: string;
+        toOperator?: IOperators;
+        toOperator_ID?: string;
+    }
+
+    export interface IStations_Stoppages {
+        ID: string;
+        toStation?: IStations;
+        toStation_ID?: string;
+        toStoppage?: IStoppages;
+        toStoppage_ID?: string;
     }
 
     export interface IStations_Turns {
@@ -623,6 +620,7 @@ export namespace OrderService {
         type?: IStoppages_Types;
         type_ID?: string;
         isOverlapping?: boolean;
+        toStations?: IStations_Stoppages[];
     }
 
     export interface IStoppages_Types {
@@ -644,7 +642,7 @@ export namespace OrderService {
 
     export interface ISupervisors_Responsibles {
         ID: string;
-        toUser?: ISupervisors;
+        toUser?: IUsers;
         toUser_ID?: string;
         toPlant?: IPlants;
         toPlant_ID?: string;
@@ -691,6 +689,7 @@ export namespace OrderService {
         toTurns?: ISupervisors_Turns[];
         toStation?: IStations;
         toStation_ID?: string;
+        toResponsibles?: ISupervisors_Responsibles[];
     }
 
     export interface IVH_OrderClasses {
@@ -759,8 +758,10 @@ export namespace OrderService {
     }
 
     export enum Entity {
+        Activities = "OrderService.Activities",
         ActivityPhases = "OrderService.ActivityPhases",
         Components = "OrderService.Components",
+        DocumentClasses = "OrderService.DocumentClasses",
         GrantedTypes = "OrderService.GrantedTypes",
         Incidents = "OrderService.Incidents",
         MaterialsToSync = "OrderService.MaterialsToSync",
@@ -774,6 +775,8 @@ export namespace OrderService {
         Responsibles = "OrderService.Responsibles",
         Roles = "OrderService.Roles",
         Stations = "OrderService.Stations",
+        Stations_Operators = "OrderService.Stations_Operators",
+        Stations_Stoppages = "OrderService.Stations_Stoppages",
         Stations_Turns = "OrderService.Stations_Turns",
         Stoppages = "OrderService.Stoppages",
         Stoppages_Types = "OrderService.Stoppages_Types",
@@ -794,8 +797,10 @@ export namespace OrderService {
     }
 
     export enum SanitizedEntity {
+        Activities = "Activities",
         ActivityPhases = "ActivityPhases",
         Components = "Components",
+        DocumentClasses = "DocumentClasses",
         GrantedTypes = "GrantedTypes",
         Incidents = "Incidents",
         MaterialsToSync = "MaterialsToSync",
@@ -809,6 +814,8 @@ export namespace OrderService {
         Responsibles = "Responsibles",
         Roles = "Roles",
         Stations = "Stations",
+        Stations_Operators = "Stations_Operators",
+        Stations_Stoppages = "Stations_Stoppages",
         Stations_Turns = "Stations_Turns",
         Stoppages = "Stoppages",
         Stoppages_Types = "Stoppages_Types",
@@ -827,8 +834,76 @@ export namespace OrderService {
         VH_WorkCenters = "VH_WorkCenters",
         WorkCenters = "WorkCenters"
     }
+}
 
+export type User = string;
 
+export interface ICuid {
+    ID: string;
+}
 
+export interface IManaged {
+    createdAt?: Date;
+    createdBy?: string;
+    modifiedAt?: Date;
+    modifiedBy?: string;
+}
 
+export interface ITemporal {
+    validFrom: Date;
+    validTo: Date;
+}
+
+export enum Entity {
+    Cuid = "cuid",
+    Managed = "managed",
+    Temporal = "temporal"
+}
+
+export enum SanitizedEntity {
+    Cuid = "Cuid",
+    Managed = "Managed",
+    Temporal = "Temporal"
+}
+
+export namespace TestService {
+    export interface IPerson {
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
+        ID: number;
+        title: string;
+        description: string;
+    }
+
+    export enum FuncHello {
+        name = "hello",
+        paramTo = "to"
+    }
+
+    export interface IFuncHelloParams {
+        to: string;
+    }
+
+    export type FuncHelloReturn = string;
+
+    export enum ActionHello2 {
+        name = "hello2",
+        paramTo = "to"
+    }
+
+    export interface IActionHello2Params {
+        to: string;
+    }
+
+    export type ActionHello2Return = string;
+
+    export enum Entity {
+        Person = "TestService.Person"
+    }
+
+    export enum SanitizedEntity {
+        Person = "Person"
+    }
 }
