@@ -14,7 +14,8 @@ build-parameters:
    - builder: custom
      commands:
       - npm install --production
-      - npx -p @sap/cds-dk cds build --production
+      - npm run build
+
 
 modules:
 
@@ -117,114 +118,9 @@ modules:
      build-result: resources
      requires:
      - artifacts:
-       - v4orders-content.zip
-       name: v4orders
-       target-path: resources/    
-     - artifacts:
-       - v4workcenters-content.zip
-       name: v4workcenters
-       target-path: resources/  
-     - artifacts:
-       - v2orders-content.zip
-       name: v2orders
-       target-path: resources/      
-     - artifacts:
-       - v2workcenters-content.zip
-       name: v2workcenters
-       target-path: resources/  
-     - artifacts:
-       - v2queues-content.zip
-       name: v2queues
-       target-path: resources/  
-     - artifacts:
-       - v2operations-content.zip
-       name: v2operations
-       target-path: resources/  
-     - artifacts:
-       - v2turns-content.zip
-       name: v2turns
-       target-path: resources/
-     - artifacts:
        - manage_roles-content.zip
        name: manage_roles
        target-path: resources/ 
-
- # -------------------- V4ORDERS APP MODULE -------------------
- - name: v4orders
- # ------------------------------------------------------------
-   type: html5
-   path: app/v4_orders
-   build-parameters:
-     builder: custom
-     commands:
-     - npm run build
-     supported-platforms: []  
-
- # -------------------- V4ORDERS APP MODULE -------------------
- - name: v4workcenters
- # ------------------------------------------------------------
-   type: html5
-   path: app/v4_workcenters
-   build-parameters:
-     builder: custom
-     commands:
-     - npm run build
-     supported-platforms: []  
-
- # -------------------- V2ORDERS APP MODULE -------------------
- - name: v2orders
- # ------------------------------------------------------------
-   type: html5
-   path: app/v2_orders
-   build-parameters:
-     builder: custom
-     commands:
-     - npm run build
-     supported-platforms: []  
-
- # -------------------- V2WORKCENTERS APP MODULE -------------------
- - name: v2workcenters
- # ------------------------------------------------------------
-   type: html5
-   path: app/v2_workcenters
-   build-parameters:
-     builder: custom
-     commands:
-     - npm run build
-     supported-platforms: []  
-
- # -------------------- V2QUEUES APP MODULE -------------------
- - name: v2queues
- # ------------------------------------------------------------
-   type: html5
-   path: app/v2_queues
-   build-parameters:
-     builder: custom
-     commands:
-     - npm run build
-     supported-platforms: []  
-
- # -------------------- V2OPERATIONS APP MODULE ---------------
- - name: v2operations
- # ------------------------------------------------------------
-   type: html5
-   path: app/v2_operations
-   build-parameters:
-     builder: custom
-     commands:
-     - npm run build
-     supported-platforms: []  
-
- # -------------------- V2TURNS APP MODULE --------------------
- - name: v2turns
- # ------------------------------------------------------------
-   type: html5
-   path: app/v2_turns
-   build-parameters:
-     builder: custom
-     commands:
-     - npm run build
-     supported-platforms: []
 
 # -------------------- MANAGE_ROLES APP MODULE -------------------
  - name: manage_roles

@@ -32,13 +32,16 @@ context md {
         description : String(255);
   }
 
-  entity Turns : managed {
-    key code            : Turn;
-        description     : String(12);
-        longDescription : String(30);
-        isNightShift    : Boolean not null default false;
-        toStations      : Association to many Stations_Turns
-                            on toStations.toTurn = $self;
+  @assert.unique : {code : [code], }
+  entity Turns : cuid, managed {
+    code            : String(2);
+    description     : String(49);
+    longDescription : String(80);
+    isNightShift    : Boolean not null default false;
+    toStations      : Association to many Stations_Turns
+                        on toStations.toTurn = $self;
+    toSupervisors   : Association to many Supervisors_Turns
+                        on toSupervisors.toTurn = $self;
   }
 
   entity Stations_Turns : cuid {
@@ -49,8 +52,8 @@ context md {
   entity Stations : cuid, managed {
     code                             : String(4);
     description                      : String(30);
-    toWorkCenter                     : Association to WorkCenters;
-    operator                         : String(4);
+    // toWorkCenter                     : Association to WorkCenters;
+    toOperator                       : Association to Operators;
     turnRequired                     : Boolean not null default false;
     turnDateIsToday                  : Boolean not null default false;
     quantityRequired                 : Boolean not null default false;
@@ -65,10 +68,13 @@ context md {
     goodReceiptAuthorizationRequired : Boolean not null default false;
     consumptionAuthorizationRequired : Boolean not null default false;
     ctecAuthorizationRequired        : Boolean not null default false;
-    toWorkCenters                    : Association to many WorkCenters
-                                         on toWorkCenters.toStation = $self;
   }
 
+  @assert.unique : {code : [
+    code,
+    toPlant,
+    toResponsible
+  ], }
   entity WorkCenters : cuid, managed {
     code          : WorkCenter;
     plant         : WorkCenterPlant;
@@ -76,25 +82,156 @@ context md {
     responsible   : String;
     queueType     : String(1);
     isOeeRelevant : Boolean not null default false;
-    toStation     : Association to Stations;
+    toPlant       : Association to Plants;
+    toResponsible : Association to Responsibles;
   }
 
-  @assert.unique: {
-    code: [ code ],
+  @assert.unique : {code : [code], }
+  entity Operators : cuid, managed {
+    code           : String(4);
+    name           : String(100);
+    personalNumber : String(8);
+    pin            : String(4);
+    toTurn         : Association to Turns;
+    currentDate    : Date
   }
+
+  @assert.unique : {code : [code], }
   entity Roles : cuid {
     code        : String(1);
-        description : localized String(35);
+    description : localized String(35);
+    toUsers     : Association to many Users
+                    on toUsers.toType = $self;
   }
 
-  @assert.unique: {
-    code: [ code ],
+  @assert.unique : {code : [code], }
+  entity Plants : cuid, managed {
+    @mandatory
+    code        : String(4);
+    description : String(35);
   }
-  entity Plants : cuid {
-        @mandatory
-        code        : String(4);
-        description : String(35);
+
+  @assert.unique : {code : [code], }
+  entity ActivityPhases : cuid {
+    code        : String(1);
+    description : localized String(35);
   }
+
+  @assert.unique : {code : [code], }
+  entity GrantedTypes : cuid {
+    code        : String(3);
+    description : localized String(80);
+  }
+
+  @assert.unique : {code : [code], }
+  entity OeeRelevancies : cuid {
+    code        : String(1);
+    description : localized String(150);
+  }
+
+  @assert.unique : {code : [code], }
+  entity Units : cuid {
+    code        : String(3);
+    description : localized String(80);
+  }
+
+  @assert.unique : {code : [code], }
+  entity Users : cuid {
+    code      : String(8);
+    toType    : Association to Roles;
+    name      : String(150);
+    toPlant   : Association to Plants;
+    toTurns   : Association to many Supervisors_Turns
+                  on toTurns.toSupervisor = $self;
+    toStation : Association to Stations;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Supervisors as
+    select from md.Roles[code = 'S'
+  ] : toUsers {
+    key ID,
+        code,
+        toType,
+        name,
+        toPlant,
+        toTurns
+  };
+
+  @assert.unique : {toUser : [
+    toUser,
+    toPlant,
+    toResponsible
+  ], }
+  entity Supervisors_Responsibles : cuid {
+    toUser        : Association to Supervisors;
+    toPlant       : Association to Plants;
+    toResponsible : Association to Responsibles;
+  }
+
+  entity Stations_Operators : cuid {
+
+  }
+
+  entity Stations_WorkCenters : cuid {}
+
+  @assert.unique : {code : [
+    code,
+    toPlant
+  ], }
+  entity Responsibles : cuid {
+    toPlant     : Association to Plants;
+    code        : String(3);
+    description : localized String(80);
+  }
+
+  @assert.unique : {code : [
+    code,
+    toPlant
+  ], }
+  entity OrderClasses : cuid, managed {
+    code    : String(4);
+    toPlant : Association to Plants;
+  }
+
+  @assert.unique : {code : [code], }
+  entity MaterialsToSync : cuid, managed {
+    code    : String(4);
+    toPlant : Association to Plants;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Stoppages_Types : cuid {
+    code        : String(1);
+    description : String(80);
+  }
+
+  entity Stations_Stoppages : cuid {}
+
+  @assert.unique : {code : [code], }
+  entity Incidents : cuid {
+    code        : String(4);
+    description : String(80);
+  }
+
+  @assert.unique : {toSupervisor : [
+    toSupervisor,
+    toTurn
+  ], }
+  entity Supervisors_Turns : cuid {
+    toSupervisor : Association to Users;
+    toTurn       : Association to Turns;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Stoppages : cuid {
+    code          : String(4);
+    description   : String(25);
+    type          : Association to Stoppages_Types;
+    isOverlapping : Boolean not null default false;
+  }
+
+
 }
 
 context td {

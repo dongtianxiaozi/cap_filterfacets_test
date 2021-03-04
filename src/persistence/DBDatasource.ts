@@ -21,12 +21,19 @@ export class DBDatasource {
     try {
       if (tx) {
         this.logger.v(DBDatasource.name, () => `executing in current tx.`);
-        return tx.run(sqlStatement);
+        const data = await tx.run(sqlStatement);
+        this.logger.v(DBDatasource.name, () => `commting in current tx.`);
+        // tx.commit();
+        return data;
       } else {
         this.logger.v(DBDatasource.name, () => `cannot execute in current tx. It isn't active.`);
-        return this.execute(sqlStatement);
+        return await this.execute(sqlStatement);
       }
     } catch (e) {
+      if (tx) {
+        this.logger.v(DBDatasource.name, () => `rollback in current tx.`);
+        await tx.rollback();
+      }
       throw e;
     }
   }
@@ -36,12 +43,17 @@ export class DBDatasource {
     const environment: IEnvironment = this.contextManager.getEnvironment();
     let tx: Transaction;
     try {
-      tx = cds.tx(environment.__REQUEST);
-      const data = tx.run(sqlStatement);
-      tx.commit();
+      this.logger.v(DBDatasource.name, () => `executing in new tx.`);
+      tx = cds.transaction(environment.__REQUEST);
+      const data = await tx.run(sqlStatement);
+      this.logger.v(DBDatasource.name, () => `commting in new tx.`);
+      // tx.commit();
       return data;
     } catch (e) {
-      if (tx) tx.rollback();
+      if (tx) {
+        this.logger.v(DBDatasource.name, () => `rollback in new tx.`);
+        await tx.rollback();
+      }
       throw e;
     }
   }

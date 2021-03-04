@@ -1,4 +1,4 @@
-import { Result } from '../core/Results';
+import { Result } from '@Core/Results';
 
 export class UnexpectedError extends Result<undefined> {
   constructor() {

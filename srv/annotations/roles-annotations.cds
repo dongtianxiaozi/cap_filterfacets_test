@@ -6,7 +6,8 @@ annotate OrderService.Roles with {
     ID
     @UI.Hidden;
     code
-    @title : '{i18n>rolesCode}';
+    @title : '{i18n>rolesCode}'
+    @Common.IsUpperCase;
     /*@(Common : {
         Text            : description,
         TextArrangement : #TextLast

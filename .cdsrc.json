@@ -1,17 +1,24 @@
 {
-  "build": {
-    "target": "gen",
-    "tasks": [
-      { "for": "hana", "src": "db", "options": { "model": ["db", "srv"] } },
-      { "for": "node-cf", "src": "srv", "options": { "model": ["db", "srv"] } }
-    ]
-  },
-  "requires": {
-    "db": {
-      "kind": "sqlite",
-      "credentials": {
-        "database": "db/test.db"
+  "auth": {
+      "passport": {
+          "strategy": "mock",
+          "users": {
+              "user": {
+                  "password": "",
+                  "ID": "user",
+                  "roles": [
+                      "user"
+                  ],
+                  "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+                  "userAttributes": {
+                      "currency": [
+                          "USD"
+                      ],
+                      "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+                      "email": "user@seidor.es"
+                  }
+              }
+          }
       }
-    }
   }
 }
