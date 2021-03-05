@@ -11,16 +11,17 @@ export class TestService extends cds.ApplicationService {
     await super.init();
   }
 
-  static configRoutes(service: Service, baseDir: string = 'gen/srv/srv') {
+  static configRoutes(service: Service) {
     const options = {
       handler: [
-        path.join(__dirname, '..', baseDir, 'features', 'tests', '/handlers/entities/**/*.js'),
-        path.join(__dirname, '..', baseDir, 'features', 'tests', '/handlers/functions/**/*.js'),
-        path.join(__dirname, '..', baseDir, 'features', 'tests', '/handlers/actions/**/*.js'),
+        path.join(__dirname, 'features', 'tests', '/handlers/entities/**/*.js'),
+        path.join(__dirname, 'features', 'tests', '/handlers/functions/**/*.js'),
+        path.join(__dirname, 'features', 'tests', '/handlers/actions/**/*.js'),
       ],
       middlewares: [EnvironmentMiddleware],
       userChecker: SFCUserChecker,
     };
+    console.log(JSON.stringify(options.handler))
     const hdl = createCombinedHandler(options);
     hdl(service);
   }

@@ -40,6 +40,8 @@ context md {
     isNightShift    : Boolean not null default false;
     toStations      : Association to many Stations_Turns
                         on toStations.toTurn = $self;
+    toSupervisors   : Association to many Supervisors_Turns
+                        on toSupervisors.toTurn = $self;
   }
 
   entity Stations_Turns : cuid {
@@ -50,8 +52,8 @@ context md {
   entity Stations : cuid, managed {
     code                             : String(4);
     description                      : String(30);
-    toWorkCenter                     : Association to WorkCenters;
-    operator                         : String(4);
+    // toWorkCenter                     : Association to WorkCenters;
+    toOperator                       : Association to Operators;
     turnRequired                     : Boolean not null default false;
     turnDateIsToday                  : Boolean not null default false;
     quantityRequired                 : Boolean not null default false;
@@ -66,10 +68,17 @@ context md {
     goodReceiptAuthorizationRequired : Boolean not null default false;
     consumptionAuthorizationRequired : Boolean not null default false;
     ctecAuthorizationRequired        : Boolean not null default false;
-    toWorkCenters                    : Association to many WorkCenters
-                                         on toWorkCenters.toStation = $self;
+    toOperators                      : Association to many Stations_Operators
+                                         on toOperators.toStation = $self;
+    toStoppages                      : Association to many Stations_Stoppages
+                                         on toStoppages.toStation = $self;
   }
 
+  @assert.unique : {code : [
+    code,
+    toPlant,
+    toResponsible
+  ], }
   entity WorkCenters : cuid, managed {
     code          : WorkCenter;
     plant         : WorkCenterPlant;
@@ -77,17 +86,32 @@ context md {
     responsible   : String;
     queueType     : String(1);
     isOeeRelevant : Boolean not null default false;
-    toStation     : Association to Stations;
+    toPlant       : Association to Plants;
+    toResponsible : Association to Responsibles;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Operators : cuid, managed {
+    code           : String(4);
+    name           : String(100);
+    personalNumber : String(8);
+    pin            : String(4);
+    toTurn         : Association to Turns;
+    currentDate    : Date;
+    toStations     : Association to many Stations_Operators
+                       on toStations.toOperator = $self;
   }
 
   @assert.unique : {code : [code], }
   entity Roles : cuid {
     code        : String(1);
     description : localized String(35);
+    toUsers     : Association to many Users
+                    on toUsers.toType = $self;
   }
 
   @assert.unique : {code : [code], }
-  entity Plants : cuid {
+  entity Plants : cuid, managed {
     @mandatory
     code        : String(4);
     description : String(35);
@@ -118,15 +142,49 @@ context md {
   }
 
   @assert.unique : {code : [code], }
-  entity Users : cuid, managed {
-    code    : String(8);
-    toType  : Association to Roles;
-    name    : String(150);
-    toPlant : Association to Plants;
+  entity Users : cuid {
+    code           : String(8);
+    toType         : Association to Roles;
+    name           : String(150);
+    toPlant        : Association to Plants;
+    toTurns        : Association to many Supervisors_Turns
+                       on toTurns.toSupervisor = $self;
+    toStation      : Association to Stations;
+    toResponsibles : Association to many Supervisors_Responsibles
+                       on toResponsibles.toUser = $self;
   }
 
-  entity Stations_Operators : cuid {
+  @assert.unique : {code : [code], }
+  entity Supervisors as
+    select from md.Roles[code = 'S'
+  ] : toUsers {
+    key ID,
+        code,
+        toType,
+        name,
+        toPlant,
+        toTurns,
+        toResponsibles
+  };
 
+  @assert.unique : {toUser : [
+    toUser,
+    toPlant,
+    toResponsible
+  ], }
+  entity Supervisors_Responsibles : cuid {
+    toUser        : Association to Users;
+    toPlant       : Association to Plants;
+    toResponsible : Association to Responsibles;
+  }
+
+  @assert.unique : {toStation : [
+    toStation,
+    toOperator
+  ], }
+  entity Stations_Operators : cuid {
+    toStation  : Association to Stations;
+    toOperator : Association to Operators;
   }
 
   entity Stations_WorkCenters : cuid {}
@@ -149,6 +207,67 @@ context md {
     code    : String(4);
     toPlant : Association to Plants;
   }
+
+  @assert.unique : {code : [code], }
+  entity MaterialsToSync : cuid, managed {
+    code    : String(4);
+    toPlant : Association to Plants;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Stoppages_Types : cuid {
+    code        : String(1);
+    description : String(80);
+  }
+
+  entity Stations_Stoppages : cuid {
+    toStation  : Association to Stations;
+    toStoppage : Association to Stoppages;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Incidents : cuid {
+    code        : String(4);
+    description : String(80);
+  }
+
+  @assert.unique : {toSupervisor : [
+    toSupervisor,
+    toTurn
+  ], }
+  entity Supervisors_Turns : cuid {
+    toSupervisor : Association to Users;
+    toTurn       : Association to Turns;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Stoppages : cuid {
+    code          : String(4);
+    description   : String(25);
+    type          : Association to Stoppages_Types;
+    isOverlapping : Boolean not null default false;
+    toStations    : Association to many Stations_Stoppages
+                      on toStations.toStoppage = $self;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Activities : cuid {
+    code        : String(6);
+    description : localized String(20);
+    toUnit      : Association to Units;
+  }
+
+  @assert.unique : {objectClass : [
+    objectClass,
+    documentClass,
+    application
+  ], }
+  entity DocumentClasses : cuid {
+    objectClass   : String(10);
+    documentClass : String(3);
+    application   : String(3);
+  }
+
 
 }
 

@@ -1,7 +1,7 @@
 import { ILogger, Level, LogMessage, getLevel, now } from './ILogger';
 import { injectable } from 'inversify';
 import { ConsoleLog } from './ConsoleLog';
-import { EnvironmentManager } from '../application/EnvironmentManager';
+import { EnvironmentManager } from '@Application/EnvironmentManager';
 
 @injectable()
 export class Logger implements ILogger {
