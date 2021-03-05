@@ -6,34 +6,35 @@ annotate OrderService.Plants with {
     ID
     @UI.Hidden;
     code
-    @title     : '{i18n>plantsCode}'
+    @title : '{i18n>plantsCode}'
+    @Common.IsUpperCase;
     /*@(Common : {
         Text            : description,
         TextArrangement : #TextLast
-    })*/;
+    })*/
     description
-    @title     : '{i18n>plantsDescription}';
+    @title : '{i18n>plantsDescription}';
 }
 
 annotate OrderService.Plants with @(
     Common.SemanticKey : [code, ],
     UI                 : {
-        Identification  : [{
+        Identification            : [{
             $Type : 'UI.DataField',
             Value : code,
         }],
-        SelectionFields : [],
-        LineItem        : [
+        SelectionFields           : [],
+        LineItem                  : [
             {Value : code},
             {Value : description},
         ],
-        HeaderInfo      : {
+        HeaderInfo                : {
             TypeName       : '{i18n>plant}',
             TypeNamePlural : '{i18n>plants}',
             Title          : {Value : code},
             Description    : {Value : description}
         },
-        Facets                   : [{
+        Facets                    : [{
             $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>details}',
             Target : '@UI.FieldGroup#PlantsDetails'
@@ -44,7 +45,7 @@ annotate OrderService.Plants with @(
                 {
                     $Type : 'UI.DataField',
                     Value : code
-                    
+
                 },
                 {
                     $Type : 'UI.DataField',
