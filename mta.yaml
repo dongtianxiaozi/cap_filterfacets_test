@@ -119,12 +119,27 @@ modules:
             - manage_units-content.zip
           name: manage_units
           target-path: resources/
+        - artifacts:
+            - manage_plants-content.zip
+          name: manage_plants
+          target-path: resources/
 
   # -------------------- MANAGE_UNITS APP MODULE -------------------
   - name: manage_units
     # ------------------------------------------------------------
     type: html5
     path: app/manage_units
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+
+  # -------------------- MANAGE_PLANTS APP MODULE -------------------
+  - name: manage_plants
+    # ------------------------------------------------------------
+    type: html5
+    path: app/manage_plants
     build-parameters:
       builder: custom
       commands:

@@ -83,6 +83,7 @@
     "app\\v2_queues",
     "app\\v2_operations",
     "app\\v2_turns",
-    "app\\manage_units"
+    "app\\manage_units",
+    "app\\manage_plants"
   ]
 }
