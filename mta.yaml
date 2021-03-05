@@ -2,189 +2,201 @@
 ## appName = sfc
 ## language=nodejs; multiTenant=false
 ## approuter=
-_schema-version: '3.1'
+_schema-version: "3.1"
 ID: sfc
 version: 1.0.0
 description: "A simple CAP project."
 parameters:
   enable-parallel-deployments: true
-   
+
 build-parameters:
   before-all:
-   - builder: custom
-     commands:
-      - npm install --production
-      - npm run build
-
+    - builder: custom
+      commands:
+        - npm install --production
+        - npm run build
 
 modules:
+  # --------------------- SERVER MODULE ------------------------
+  - name: sfc-router
+    # ------------------------------------------------------------
+    type: approuter.nodejs
+    path: router
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    requires:
+      - name: sfc-uaa
+      - name: sfc-destination-service
+      - name: srv_api
+        group: destinations
+        properties:
+          forwardAuthToken: true
+          strictSSL: true
+          url: ~{srv-url}
+    properties:
+      SAP_JWT_TRUST_ACL:
+        - clientid: "*"
+          identityzone: "*"
 
-# --------------------- SERVER MODULE ------------------------
- - name: sfc-router
-# ------------------------------------------------------------
-   type: approuter.nodejs
-   path: router
-   parameters:
-     memory: 256M
-     disk-quota: 512M
-   requires:
-     - name: sfc-uaa
-     - name: sfc-destination-service
-     - name: srv_api
-       group: destinations
-       properties:
-         forwardAuthToken: true
-         strictSSL: true
-         url: ~{srv-url}
-   properties:
-     SAP_JWT_TRUST_ACL:
-       - clientid: "*"
-         identityzone: "*"  
+  # --------------------- SERVER MODULE ------------------------
+  - name: sfc-srv
+    # ------------------------------------------------------------
+    type: nodejs
+    path: gen/srv
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    requires:
+      # Resources extracted from CAP configuration
+      - name: sfc-uaa
+      - name: sfc-db
+    provides:
+      - name: srv_api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
 
- # --------------------- SERVER MODULE ------------------------
- - name: sfc-srv
- # ------------------------------------------------------------
-   type: nodejs
-   path: gen/srv
-   parameters:
-     memory: 256M
-     disk-quota: 512M
-   requires:
-    # Resources extracted from CAP configuration
-    - name: sfc-uaa
-    - name: sfc-db
-   provides:
-    - name: srv_api      # required by consumers of CAP services (e.g. approuter)
-      properties:
-        srv-url: ${default-url}
+  # -------------------- SIDECAR MODULE ------------------------
+  - name: sfc-db-deployer
+    # ------------------------------------------------------------
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+      memory: 512M
+      disk-quota: 512M
+    requires:
+      # 'hana' and 'xsuaa' resources extracted from CAP configuration
+      - name: sfc-uaa
+      - name: sfc-db
 
- # -------------------- SIDECAR MODULE ------------------------
- - name: sfc-db-deployer
- # ------------------------------------------------------------
-   type: hdb
-   path: gen/db  
-   parameters:
-     buildpack: nodejs_buildpack
-     memory: 512M
-     disk-quota: 512M
-   requires:
-    # 'hana' and 'xsuaa' resources extracted from CAP configuration
-    - name: sfc-uaa
-    - name: sfc-db
+  # -------------------- DESTINATION CONTENT MODULE ------------
+  - name: sfc-destination-content
+    # ------------------------------------------------------------
+    type: com.sap.application.content
+    requires:
+      - name: sfc-uaa
+        parameters:
+          service-key:
+            name: sfc-uaa-key
+      - name: sfc_html_repo_host
+        parameters:
+          service-key:
+            name: sfc_html_repo_host-key
+      - name: sfc-destination-service
+        parameters:
+          content-target: true
+    parameters:
+      content:
+        subaccount:
+          destinations:
+            - Name: sfcservice_sfc_html_repo_host
+              ServiceInstanceName: sfc-html5-app-host-service
+              ServiceKeyName: sfc_html_repo_host-key
+              sap.cloud.service: sfcservice
+            - Authentication: OAuth2UserTokenExchange
+              Name: sfcservice_sfc-uaa
+              ServiceInstanceName: sfc-xsuaa-service
+              ServiceKeyName: sfc-uaa-key
+              sap.cloud.service: sfcservice
+          existing_destinations_policy: update
+    build-parameters:
+      no-source: true
 
- # -------------------- DESTINATION CONTENT MODULE ------------
- - name: sfc-destination-content
- # ------------------------------------------------------------
-   type: com.sap.application.content
-   requires:
-   - name: sfc-uaa
-     parameters:
-       service-key:
-         name: sfc-uaa-key
-   - name: sfc_html_repo_host
-     parameters:
-       service-key:
-         name: sfc_html_repo_host-key
-   - name: sfc-destination-service
-     parameters:
-       content-target: true        
-   parameters:
-     content:
-       subaccount:
-         destinations:
-         - Name: sfcservice_sfc_html_repo_host
-           ServiceInstanceName: sfc-html5-app-host-service
-           ServiceKeyName: sfc_html_repo_host-key
-           sap.cloud.service: sfcservice
-         - Authentication: OAuth2UserTokenExchange
-           Name: sfcservice_sfc-uaa
-           ServiceInstanceName: sfc-xsuaa-service
-           ServiceKeyName: sfc-uaa-key
-           sap.cloud.service: sfcservice
-         existing_destinations_policy: update    
-   build-parameters:
-     no-source: true
+  # -------------------- UI DEPLOYER MODULE --------------------
+  - name: sfc_ui_deployer
+    # ------------------------------------------------------------
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: sfc_html_repo_host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - manage_plants-content.zip
+          name: manage_plants
+          target-path: resources/
+        - artifacts:
+            - manage_roles-content.zip
+          name: manage_roles
+          target-path: resources/ 
 
- # -------------------- UI DEPLOYER MODULE --------------------
- - name: sfc_ui_deployer
- # ------------------------------------------------------------
-   type: com.sap.application.content
-   path: .
-   requires:
-   - name: sfc_html_repo_host
-     parameters:
-       content-target: true
-   build-parameters:
-     build-result: resources
-     requires:
-     - artifacts:
-       - manage_roles-content.zip
-       name: manage_roles
-       target-path: resources/ 
-
-# -------------------- MANAGE_ROLES APP MODULE -------------------
- - name: manage_roles
- # ------------------------------------------------------------
-   type: html5
-   path: app/manage_roles
-   build-parameters:
-     builder: custom
-     commands:
-     - npm run build
-     supported-platforms: []  
+  # -------------------- MANAGE_ROLES APP MODULE -------------------
+  - name: manage_roles
+  # ------------------------------------------------------------
+    type: html5
+    path: app/manage_roles
+    build-parameters:
+      builder: custom
+      commands:
+      - npm run build
+      supported-platforms: []  
+  # -------------------- MANAGE_PLANTS APP MODULE -------------------
+  - name: manage_plants
+  # ------------------------------------------------------------
+    type: html5
+    path: app/manage_plants
+    build-parameters:
+       builder: custom
+       commands:
+         - npm run build
+       supported-platforms: []
 
 resources:
- # services extracted from CAP configuration
- # 'service-plan' can be configured via 'cds.requires.<name>.vcap.plan'
-# ------------------------------------------------------------
- - name: sfc-uaa
-# ------------------------------------------------------------
-   type: org.cloudfoundry.managed-service
-   parameters:
-     path: ./xs-security.json
-     service: xsuaa
-     service-plan: application  
-     service-name: sfc-xsuaa-service
-     
-# ------------------------------------------------------------
- - name: sfc-db
-# ------------------------------------------------------------
-   type: com.sap.xs.hdi-container
-   parameters:
-     service: hanatrial
-     service-plan: hdi-shared
-   properties:
-     hdi-service-name: ${service-name}
+  # services extracted from CAP configuration
+  # 'service-plan' can be configured via 'cds.requires.<name>.vcap.plan'
+  # ------------------------------------------------------------
+  - name: sfc-uaa
+    # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service: xsuaa
+      service-plan: application
+      service-name: sfc-xsuaa-service
 
-# ------------------------------------------------------------
- - name: sfc-destination-service
- # ------------------------------------------------------------
-   type: org.cloudfoundry.managed-service
-   requires:
-     - name: srv_api
-   parameters:
-     service: destination
-     service-name: sfc-destination-service
-     service-plan: lite
-     config:
-      init_data:      
-       subaccount:
-         existing_destinations_policy: update
-         destinations:
-           - Name: sfc-cap-launchpad
-             Description: CAP sfc service
-             Authentication: NoAuthentication
-             ProxyType: Internet
-             Type: HTTP
-             URL: ~{srv_api/srv-url}
-             HTML5.DynamicDestination: true
-             ForwardAuthToken: true
+  # ------------------------------------------------------------
+  - name: sfc-db
+    # ------------------------------------------------------------
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hanatrial
+      service-plan: hdi-shared
+    properties:
+      hdi-service-name: ${service-name}
 
-# ------------------------------------------------------------       
- - name: sfc_html_repo_host
-# ------------------------------------------------------------
-   type: org.cloudfoundry.managed-service
-   parameters:
-     service: html5-apps-repo
-     service-name: sfc-html5-app-host-service
-     service-plan: app-host
+  # ------------------------------------------------------------
+  - name: sfc-destination-service
+    # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    requires:
+      - name: srv_api
+    parameters:
+      service: destination
+      service-name: sfc-destination-service
+      service-plan: lite
+      config:
+        init_data:
+          subaccount:
+            existing_destinations_policy: update
+            destinations:
+              - Name: sfc-cap-launchpad
+                Description: CAP sfc service
+                Authentication: NoAuthentication
+                ProxyType: Internet
+                Type: HTTP
+                URL: ~{srv_api/srv-url}
+                HTML5.DynamicDestination: true
+                ForwardAuthToken: true
+
+  # ------------------------------------------------------------
+  - name: sfc_html_repo_host
+    # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: sfc-html5-app-host-service
+      service-plan: app-host
