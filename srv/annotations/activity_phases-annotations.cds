@@ -7,7 +7,8 @@ annotate OrderService.ActivityPhases with {
     @UI.Hidden : true;
 
     code
-    @title     : '{i18n>activityCode}';
+    @title     : '{i18n>activityCode}'
+    @Common.IsUpperCase;
     /*@(Common : {
         Text            : description,
         TextArrangement : #TextLast
@@ -18,27 +19,24 @@ annotate OrderService.ActivityPhases with {
 }
 
 annotate OrderService.ActivityPhases with @(
-    Common.SemanticKey : [
-        code,
-    ],
+    Common.SemanticKey : [code, ],
     UI                 : {
-        Identification  : [{
+        Identification                : [{
             $Type : 'UI.DataField',
             Value : code,
         }],
-        SelectionFields : [
-        ],
-        LineItem        : [
+        SelectionFields               : [],
+        LineItem                      : [
             {Value : code},
             {Value : description},
         ],
-        HeaderInfo      : {
+        HeaderInfo                    : {
             TypeName       : '{i18n>activity}',
             TypeNamePlural : '{i18n>activities}',
             Title          : {Value : code},
             Description    : {Value : description}
         },
-        Facets                       : [{
+        Facets                        : [{
             $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>details}',
             Target : '@UI.FieldGroup#ActivitiesDetails'
@@ -46,14 +44,14 @@ annotate OrderService.ActivityPhases with @(
         FieldGroup #ActivitiesDetails : {
             Label : '{i18n>details}',
             Data  : [
-            {
-                $Type : 'UI.DataField',
-                Value : code
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : description
-            },
+                {
+                    $Type : 'UI.DataField',
+                    Value : code
+                },
+                {
+                    $Type : 'UI.DataField',
+                    Value : description
+                },
             ]
         }
     }
