@@ -117,8 +117,8 @@ modules:
    build-parameters:
      build-result: resources
      requires:  
-  - artifacts:
-    - activity_phases-content.zip
+     - artifacts:
+       - activity_phases-content.zip
        name: activity_phases
        target-path: resources/  
 
@@ -130,8 +130,6 @@ modules:
    build-parameters:
      builder: custom
      commands:
-
-
 
 resources:
  # services extracted from CAP configuration
