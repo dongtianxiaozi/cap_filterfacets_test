@@ -7,10 +7,11 @@ annotate OrderService.Units with {
     @UI.Hidden : true;
 
     code
-    @title     : '{i18n>unitCode}';
+    @title     : '{i18n>unitCode}'
+    @Common.IsUpperCase;
 
     description
-    @title     : '{i18n>unitDescription}';
+    @title     : '{i18n>unit}';
 
 }
 
