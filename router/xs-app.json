@@ -1,5 +1,5 @@
 {
-  "welcomeFile": "/comseidorsfcuiv2orders/",
+  "welcomeFile": "/order",
   "authenticationMethod": "route",
   "routes": [
     {

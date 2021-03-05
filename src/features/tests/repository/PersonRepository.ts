@@ -17,10 +17,10 @@ export class PersonRepository {
   }
 
   /**
-   * 
-   * @param top 
-   * @param limit 
-   * @param select 
+   *
+   * @param top
+   * @param limit
+   * @param select
    */
   async getPersons(
     top?: number,
@@ -42,8 +42,8 @@ export class PersonRepository {
   }
 
   /**
-   * 
-   * @param id 
+   *
+   * @param id
    */
   async getPersonById(id: string): Promise<Either<UnexpectedError | EmptyResult, ReadResult<TestService.IPerson>>> {
     this.logger.d(PersonRepository.name, () => `get persons by ID=${id}`);

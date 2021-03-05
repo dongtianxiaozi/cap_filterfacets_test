@@ -1,6 +1,6 @@
 import { Level, LogMessage, getLevel, now } from './ILogger';
 import { injectable } from 'inversify';
-import { IEnvironment } from '../shared/IEnvironment';
+import { IEnvironment } from '@Shared/IEnvironment';
 import { ContextManager } from '@Application/ContextManager';
 
 @injectable()

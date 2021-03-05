@@ -49,7 +49,7 @@ export abstract class UnitOfWork<T, FailedResult, SuccessResult>
     }
     try {
       this.logger.v(`${this.constructor.name}`, () => `Start transaction.`);
-      const tx = cds.tx(this.contextManager.getEnvironment().__REQUEST);
+      const tx = cds.transaction(this.contextManager.getEnvironment().__REQUEST);
       const result = await this.internalExecute(request, tx);
       if (result.isLeft()) return Left(result.leftValue());
       return Right(result.rightValue());
@@ -74,7 +74,7 @@ export abstract class UnitOfWork<T, FailedResult, SuccessResult>
    * A partir del queryRunner conecta y gestiona la transacción contra la BBDD utilizando TypeORM.
    *
    * @param request
-   * @param queryRunner
+   * @param tx
    */
   private async internalExecute(request: T, tx: Transaction): Promise<Either<FailedResult | UnexpectedError, SuccessResult>> {
     try {
@@ -89,7 +89,7 @@ export abstract class UnitOfWork<T, FailedResult, SuccessResult>
         await tx.rollback();
       } else {
         this.logger.v(`${this.constructor.name}`, () => `Commit transaction.`);
-        await tx.commit();
+        //await tx.commit();
       }
       return data;
     } catch (error) {
