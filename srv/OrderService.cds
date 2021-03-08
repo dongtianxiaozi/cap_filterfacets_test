@@ -17,7 +17,7 @@ service OrderService @(requires : ['user']) {
 
     @readonly
     entity Stations                 as projection on md.Stations {
-        * , toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages,
+        * , toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages, toWorkCenters : redirected to Stations_WorkCenters
     }
 
     @odata.draft.enabled
@@ -28,6 +28,11 @@ service OrderService @(requires : ['user']) {
     @odata.draft.enabled
     entity Stations_Stoppages       as projection on md.Stations_Stoppages {
         * , toStation : redirected to Stations, toStoppage : redirected to Stoppages
+    }
+
+    @odata.draft.enabled
+    entity Stations_WorkCenters     as projection on md.Stations_WorkCenters {
+        * , toStation : redirected to Stations, toWorkCenter : redirected to WorkCenters
     }
 
     entity Components               as projection on td.Components {
@@ -62,7 +67,8 @@ service OrderService @(requires : ['user']) {
         select from md.WorkCenters {
             *,
             toPlant       : redirected to Plants,
-            toResponsible : redirected to Responsibles
+            toResponsible : redirected to Responsibles,
+            toStations: redirected to Stations_WorkCenters
         };
 
     @odata.draft.enabled
