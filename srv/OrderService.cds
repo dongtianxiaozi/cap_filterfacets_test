@@ -68,7 +68,8 @@ service OrderService @(requires : ['user']) {
             *,
             toPlant       : redirected to Plants,
             toResponsible : redirected to Responsibles,
-            toStations: redirected to Stations_WorkCenters
+            toStations: redirected to Stations_WorkCenters,
+            toActivities: redirected to WorkCenters_Activities
         };
 
     @odata.draft.enabled

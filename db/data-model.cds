@@ -92,6 +92,8 @@ context md {
     toResponsible : Association to Responsibles;
     toStations    : Association to many Stations_WorkCenters
                       on toStations.toWorkCenter = $self;
+    toActivities  : Association to many WorkCenters_Activities
+                      on toActivities.toWorkCenter = $self;
   }
 
   @assert.unique : {toWorkCenter : [
