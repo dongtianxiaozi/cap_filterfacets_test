@@ -38,8 +38,8 @@ export abstract class UnitOfWork<T, FailedResult, SuccessResult>
 	 */
 	async execute(request: T): Promise<Either<FailedResult | UnexpectedError, SuccessResult>> {
 		this.logger.v(`${this.constructor.name}`, () => `Preparing transaction.`);
-		const tx: Transaction = this.contextManager.getCurrentTransaction();
-		if (tx) {
+		const currentTransaction: Transaction = this.contextManager.getCurrentTransaction();
+		if (currentTransaction) {
 			this.logger.w(`${this.constructor.name}`, () => `Existing transaction in use... Recycling current transaction`);
 			const transaction: Transaction = this.contextManager.getCurrentTransaction();
 			if (transaction) {
@@ -49,8 +49,8 @@ export abstract class UnitOfWork<T, FailedResult, SuccessResult>
 		}
 		try {
 			this.logger.v(`${this.constructor.name}`, () => `Start transaction.`);
-			const tx = cds.transaction(this.contextManager.getEnvironment().__REQUEST);
-			const result = await this.internalExecute(request, tx);
+			const transaction = cds.transaction(this.contextManager.getEnvironment().__REQUEST);
+			const result = await this.internalExecute(request, transaction);
 			if (result.isLeft()) return Left(result.leftValue());
 			return Right(result.rightValue());
 		} catch (error) {

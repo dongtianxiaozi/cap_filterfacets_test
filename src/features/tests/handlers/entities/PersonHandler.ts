@@ -31,7 +31,7 @@ export class PersonHandler {
 	}
 
 	bondedActionTest(@Param('ID') id: string) {
-		// TODO: Pendiente revisar Bounded Actions
+		// Pendiente revisar Bounded Actions
 	}
 
 	/**

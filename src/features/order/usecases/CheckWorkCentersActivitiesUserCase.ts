@@ -50,13 +50,13 @@ export class CheckWorkCentersActivitiesUserCase
 			() => `start get CheckWorkCentersActivities UseCase with params=${JSON.stringify(params)}`
 		);
 		if (params.activity_id && params.phase_id) {
-			const resultOrError_ActivityPhase = await this.activitiesRepository.getActivityPhasesWithId(params.phase_id);
-			const resultOrError_Unit = await this.activitiesRepository.getUnitsOfActivity(params.activity_id);
-			if (resultOrError_Unit.isLeft() || resultOrError_ActivityPhase.isLeft()) return Left(new EntityNotFoundResult());
-			if (resultOrError_ActivityPhase.value.data.length === 0 || resultOrError_Unit.value.data.length === 0)
+			const resultOrErrorActivityPhase = await this.activitiesRepository.getActivityPhasesWithId(params.phase_id);
+			const resultOrErrorUnit = await this.activitiesRepository.getUnitsOfActivity(params.activity_id);
+			if (resultOrErrorUnit.isLeft() || resultOrErrorActivityPhase.isLeft()) return Left(new EntityNotFoundResult());
+			if (resultOrErrorActivityPhase.value.data.length === 0 || resultOrErrorUnit.value.data.length === 0)
 				return Left(new EntityNotFoundResult());
-			const unit: OrderService.IUnits = resultOrError_Unit.value.data[0];
-			const activityphase: OrderService.IActivityPhases = resultOrError_ActivityPhase.value.data[0];
+			const unit: OrderService.IUnits = resultOrErrorUnit.value.data[0];
+			const activityphase: OrderService.IActivityPhases = resultOrErrorActivityPhase.value.data[0];
 			if (
 				this.environmentManager.WORKCENTERSACTIVITIES_CASE_ACTIVITYPHASE.indexOf(activityphase.code) > -1 &&
 				unit.code !== this.environmentManager.WORKCENTERSACTIVITIES_CASE_UNITY
@@ -64,13 +64,13 @@ export class CheckWorkCentersActivitiesUserCase
 				return Left(new InvalidUnity());
 
 			if (this.environmentManager.WORKCENTERSACTIVITIES_CASE_ACTIVITYPHASE.indexOf(activityphase.code) > -1) {
-				const resultOrError_GrantedTypes = await this.workCentesActivitiesRepository.getGrantedTypesWithPhase([
+				const resultOrErrorGrantedTypes = await this.workCentesActivitiesRepository.getGrantedTypesWithPhase([
 					activityphase.code,
 				]);
-				if (resultOrError_GrantedTypes.isRight()) {
-					if (resultOrError_GrantedTypes.value.data.length > 1) return Left(new UnexpectedError());
-					if (resultOrError_GrantedTypes.value.data.length === 1) {
-						if (resultOrError_GrantedTypes.value.data[0].ID !== params.grantedtypes_id)
+				if (resultOrErrorGrantedTypes.isRight()) {
+					if (resultOrErrorGrantedTypes.value.data.length > 1) return Left(new UnexpectedError());
+					if (resultOrErrorGrantedTypes.value.data.length === 1) {
+						if (resultOrErrorGrantedTypes.value.data[0].ID !== params.grantedtypes_id)
 							return Left(new DifferentGrantedType());
 					}
 				}
