@@ -72,6 +72,8 @@ context md {
                                          on toOperators.toStation = $self;
     toStoppages                      : Association to many Stations_Stoppages
                                          on toStoppages.toStation = $self;
+    toWorkCenters                    : Association to many Stations_WorkCenters
+                                         on toWorkCenters.toStation = $self;
   }
 
   @assert.unique : {code : [
@@ -88,6 +90,8 @@ context md {
     isOeeRelevant : Boolean not null default false;
     toPlant       : Association to Plants;
     toResponsible : Association to Responsibles;
+    toStations    : Association to many Stations_WorkCenters
+                      on toStations.toWorkCenter = $self;
   }
 
   @assert.unique : {toWorkCenter : [
@@ -203,7 +207,14 @@ context md {
     toOperator : Association to Operators;
   }
 
-  entity Stations_WorkCenters : cuid {}
+  @assert.unique : {toStation : [
+    toStation,
+    toWorkCenter
+  ]}
+  entity Stations_WorkCenters : cuid {
+    toStation    : Association to Stations;
+    toWorkCenter : Association to WorkCenters;
+  }
 
   @assert.unique : {code : [
     code,
