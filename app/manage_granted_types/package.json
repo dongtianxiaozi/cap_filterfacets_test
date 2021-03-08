@@ -18,8 +18,8 @@
 		"deploy-config": "fiori add deploy-config",
 		"start-mock": "fiori run --open test/flpSandboxMockServer.html#masterDetail-display",
 		"build": "npm run clean && ui5 build --include-task=generateManifestBundle generateCachebusterInfo && npm run zip",
-		"zip": "cd dist && npx bestzip ../granted_types-content.zip *",
-		"clean": "npx rimraf granted_types-content.zip dist"
+		"zip": "cd dist && npx bestzip ../manage_granted_types-content.zip *",
+		"clean": "npx rimraf manage_granted_types-content.zip dist"
 	},
 	"devDependencies": {
 		"@ui5/cli": "2.7.1",
