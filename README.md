@@ -17,6 +17,65 @@ Si se activa el auto-attach del debug:
 - npm run watch
 - debug (activamos el debug)
 
+Deploy (Node 12)
+
+- npm install -g npm
+- npm install -g mbt
+- brew install cloudfoundry/tap/cf-cli@7
+- cf install-plugin multiapps
+- npm install app/**/package.json
+- mbt build
+- cf login (API Endpoint: api.cf.eu10.hana.ondemand.com)
+- cf deploy mta_archives/sfc_1.0.0.mtar
+
+Logs SCF
+- cf logs sfc-srv --recent
+
+Mock de autentication xsuaa cloud en local
+- en .cdsrc.json:
+```
+{
+    "auth": {
+        "passport": {
+            "strategy": "JWT"
+        }
+    }
+}
+```
+- en default-env.json, actualizar VCAP_SERVICES > xsuaa > credentials con las credenciales obtenidas de ejecutar:
+```
+cf service-key sfc-xsuaa-service sfc-uaa-key
+```
+
+
+Usuarios mocked en local
+- en .cdsrc.json:
+```
+{
+  "auth": {
+      "passport": {
+          "strategy": "mock",
+          "users": {
+              "user": {
+                  "password": "",
+                  "ID": "user",
+                  "roles": [
+                      "user"
+                  ],
+                  "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+                  "userAttributes": {
+                      "currency": [
+                          "USD"
+                      ],
+                      "tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+                      "email": "user@seidor.es"
+                  }
+              }
+          }
+      }
+  }
+}
+```
 ### Importe
 
 - [Nomenclaturas a utilizar en el modelado](https://seidor.sharepoint.com/:p:/t/ShopFloorControlConsultingESP/EZ6gD5IkBi9Mq_6MiRr9iXsBRCBV5vNPUTpeWju7Yn02iQ?e=YZ8Tad)
