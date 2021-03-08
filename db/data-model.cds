@@ -90,6 +90,22 @@ context md {
     toResponsible : Association to Responsibles;
   }
 
+  @assert.unique : {toWorkCenter : [
+    toWorkCenter,
+    number
+  ], }
+  entity WorkCenters_Activities : cuid {
+    toWorkCenter   : Association to WorkCenters;
+    toActivity     : Association to Activities;
+    number         : String(1)@assert.range : [
+      1,
+      6
+    ];
+    toPhase        : Association to ActivityPhases;
+    toGrantedType  : Association to GrantedTypes;
+    toOeeRelevancy : Association to OeeRelevancies;
+  }
+
   @assert.unique : {code : [code], }
   entity Operators : cuid, managed {
     code           : String(4);

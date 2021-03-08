@@ -17,8 +17,7 @@ service OrderService @(requires : ['user']) {
 
     @readonly
     entity Stations                 as projection on md.Stations {
-        * , toOperators : redirected to Stations_Operators,
-        toStoppages : redirected to Stations_Stoppages,
+        * , toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages,
     }
 
     @odata.draft.enabled
@@ -27,10 +26,8 @@ service OrderService @(requires : ['user']) {
     }
 
     @odata.draft.enabled
-    entity Stations_Stoppages as projection on md.Stations_Stoppages {
-        *,
-        toStation : redirected to Stations,
-        toStoppage: redirected to Stoppages
+    entity Stations_Stoppages       as projection on md.Stations_Stoppages {
+        * , toStation : redirected to Stations, toStoppage : redirected to Stoppages
     }
 
     entity Components               as projection on td.Components {
@@ -66,6 +63,17 @@ service OrderService @(requires : ['user']) {
             *,
             toPlant       : redirected to Plants,
             toResponsible : redirected to Responsibles
+        };
+
+    @odata.draft.enabled
+    entity WorkCenters_Activities   as
+        select from md.WorkCenters_Activities {
+            *,
+            toWorkCenter   : redirected to WorkCenters,
+            toActivity     : redirected to Activities,
+            toPhase        : redirected to ActivityPhases,
+            toGrantedType  : redirected to GrantedTypes,
+            toOeeRelevancy : redirected to OeeRelevancies,
         };
 
     @odata.draft.enabled
@@ -267,7 +275,7 @@ service OrderService @(requires : ['user']) {
     entity Stoppages                as
         select from md.Stoppages {
             *,
-            type : redirected to Stoppages_Types,
+            type       : redirected to Stoppages_Types,
             toStations : redirected to Stations_Stoppages
         };
 
