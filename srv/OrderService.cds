@@ -65,6 +65,7 @@ service OrderService @(requires : ['user']) {
             toResponsible : redirected to Responsibles
         };
 
+    @odata.draft.enabled
     entity WorkCenters_Activities   as
         select from md.WorkCenters_Activities {
             *,
