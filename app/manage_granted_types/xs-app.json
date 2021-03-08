@@ -7,7 +7,7 @@
     "routes": [
       {
         "source": "^/v2/",
-        "destination": "sfcsandbox-cap-launchpad",
+        "destination": "sfc-cap-launchpad",
         "authenticationType": "xsuaa",
         "csrfProtection": false
       },

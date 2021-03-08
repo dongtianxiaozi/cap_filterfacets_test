@@ -7,7 +7,8 @@ annotate OrderService.GrantedTypes with {
     @UI.Hidden : true;
 
     code
-    @title     : '{i18n>grantedTypeCode}';
+    @title     : '{i18n>grantedTypeCode}'
+    @Common.IsUpperCase;
 
     description
     @title     : '{i18n>grantedType}';
