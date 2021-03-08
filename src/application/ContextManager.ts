@@ -2,6 +2,7 @@ import cls from 'cls-hooked';
 import { IEnvironment } from '@Shared/IEnvironment';
 import { Transaction } from '@sap/cds/apis/services';
 import { injectable } from 'inversify';
+import { v4 as uuidv4 } from 'uuid';
 
 @injectable()
 export class ContextManager {
@@ -16,6 +17,24 @@ export class ContextManager {
 
   startContext(fn: () => void) {
     this.getContext().run(fn);
+  }
+
+  async startContextWithPromise(req, fn: () => Promise<any>): Promise<any> {
+    return this.getContext().runAndReturn(() => {
+      let environment = this.getEnvironment();
+      if (!environment) {
+        const uuid = req.headers['UUID'];
+        environment = {
+          __UUID: uuid == undefined ? uuidv4() : uuid,
+          __REQUEST: req,
+        };
+        Object.assign(req.headers, {
+          UUID: environment.__UUID,
+        });
+        this.setEnvironment(environment);
+      }
+      return fn();
+    });
   }
 
   private getContext(): cls.Namespace {

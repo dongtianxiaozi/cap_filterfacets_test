@@ -10,7 +10,7 @@
     "start:local": "npm run build && cds run",
     "start": "cds run",
     "build": "npm run build:cds && npm run build:cds2types && npm run build:ts",
-    "build:cds2types": "cds2types --cds ./srv/order-service.cds --cds ./srv/TestService.cds --output ./src/shared/Contract.ts --prefix I --debug",
+    "build:cds2types": "cds2types --cds ./srv/OrderService.cds --output ./src/shared/Contract.temp.ts --prefix I --debug",
     "build:cds": "echo 'Compiling cds sources...' && cds build --production && cp .cdsrc.json gen/srv",
     "build:ts": "echo 'Compiling *.ts sources...' && tsc",
     "start2": "cds run",
@@ -40,7 +40,6 @@
     "moment": "2.29.1",
     "passport": "0.4.1",
     "reflect-metadata": "0.1.13",
-    "tsc": "^1.20150623.0",
     "uuid": "8.3.2"
   },
   "devDependencies": {
@@ -84,6 +83,8 @@
     "app\\v2_queues",
     "app\\v2_operations",
     "app\\v2_turns",
-    "app\\manage_granted_types"
+    "app\\manage_granted_types",
+    "app\\manage_units",
+    "app\\manage_plants"
   ]
 }
