@@ -6,13 +6,14 @@ annotate OrderService.Plants with {
     ID
     @UI.Hidden;
     code
-    @title     : '{i18n>plantsCode}'
+    @title : '{i18n>plantsCode}'
+    @Common.IsUpperCase;
     /*@(Common : {
         Text            : description,
         TextArrangement : #TextLast
-    })*/;
+    })*/
     description
-    @title     : '{i18n>plantsDescription}';
+    @title : '{i18n>plantsDescription}';
 }
 
 annotate OrderService.Plants with @(
@@ -33,7 +34,7 @@ annotate OrderService.Plants with @(
             Title          : {Value : code},
             Description    : {Value : description}
         },
-        Facets                   : [{
+        Facets                    : [{
             $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>details}',
             Target : '@UI.FieldGroup#PlantsDetails'
@@ -44,7 +45,6 @@ annotate OrderService.Plants with @(
                 {
                     $Type : 'UI.DataField',
                     Value : code
-                    
                 },
                 {
                     $Type : 'UI.DataField',
