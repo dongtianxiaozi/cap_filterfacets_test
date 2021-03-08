@@ -189,7 +189,6 @@ service OrderService @(requires : ['user']) {
             toTurns : redirected to Supervisors_Turns,
         };
 
-    @readonly
     @odata.draft.enabled
     entity Responsibles             as
         select from md.Responsibles {
