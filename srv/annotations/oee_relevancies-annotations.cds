@@ -1,13 +1,14 @@
 namespace com.seidor.sfc;
 
-using {OrderService} from '../OrdeService';
+using {OrderService} from '../OrderService';
 
 annotate OrderService.OeeRelevancies with {
     ID
     @UI.Hidden : true;
 
     code
-    @title     : '{i18n>oeeCode}';
+    @title     : '{i18n>oeeCode}'
+    @Common.IsUpperCase;
 
     description
     @title     : '{i18n>oee}';

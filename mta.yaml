@@ -117,19 +117,49 @@ modules:
       requires:
         - artifacts:
             - oee_relevancies-content.zip
-          name: oee_relevancies
+          name: manage_oee_relevancies
           target-path: resources/
+        - artifacts:
+            - manage_units-content.zip
+          name: manage_units
+          target-path: resources/
+        - artifacts:
+            - manage_plants-content.zip
+          name: manage_plants
+          target-path: resources/
+          
+  #-------------------- MANAGE_OEE_RELEVANCIES ---------------------
+  - name: manage_oee_relevancies
+    # --------------------------------------------------------------
+    type: html5
+    path: app/manage_oee_relevancies
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+  
+  # -------------------- MANAGE_UNITS APP MODULE -------------------
+  - name: manage_units
+    # ------------------------------------------------------------
+    type: html5
+    path: app/manage_units
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
 
-# -------------------- MANAGE_OEE_RELEVANCIES APP MODULE -------------------
- - name: manage_oee_relevancies
- # ------------------------------------------------------------
-   type: html5
-   path: app/manage_oee_relevancies
-   build-parameters:
-     builder: custom
-     commands:
-     - npm run build
-     supported-platforms: []
+  # -------------------- MANAGE_PLANTS APP MODULE -------------------
+  - name: manage_plants
+    # ------------------------------------------------------------
+    type: html5
+    path: app/manage_plants
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
 
 resources:
   # services extracted from CAP configuration
