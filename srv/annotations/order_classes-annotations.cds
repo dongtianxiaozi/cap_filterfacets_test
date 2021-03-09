@@ -10,32 +10,34 @@ annotate OrderService.OrderClasses with {
     @title     : '{i18n>orderClassCode}';
 
     toPlant
-    @title     : '{i18n>plant}';
+    @title     : '{i18n>plant}'
+    @(Common : {Text : {
+        $value                 : toPlant.code,
+        ![@UI.TextArrangement] : #TextOnly
+    }})
 
 }
 
-annotate OrderService.OrderClasses with @(
-    Common.SemanticKey : [
-        code,
-    ],
+annotate OrderService.OrderClasses with
+@(
+    Common.SemanticKey : [code, ],
     UI                 : {
-        Identification  : [{
+        Identification                  : [{
             $Type : 'UI.DataField',
             Value : code,
         }],
-        SelectionFields : [
-        ],
-        LineItem        : [
+        SelectionFields                 : [],
+        LineItem                        : [
             {Value : code},
             {Value : toPlant.code},
         ],
-        HeaderInfo      : {
+        HeaderInfo                      : {
             TypeName       : '{i18n>orderClass}',
             TypeNamePlural : '{i18n>orderClasses}',
             Title          : {Value : code},
-            Description    : {Value : toPlant_ID}
+            Description    : {Value : toPlant.code}
         },
-        Facets : [{
+        Facets                          : [{
             $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>details}',
             Target : '@UI.FieldGroup#OrderClassesDetails'
@@ -47,7 +49,7 @@ annotate OrderService.OrderClasses with @(
                 {
                     $Type : 'UI.DataField',
                     Value : code
-                },                
+                },
                 {
                     $Type : 'UI.DataField',
                     Value : toPlant_ID
@@ -59,19 +61,17 @@ annotate OrderService.OrderClasses with @(
 );
 
 annotate OrderService.OrderClasses with {
-    toPlant @(
-        Common : {            
-            ValueListWithFixedValues,
-            ValueList : {
-                SearchSupported : true,
-                CollectionPath  : 'VH_Plants',
-                Parameters      : [{
-                    $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : toPlant_ID,
-                    ValueListProperty : '_text'
-                    },
-                ]
-            }
+    toPlant
+    @(Common : {
+        ValueListWithFixedValues,
+        ValueList : {
+            SearchSupported : true,
+            CollectionPath  : 'VH_Plants',
+            Parameters      : [{
+                $Type             : 'Common.ValueListParameterInOut',
+                LocalDataProperty : toPlant_ID,
+                ValueListProperty : '_ID'
+            }, ]
         }
-    );
+    });
 };
