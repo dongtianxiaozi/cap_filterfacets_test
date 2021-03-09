@@ -116,15 +116,6 @@
         "internalConsoleOptions": "neverOpen",
         "port": 9229,
         "env": {}
-      },
-      {
-        "type": "node",
-        "request": "launch",
-        "name": "Launch Test",
-        "skipFiles": ["<node_internals>/**"],
-        "program": "${workspaceFolder}/gen/srv/srv/serverdev.js",
-        "preLaunchTask": "npm: build",
-        "outFiles": ["${workspaceFolder}/gen/**/*.js"]
       }
     ],
     "compounds": [],
