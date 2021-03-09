@@ -11,7 +11,12 @@ annotate OrderService.MaterialsToSync with {
     @Common.IsUpperCase;
 
     toPlant
-    @title     : '{i18n>plant}';
+    @title     : '{i18n>plant}'
+    @(Common : {Text : {
+        $value                 : toPlant.code,
+        ![@UI.TextArrangement] : #TextOnly
+    }});
+
 
 }
 
@@ -27,9 +32,8 @@ annotate OrderService.MaterialsToSync with @(
         SelectionFields : [
         ],
         LineItem        : [
-            {Value : ID},
-            {Value : code},
             {Value : toPlant.code},
+            {Value : code},    
         ],
         HeaderInfo      : {
             TypeName       : '{i18n>material}',
