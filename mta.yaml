@@ -117,7 +117,7 @@ modules:
    build-parameters:
      build-result: resources
      requires:  
-    - artifacts:
+     - artifacts:
        - materials_sync-content.zip
        name: materials_sync
        target-path: resources/  

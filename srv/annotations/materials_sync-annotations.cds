@@ -7,7 +7,8 @@ annotate OrderService.MaterialsToSync with {
     @UI.Hidden : true;
 
     code
-    @title     : '{i18n>materialCode}';
+    @title     : '{i18n>materialCode}'
+    @Common.IsUpperCase;
 
     toPlant
     @title     : '{i18n>plant}';
