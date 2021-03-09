@@ -68,6 +68,10 @@ context md {
     goodReceiptAuthorizationRequired : Boolean not null default false;
     consumptionAuthorizationRequired : Boolean not null default false;
     ctecAuthorizationRequired        : Boolean not null default false;
+    toOperators                      : Association to many Stations_Operators
+                                         on toOperators.toStation = $self;
+    toStoppages                      : Association to many Stations_Stoppages
+                                         on toStoppages.toStation = $self;
   }
 
   @assert.unique : {code : [
@@ -93,7 +97,9 @@ context md {
     personalNumber : String(8);
     pin            : String(4);
     toTurn         : Association to Turns;
-    currentDate    : Date
+    currentDate    : Date;
+    toStations     : Association to many Stations_Operators
+                       on toStations.toOperator = $self;
   }
 
   @assert.unique : {code : [code], }
@@ -137,13 +143,15 @@ context md {
 
   @assert.unique : {code : [code], }
   entity Users : cuid {
-    code      : String(8);
-    toType    : Association to Roles;
-    name      : String(150);
-    toPlant   : Association to Plants;
-    toTurns   : Association to many Supervisors_Turns
-                  on toTurns.toSupervisor = $self;
-    toStation : Association to Stations;
+    code           : String(8);
+    toType         : Association to Roles;
+    name           : String(150);
+    toPlant        : Association to Plants;
+    toTurns        : Association to many Supervisors_Turns
+                       on toTurns.toSupervisor = $self;
+    toStation      : Association to Stations;
+    toResponsibles : Association to many Supervisors_Responsibles
+                       on toResponsibles.toUser = $self;
   }
 
   @assert.unique : {code : [code], }
@@ -155,7 +163,8 @@ context md {
         toType,
         name,
         toPlant,
-        toTurns
+        toTurns,
+        toResponsibles
   };
 
   @assert.unique : {toUser : [
@@ -164,13 +173,18 @@ context md {
     toResponsible
   ], }
   entity Supervisors_Responsibles : cuid {
-    toUser        : Association to Supervisors;
+    toUser        : Association to Users;
     toPlant       : Association to Plants;
     toResponsible : Association to Responsibles;
   }
 
+  @assert.unique : {toStation : [
+    toStation,
+    toOperator
+  ], }
   entity Stations_Operators : cuid {
-
+    toStation  : Association to Stations;
+    toOperator : Association to Operators;
   }
 
   entity Stations_WorkCenters : cuid {}
@@ -206,7 +220,10 @@ context md {
     description : String(80);
   }
 
-  entity Stations_Stoppages : cuid {}
+  entity Stations_Stoppages : cuid {
+    toStation  : Association to Stations;
+    toStoppage : Association to Stoppages;
+  }
 
   @assert.unique : {code : [code], }
   entity Incidents : cuid {
@@ -229,6 +246,26 @@ context md {
     description   : String(25);
     type          : Association to Stoppages_Types;
     isOverlapping : Boolean not null default false;
+    toStations    : Association to many Stations_Stoppages
+                      on toStations.toStoppage = $self;
+  }
+
+  @assert.unique : {code : [code], }
+  entity Activities : cuid {
+    code        : String(6);
+    description : localized String(20);
+    toUnit      : Association to Units;
+  }
+
+  @assert.unique : {objectClass : [
+    objectClass,
+    documentClass,
+    application
+  ], }
+  entity DocumentClasses : cuid {
+    objectClass   : String(10);
+    documentClass : String(3);
+    application   : String(3);
   }
 
 

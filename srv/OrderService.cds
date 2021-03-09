@@ -17,9 +17,20 @@ service OrderService @(requires : ['user']) {
 
     @readonly
     entity Stations                 as projection on md.Stations {
-        * ,
-    // toWorkCenter: redirected to WorkCenters,
-    // toWorkCenters : redirected to WorkCenters,
+        * , toOperators : redirected to Stations_Operators,
+        toStoppages : redirected to Stations_Stoppages,
+    }
+
+    @odata.draft.enabled
+    entity Stations_Operators       as projection on md.Stations_Operators {
+        * , toStation : redirected to Stations, toOperator : redirected to Operators
+    }
+
+    @odata.draft.enabled
+    entity Stations_Stoppages as projection on md.Stations_Stoppages {
+        *,
+        toStation : redirected to Stations,
+        toStoppage: redirected to Stoppages
     }
 
     entity Components               as projection on td.Components {
@@ -50,7 +61,6 @@ service OrderService @(requires : ['user']) {
             toTurn    : redirected to Turns
         };
 
-    @odata.draft.enabled
     entity WorkCenters              as
         select from md.WorkCenters {
             *,
@@ -84,13 +94,9 @@ service OrderService @(requires : ['user']) {
     @odata.draft.enabled
     entity Operators                as
         select from md.Operators {
-            ID,
-            code,
-            name,
-            personalNumber,
-            pin,
-            toTurn : redirected to Turns,
-            currentDate
+            *,
+            toTurn     : redirected to Turns,
+            toStations : redirected to Stations_Operators
         };
 
     @odata.draft.enabled
@@ -200,7 +206,7 @@ service OrderService @(requires : ['user']) {
     entity Supervisors_Responsibles as
         select from md.Supervisors_Responsibles {
             ID,
-            toUser        : redirected to Supervisors,
+            toUser        : redirected to Users,
             toPlant       : redirected to Plants,
             toResponsible : redirected to Responsibles
         };
@@ -261,7 +267,21 @@ service OrderService @(requires : ['user']) {
     entity Stoppages                as
         select from md.Stoppages {
             *,
-            type : redirected to Stoppages_Types
+            type : redirected to Stoppages_Types,
+            toStations : redirected to Stations_Stoppages
+        };
+
+    @odata.draft.enabled
+    entity Activities               as
+        select from md.Activities {
+            *,
+            toUnit : redirected to Units
+        };
+
+    @odata.draft.enabled
+    entity DocumentClasses          as
+        select from md.DocumentClasses {
+            *
         };
 
 }
