@@ -123,7 +123,21 @@ modules:
             - manage_plants-content.zip
           name: manage_plants
           target-path: resources/
+        - artifacts:
+            - manage_roles-content.zip
+          name: manage_roles
+          target-path: resources/ 
 
+  # -------------------- MANAGE_ROLES APP MODULE -------------------
+  - name: manage_roles
+  # ------------------------------------------------------------
+    type: html5
+    path: app/manage_roles
+    build-parameters:
+      builder: custom
+      commands:
+      - npm run build
+      supported-platforms: []  
   # -------------------- MANAGE_UNITS APP MODULE -------------------
   - name: manage_units
     # ------------------------------------------------------------
@@ -137,14 +151,14 @@ modules:
 
   # -------------------- MANAGE_PLANTS APP MODULE -------------------
   - name: manage_plants
-    # ------------------------------------------------------------
+  # ------------------------------------------------------------
     type: html5
     path: app/manage_plants
     build-parameters:
-      builder: custom
-      commands:
-        - npm run build
-      supported-platforms: []
+       builder: custom
+       commands:
+         - npm run build
+       supported-platforms: []
 
 resources:
   # services extracted from CAP configuration
