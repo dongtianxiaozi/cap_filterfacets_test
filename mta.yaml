@@ -2,10 +2,10 @@
 ## appName = sfc
 ## language=nodejs; multiTenant=false
 ## approuter=
-_schema-version: "3.1"
+_schema-version: '3.1'
 ID: sfc
 version: 1.0.0
-description: "A simple CAP project."
+description: 'A simple CAP project.'
 parameters:
   enable-parallel-deployments: true
 
@@ -36,8 +36,8 @@ modules:
           url: ~{srv-url}
     properties:
       SAP_JWT_TRUST_ACL:
-        - clientid: "*"
-          identityzone: "*"
+        - clientid: '*'
+          identityzone: '*'
 
   # --------------------- SERVER MODULE ------------------------
   - name: sfc-srv
@@ -127,6 +127,10 @@ modules:
             - manage_units-content.zip
           name: manage_units
           target-path: resources/
+        - artifacts:
+            - manage_roles-content.zip
+          name: manage_roles
+          target-path: resources/
 
   # -------------------- MANAGE_ACTIVITY_PHASES APP MODULE -------------------
   - name: manage_activity_phases
@@ -139,6 +143,16 @@ modules:
         - npm run build
       supported-platforms: []
 
+  # -------------------- MANAGE_ROLES APP MODULE -------------------
+  - name: manage_roles
+    # ------------------------------------------------------------
+    type: html5
+    path: app/manage_roles
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
   # -------------------- MANAGE_UNITS APP MODULE -------------------
   - name: manage_units
     # ------------------------------------------------------------

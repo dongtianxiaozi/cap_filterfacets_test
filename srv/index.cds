@@ -14,5 +14,6 @@ using from './annotations/turns-annotations';
 using from './annotations/stations-annotations';
 using from './annotations/stations_turns-annotations';
 using from './annotations/activity_phases-annotations';
+using from './annotations/roles-annotations';
 using from './annotations/units-annotations';
 using from './annotations/plants-annotations';

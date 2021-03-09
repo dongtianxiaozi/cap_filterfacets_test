@@ -214,6 +214,20 @@ export namespace com.seidor.sfc {
         toResponsible_ID?: string;
     }
 
+    export interface IWorkCenters_Activities extends ICuid {
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
+        toActivity?: IActivities;
+        toActivity_ID?: string;
+        number: string;
+        toPhase?: IActivityPhases;
+        toPhase_ID?: string;
+        toGrantedType?: IGrantedTypes;
+        toGrantedType_ID?: string;
+        toOeeRelevancy?: IOeeRelevancies;
+        toOeeRelevancy_ID?: string;
+    }
+
     export interface IComponents extends ICuid, IManaged {
         toOrder?: IOrders;
         toOrder_ID?: string;
@@ -304,6 +318,7 @@ export namespace com.seidor.sfc {
         Units = "com.seidor.sfc.md.Units",
         Users = "com.seidor.sfc.md.Users",
         WorkCenters = "com.seidor.sfc.md.WorkCenters",
+        WorkCenters_Activities = "com.seidor.sfc.md.WorkCenters_Activities",
         Components = "com.seidor.sfc.td.Components",
         Operations = "com.seidor.sfc.td.Operations",
         Orders = "com.seidor.sfc.td.Orders",
@@ -338,23 +353,11 @@ export namespace com.seidor.sfc {
         Units = "Units",
         Users = "Users",
         WorkCenters = "WorkCenters",
+        WorkCenters_Activities = "WorkCenters_Activities",
         Components = "Components",
         Operations = "Operations",
         Orders = "Orders",
         Queues = "Queues"
-    }
-
-    export interface IWorkCenters extends ICuid, IManaged {
-        code: WorkCenter;
-        plant: WorkCenterPlant;
-        description: string;
-        responsible: string;
-        queueType: string;
-        isOeeRelevant?: boolean;
-        toPlant?: IPlants;
-        toPlant_ID?: string;
-        toResponsible?: IResponsibles;
-        toResponsible_ID?: string;
     }
 }
 
@@ -757,6 +760,21 @@ export namespace OrderService {
         toResponsible_ID?: string;
     }
 
+    export interface IWorkCenters_Activities {
+        ID: string;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
+        toActivity?: IActivities;
+        toActivity_ID?: string;
+        number: string;
+        toPhase?: IActivityPhases;
+        toPhase_ID?: string;
+        toGrantedType?: IGrantedTypes;
+        toGrantedType_ID?: string;
+        toOeeRelevancy?: IOeeRelevancies;
+        toOeeRelevancy_ID?: string;
+    }
+
     export enum Entity {
         Activities = "OrderService.Activities",
         ActivityPhases = "OrderService.ActivityPhases",
@@ -793,7 +811,8 @@ export namespace OrderService {
         VH_Roles = "OrderService.VH_Roles",
         VH_Turns = "OrderService.VH_Turns",
         VH_WorkCenters = "OrderService.VH_WorkCenters",
-        WorkCenters = "OrderService.WorkCenters"
+        WorkCenters = "OrderService.WorkCenters",
+        WorkCenters_Activities = "OrderService.WorkCenters_Activities"
     }
 
     export enum SanitizedEntity {
@@ -832,7 +851,8 @@ export namespace OrderService {
         VH_Roles = "VH_Roles",
         VH_Turns = "VH_Turns",
         VH_WorkCenters = "VH_WorkCenters",
-        WorkCenters = "WorkCenters"
+        WorkCenters = "WorkCenters",
+        WorkCenters_Activities = "WorkCenters_Activities"
     }
 }
 
