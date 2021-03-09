@@ -1,4 +1,4 @@
-let Service = require('../gen/srv/srv/OrderService');
+const Service = require('../gen/srv/srv/OrderService');
 
 exports.OrderService = Service.OrderService;
 module.exports.OrderService = Service.OrderService;

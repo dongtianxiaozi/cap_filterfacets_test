@@ -72,6 +72,8 @@ context md {
                                          on toOperators.toStation = $self;
     toStoppages                      : Association to many Stations_Stoppages
                                          on toStoppages.toStation = $self;
+    toWorkCenters                    : Association to many Stations_WorkCenters
+                                         on toWorkCenters.toStation = $self;
   }
 
   @assert.unique : {code : [
@@ -88,6 +90,26 @@ context md {
     isOeeRelevant : Boolean not null default false;
     toPlant       : Association to Plants;
     toResponsible : Association to Responsibles;
+    toStations    : Association to many Stations_WorkCenters
+                      on toStations.toWorkCenter = $self;
+    toActivities  : Association to many WorkCenters_Activities
+                      on toActivities.toWorkCenter = $self;
+  }
+
+  @assert.unique : {toWorkCenter : [
+    toWorkCenter,
+    number
+  ], }
+  entity WorkCenters_Activities : cuid {
+    toWorkCenter   : Association to WorkCenters;
+    toActivity     : Association to Activities;
+    number         : String(1)@assert.range : [
+      1,
+      6
+    ];
+    toPhase        : Association to ActivityPhases;
+    toGrantedType  : Association to GrantedTypes;
+    toOeeRelevancy : Association to OeeRelevancies;
   }
 
   @assert.unique : {code : [code], }
@@ -187,7 +209,14 @@ context md {
     toOperator : Association to Operators;
   }
 
-  entity Stations_WorkCenters : cuid {}
+  @assert.unique : {toStation : [
+    toStation,
+    toWorkCenter
+  ]}
+  entity Stations_WorkCenters : cuid {
+    toStation    : Association to Stations;
+    toWorkCenter : Association to WorkCenters;
+  }
 
   @assert.unique : {code : [
     code,
@@ -252,9 +281,11 @@ context md {
 
   @assert.unique : {code : [code], }
   entity Activities : cuid {
-    code        : String(6);
-    description : localized String(20);
-    toUnit      : Association to Units;
+    code          : String(6);
+    description   : localized String(20);
+    toUnit        : Association to Units;
+    toWorkCenters : Association to many WorkCenters_Activities
+                      on toWorkCenters.toActivity = $self;
   }
 
   @assert.unique : {objectClass : [

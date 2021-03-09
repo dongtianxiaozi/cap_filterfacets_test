@@ -12,4 +12,12 @@ export class EnvironmentManager {
     const level = process.env.LOG_LEVEL;
     return level !== undefined && level !== null && !isNaN(Number(level)) ? parseInt(level) : Level.INFO;
   }
+
+  public get WORKCENTERSACTIVITIES_CASE_ACTIVITYPHASE(): Array<string>{
+    return ["P", "E", "D"];
+  }
+
+  public get WORKCENTERSACTIVITIES_CASE_UNITY(): string{
+    return "H";
+  }
 }

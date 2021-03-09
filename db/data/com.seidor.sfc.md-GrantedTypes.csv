@@ -1,6 +1,6 @@
-ID,code,description
-427ef85a-aef2-464b-89f6-6a3ce64f2e01,000,Sin tiempo concedido
-427ef85a-aef2-464b-89f6-6a3ce64f2e02,001,Valor directo (no depende de cantidad)
-427ef85a-aef2-464b-89f6-6a3ce64f2e03,002,Multiplicar por cantidad operación / cantidad de referencia
-427ef85a-aef2-464b-89f6-6a3ce64f2e04,901,Rutina de usuario 01
-427ef85a-aef2-464b-89f6-6a3ce64f2e05,902,Rutina de usuario 02
+ID;code;description
+427ef85a-aef2-464b-89f6-6a3ce64f2e01;000;Sin tiempo concedido
+427ef85a-aef2-464b-89f6-6a3ce64f2e02;001;Valor directo (no depende de cantidad)
+427ef85a-aef2-464b-89f6-6a3ce64f2e03;002;Multiplicar por cantidad operación / cantidad de referencia
+427ef85a-aef2-464b-89f6-6a3ce64f2e04;901;Rutina de usuario 01
+427ef85a-aef2-464b-89f6-6a3ce64f2e05;902;Rutina de usuario 02
