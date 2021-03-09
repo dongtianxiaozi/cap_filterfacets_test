@@ -60,7 +60,7 @@ annotate OrderService.VH_Plants with {
         }
     );
     _text @(
-        title : '{i18n>workCenter}',
+        title : '{i18n>plant}',
         UI    : {HiddenFilter : true}
     );
 }
