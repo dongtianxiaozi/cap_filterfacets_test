@@ -7,7 +7,8 @@ annotate OrderService.OrderClasses with {
     @UI.Hidden : true;
 
     code
-    @title     : '{i18n>orderClassCode}';
+    @title     : '{i18n>orderClassCode}'
+    @Common.IsUpperCase;
 
     toPlant
     @title     : '{i18n>plant}'
