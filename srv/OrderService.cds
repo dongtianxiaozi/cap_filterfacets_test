@@ -68,8 +68,8 @@ service OrderService @(requires : ['user']) {
             *,
             toPlant       : redirected to Plants,
             toResponsible : redirected to Responsibles,
-            toStations: redirected to Stations_WorkCenters,
-            toActivities: redirected to WorkCenters_Activities
+            toStations    : redirected to Stations_WorkCenters,
+            toActivities  : redirected to WorkCenters_Activities
         };
 
     @odata.draft.enabled
@@ -289,7 +289,8 @@ service OrderService @(requires : ['user']) {
     entity Activities               as
         select from md.Activities {
             *,
-            toUnit : redirected to Units
+            toUnit        : redirected to Units,
+            toWorkCenters : redirected to WorkCenters_Activities
         };
 
     @odata.draft.enabled
