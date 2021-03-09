@@ -7,7 +7,12 @@ annotate OrderService.Responsibles with {
     @UI.Hidden;
 
     toPlant
-    @title: '{i18n>plants}';
+    @title: '{i18n>plants}'
+        @(Common : {Text : {
+        $value                 : toPlant.code,
+        ![@UI.TextArrangement] : #TextOnly
+    }});
+
 
     description
     @title : '{i18n>description}';   
