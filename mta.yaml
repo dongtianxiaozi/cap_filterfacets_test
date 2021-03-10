@@ -120,16 +120,20 @@ modules:
           name: manage_oee_relevancies
           target-path: resources/
         - artifacts:
-            - manage_units-content.zip
-          name: manage_units
-          target-path: resources/
-        - artifacts:
             - activity_phases-content.zip
           name: manage_activity_phases
           target-path: resources/
         - artifacts:
             - manage_plants-content.zip
           name: manage_plants
+          target-path: resources/
+        - artifacts:
+            - manage_granted_types-content.zip
+          name: manage_granted_types
+          target-path: resources/
+        - artifacts:
+            - manage_units-content.zip
+          name: manage_units
           target-path: resources/
         - artifacts:
             - manage_roles-content.zip
@@ -141,6 +145,17 @@ modules:
     # --------------------------------------------------------------
     type: html5
     path: app/manage_oee_relevancies
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+
+  # -------------------- MANAGE_GRANTED_TYPES APP MODULE -------------------
+  - name: manage_granted_types
+    # ------------------------------------------------------------
+    type: html5
+    path: app/manage_granted_types
     build-parameters:
       builder: custom
       commands:
@@ -167,8 +182,8 @@ modules:
       builder: custom
       commands:
         - npm run build
-      supported-platforms: []
-  
+      supported-platforms: []  
+      
   # -------------------- MANAGE_UNITS APP MODULE -------------------
   - name: manage_units
     # ------------------------------------------------------------
