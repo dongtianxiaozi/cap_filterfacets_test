@@ -21,7 +21,6 @@ export class VHPlantsHandler {
 	async before(@Req() req: Request, @Data() plants: OrderService.IPlants, @User() incommingUser: Promise<IUser>) {
 		this.logger.i(VHPlantsHandler.name, () => `@BeforeRead ${VHPlantsHandler.name}: start`);
 		const userUseCase: GetUserUseCase = DIContainer.get(GetUserUseCase);
-		// const useCase: GetResponsiblesUseCase = DIContainer.get(GetResponsiblesUseCase);
 		const resultUsers = await userUseCase.execute({
 			id: (await incommingUser).username,
 		});

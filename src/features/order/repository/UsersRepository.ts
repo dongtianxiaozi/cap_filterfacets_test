@@ -28,10 +28,6 @@ export class UsersRepository {
 				SELECT: {
 					from: { ref: [OrderService.Entity.Users] },
 					where: [{ ref: ['code'] }, '=', { val: id }],
-					// columns: [
-					// 	{ ref: ['toType'], expand: [{ val: ['*'] }, { ref: ['code'] }], as: 'ID' },
-					// 	// { ref: ['toType'], expand: [{ val:  }] },
-					// ],
 				},
 			});
 			if (resultUsers.length == 1) {
