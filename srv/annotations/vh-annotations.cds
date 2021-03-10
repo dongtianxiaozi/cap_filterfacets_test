@@ -48,16 +48,19 @@ annotate OrderService.VH_Plants with {
             Hidden       : true
         },
         Common : {Text : {
-            $value                 : _text,
+            $value                 : _code,
             ![@UI.TextArrangement] : #TextOnly
         }}
     );
     _code @(
-        title : '{i18n>code}',
-        UI    : {HiddenFilter : true}
+        title  : '{i18n>code}',
+        UI     : {
+            Hidden       : false,
+            HiddenFilter : true
+        }
     );
     _text @(
         title : '{i18n>plant}',
         UI    : {HiddenFilter : true}
     );
-};
+}

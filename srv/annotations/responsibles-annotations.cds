@@ -12,6 +12,10 @@ annotate OrderService.Responsibles with {
         $value                 : toPlant.code,
         ![@UI.TextArrangement] : #TextOnly
     }});
+            @(Common : {Text : {
+        $value                 : toPlant.description,
+        ![@UI.TextArrangement] : #TextOnly
+    }})
 
 
     description

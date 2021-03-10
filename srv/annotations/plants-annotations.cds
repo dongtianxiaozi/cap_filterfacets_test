@@ -19,16 +19,16 @@ annotate OrderService.Plants with {
 annotate OrderService.Plants with @(
     Common.SemanticKey : [code, ],
     UI                 : {
-        Identification            : [{
+        Identification  : [{
             $Type : 'UI.DataField',
             Value : code,
         }],
-        SelectionFields           : [],
-        LineItem                  : [
+        SelectionFields : [],
+        LineItem        : [
             {Value : code},
             {Value : description},
         ],
-        HeaderInfo                : {
+        HeaderInfo      : {
             TypeName       : '{i18n>plant}',
             TypeNamePlural : '{i18n>plants}',
             Title          : {Value : code},
@@ -45,7 +45,6 @@ annotate OrderService.Plants with @(
                 {
                     $Type : 'UI.DataField',
                     Value : code
-
                 },
                 {
                     $Type : 'UI.DataField',

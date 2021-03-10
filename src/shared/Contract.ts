@@ -11,6 +11,7 @@ export namespace com.seidor.sfc {
         description: string;
         toUnit?: IUnits;
         toUnit_ID?: string;
+        toWorkCenters?: IWorkCenters_Activities[];
     }
 
     export interface IActivityPhases extends ICuid {
@@ -32,6 +33,15 @@ export namespace com.seidor.sfc {
     export interface IIncidents extends ICuid {
         code: string;
         description: string;
+    }
+
+    export interface IMaterials extends ICuid, IManaged {
+        code: string;
+        description: string;
+        toUnit?: IUnits;
+        toUnit_ID?: string;
+        type: string;
+        isBatchManaged?: boolean;
     }
 
     export interface IMaterialsToSync extends ICuid, IManaged {
@@ -89,6 +99,8 @@ export namespace com.seidor.sfc {
     export interface IStations extends ICuid, IManaged {
         code: string;
         description: string;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
         toOperator?: IOperators;
         toOperator_ID?: string;
         turnRequired?: boolean;
@@ -106,6 +118,7 @@ export namespace com.seidor.sfc {
         ctecAuthorizationRequired?: boolean;
         toOperators?: IStations_Operators[];
         toStoppages?: IStations_Stoppages[];
+        toWorkCenters?: IStations_WorkCenters[];
     }
 
     export interface IStations_Operators extends ICuid {
@@ -130,6 +143,10 @@ export namespace com.seidor.sfc {
     }
 
     export interface IStations_WorkCenters extends ICuid {
+        toStation?: IStations;
+        toStation_ID?: string;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
     }
 
     export interface IStoppages extends ICuid {
@@ -212,6 +229,22 @@ export namespace com.seidor.sfc {
         toPlant_ID?: string;
         toResponsible?: IResponsibles;
         toResponsible_ID?: string;
+        toStations?: IStations_WorkCenters[];
+        toActivities?: IWorkCenters_Activities[];
+    }
+
+    export interface IWorkCenters_Activities extends ICuid {
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
+        toActivity?: IActivities;
+        toActivity_ID?: string;
+        number: string;
+        toPhase?: IActivityPhases;
+        toPhase_ID?: string;
+        toGrantedType?: IGrantedTypes;
+        toGrantedType_ID?: string;
+        toOeeRelevancy?: IOeeRelevancies;
+        toOeeRelevancy_ID?: string;
     }
 
     export interface IComponents extends ICuid, IManaged {
@@ -282,6 +315,7 @@ export namespace com.seidor.sfc {
         DocumentClasses = "com.seidor.sfc.md.DocumentClasses",
         GrantedTypes = "com.seidor.sfc.md.GrantedTypes",
         Incidents = "com.seidor.sfc.md.Incidents",
+        Materials = "com.seidor.sfc.md.Materials",
         MaterialsToSync = "com.seidor.sfc.md.MaterialsToSync",
         OeeRelevancies = "com.seidor.sfc.md.OeeRelevancies",
         Operators = "com.seidor.sfc.md.Operators",
@@ -304,6 +338,7 @@ export namespace com.seidor.sfc {
         Units = "com.seidor.sfc.md.Units",
         Users = "com.seidor.sfc.md.Users",
         WorkCenters = "com.seidor.sfc.md.WorkCenters",
+        WorkCenters_Activities = "com.seidor.sfc.md.WorkCenters_Activities",
         Components = "com.seidor.sfc.td.Components",
         Operations = "com.seidor.sfc.td.Operations",
         Orders = "com.seidor.sfc.td.Orders",
@@ -316,6 +351,7 @@ export namespace com.seidor.sfc {
         DocumentClasses = "DocumentClasses",
         GrantedTypes = "GrantedTypes",
         Incidents = "Incidents",
+        Materials = "Materials",
         MaterialsToSync = "MaterialsToSync",
         OeeRelevancies = "OeeRelevancies",
         Operators = "Operators",
@@ -338,23 +374,11 @@ export namespace com.seidor.sfc {
         Units = "Units",
         Users = "Users",
         WorkCenters = "WorkCenters",
+        WorkCenters_Activities = "WorkCenters_Activities",
         Components = "Components",
         Operations = "Operations",
         Orders = "Orders",
         Queues = "Queues"
-    }
-
-    export interface IWorkCenters extends ICuid, IManaged {
-        code: WorkCenter;
-        plant: WorkCenterPlant;
-        description: string;
-        responsible: string;
-        queueType: string;
-        isOeeRelevant?: boolean;
-        toPlant?: IPlants;
-        toPlant_ID?: string;
-        toResponsible?: IResponsibles;
-        toResponsible_ID?: string;
     }
 }
 
@@ -399,6 +423,7 @@ export namespace OrderService {
         description: string;
         toUnit?: IUnits;
         toUnit_ID?: string;
+        toWorkCenters?: IWorkCenters_Activities[];
     }
 
     export interface IActivityPhases {
@@ -444,6 +469,20 @@ export namespace OrderService {
         ID: string;
         code: string;
         description: string;
+    }
+
+    export interface IMaterials {
+        ID: string;
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
+        code: string;
+        description: string;
+        toUnit?: IUnits;
+        toUnit_ID?: string;
+        type: string;
+        isBatchManaged?: boolean;
     }
 
     export interface IMaterialsToSync {
@@ -570,6 +609,8 @@ export namespace OrderService {
         modifiedBy?: string;
         code: string;
         description: string;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
         toOperator?: IOperators;
         toOperator_ID?: string;
         turnRequired?: boolean;
@@ -587,6 +628,7 @@ export namespace OrderService {
         ctecAuthorizationRequired?: boolean;
         toOperators?: IStations_Operators[];
         toStoppages?: IStations_Stoppages[];
+        toWorkCenters?: IStations_WorkCenters[];
     }
 
     export interface IStations_Operators {
@@ -611,6 +653,14 @@ export namespace OrderService {
         toStation_ID?: string;
         toTurn?: ITurns;
         toTurn_ID?: string;
+    }
+
+    export interface IStations_WorkCenters {
+        ID: string;
+        toStation?: IStations;
+        toStation_ID?: string;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
     }
 
     export interface IStoppages {
@@ -755,6 +805,23 @@ export namespace OrderService {
         toPlant_ID?: string;
         toResponsible?: IResponsibles;
         toResponsible_ID?: string;
+        toStations?: IStations_WorkCenters[];
+        toActivities?: IWorkCenters_Activities[];
+    }
+
+    export interface IWorkCenters_Activities {
+        ID: string;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
+        toActivity?: IActivities;
+        toActivity_ID?: string;
+        number: string;
+        toPhase?: IActivityPhases;
+        toPhase_ID?: string;
+        toGrantedType?: IGrantedTypes;
+        toGrantedType_ID?: string;
+        toOeeRelevancy?: IOeeRelevancies;
+        toOeeRelevancy_ID?: string;
     }
 
     export enum Entity {
@@ -764,6 +831,7 @@ export namespace OrderService {
         DocumentClasses = "OrderService.DocumentClasses",
         GrantedTypes = "OrderService.GrantedTypes",
         Incidents = "OrderService.Incidents",
+        Materials = "OrderService.Materials",
         MaterialsToSync = "OrderService.MaterialsToSync",
         OeeRelevancies = "OrderService.OeeRelevancies",
         Operations = "OrderService.Operations",
@@ -778,6 +846,7 @@ export namespace OrderService {
         Stations_Operators = "OrderService.Stations_Operators",
         Stations_Stoppages = "OrderService.Stations_Stoppages",
         Stations_Turns = "OrderService.Stations_Turns",
+        Stations_WorkCenters = "OrderService.Stations_WorkCenters",
         Stoppages = "OrderService.Stoppages",
         Stoppages_Types = "OrderService.Stoppages_Types",
         Supervisors = "OrderService.Supervisors",
@@ -793,7 +862,8 @@ export namespace OrderService {
         VH_Roles = "OrderService.VH_Roles",
         VH_Turns = "OrderService.VH_Turns",
         VH_WorkCenters = "OrderService.VH_WorkCenters",
-        WorkCenters = "OrderService.WorkCenters"
+        WorkCenters = "OrderService.WorkCenters",
+        WorkCenters_Activities = "OrderService.WorkCenters_Activities"
     }
 
     export enum SanitizedEntity {
@@ -803,6 +873,7 @@ export namespace OrderService {
         DocumentClasses = "DocumentClasses",
         GrantedTypes = "GrantedTypes",
         Incidents = "Incidents",
+        Materials = "Materials",
         MaterialsToSync = "MaterialsToSync",
         OeeRelevancies = "OeeRelevancies",
         Operations = "Operations",
@@ -817,6 +888,7 @@ export namespace OrderService {
         Stations_Operators = "Stations_Operators",
         Stations_Stoppages = "Stations_Stoppages",
         Stations_Turns = "Stations_Turns",
+        Stations_WorkCenters = "Stations_WorkCenters",
         Stoppages = "Stoppages",
         Stoppages_Types = "Stoppages_Types",
         Supervisors = "Supervisors",
@@ -832,7 +904,8 @@ export namespace OrderService {
         VH_Roles = "VH_Roles",
         VH_Turns = "VH_Turns",
         VH_WorkCenters = "VH_WorkCenters",
-        WorkCenters = "WorkCenters"
+        WorkCenters = "WorkCenters",
+        WorkCenters_Activities = "WorkCenters_Activities"
     }
 }
 

@@ -17,8 +17,7 @@ service OrderService @(requires : ['user']) {
 
     @readonly
     entity Stations                 as projection on md.Stations {
-        * , toOperators : redirected to Stations_Operators,
-        toStoppages : redirected to Stations_Stoppages,
+        * , toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages, toWorkCenters : redirected to Stations_WorkCenters, toWorkCenter : redirected to WorkCenters
     }
 
     @odata.draft.enabled
@@ -27,10 +26,13 @@ service OrderService @(requires : ['user']) {
     }
 
     @odata.draft.enabled
-    entity Stations_Stoppages as projection on md.Stations_Stoppages {
-        *,
-        toStation : redirected to Stations,
-        toStoppage: redirected to Stoppages
+    entity Stations_Stoppages       as projection on md.Stations_Stoppages {
+        * , toStation : redirected to Stations, toStoppage : redirected to Stoppages
+    }
+
+    @odata.draft.enabled
+    entity Stations_WorkCenters     as projection on md.Stations_WorkCenters {
+        * , toStation : redirected to Stations, toWorkCenter : redirected to WorkCenters
     }
 
     entity Components               as projection on td.Components {
@@ -65,7 +67,20 @@ service OrderService @(requires : ['user']) {
         select from md.WorkCenters {
             *,
             toPlant       : redirected to Plants,
-            toResponsible : redirected to Responsibles
+            toResponsible : redirected to Responsibles,
+            toStations    : redirected to Stations_WorkCenters,
+            toActivities  : redirected to WorkCenters_Activities
+        };
+
+    @odata.draft.enabled
+    entity WorkCenters_Activities   as
+        select from md.WorkCenters_Activities {
+            *,
+            toWorkCenter   : redirected to WorkCenters,
+            toActivity     : redirected to Activities,
+            toPhase        : redirected to ActivityPhases,
+            toGrantedType  : redirected to GrantedTypes,
+            toOeeRelevancy : redirected to OeeRelevancies,
         };
 
     @odata.draft.enabled
@@ -175,7 +190,6 @@ service OrderService @(requires : ['user']) {
             toTurns : redirected to Supervisors_Turns,
         };
 
-    @readonly
     @odata.draft.enabled
     entity Responsibles             as
         select from md.Responsibles {
@@ -267,7 +281,7 @@ service OrderService @(requires : ['user']) {
     entity Stoppages                as
         select from md.Stoppages {
             *,
-            type : redirected to Stoppages_Types,
+            type       : redirected to Stoppages_Types,
             toStations : redirected to Stations_Stoppages
         };
 
@@ -275,7 +289,8 @@ service OrderService @(requires : ['user']) {
     entity Activities               as
         select from md.Activities {
             *,
-            toUnit : redirected to Units
+            toUnit        : redirected to Units,
+            toWorkCenters : redirected to WorkCenters_Activities
         };
 
     @odata.draft.enabled
@@ -283,5 +298,12 @@ service OrderService @(requires : ['user']) {
         select from md.DocumentClasses {
             *
         };
+
+    @readonly
+    entity Materials                as
+        select from md.Materials {
+            *,
+            toUnit : redirected to Units
+        }
 
 }
