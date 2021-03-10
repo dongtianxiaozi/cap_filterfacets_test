@@ -128,6 +128,10 @@ modules:
           name: manage_plants
           target-path: resources/
         - artifacts:
+            - order_classes-content.zip
+          name: manage_order_classes
+          target-path: resources/  
+        - artifacts:
             - manage_granted_types-content.zip
           name: manage_granted_types
           target-path: resources/
@@ -162,6 +166,17 @@ modules:
         - npm run build
       supported-platforms: []
 
+# -------------------- MANAGE_ORDER_CLASSES APP MODULE -------------------
+  - name: manage_order_classes
+  # ------------------------------------------------------------ 
+    type: html5
+    path: app/manage_order_classes
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported platforms: []
+
   # -------------------- MANAGE_ACTIVITY_PHASES APP MODULE -------------------
   - name: manage_activity_phases
     # ------------------------------------------------------------
@@ -171,7 +186,7 @@ modules:
       builder: custom
       commands:
         - npm run build
-      supported-platforms: []
+      supported platforms: []
 
   # -------------------- MANAGE_ROLES APP MODULE -------------------
   - name: manage_roles
@@ -182,11 +197,11 @@ modules:
       builder: custom
       commands:
         - npm run build
-      supported-platforms: []  
+      supported-platforms: []
       
   # -------------------- MANAGE_UNITS APP MODULE -------------------
   - name: manage_units
-    # ------------------------------------------------------------
+  # ------------------------------------------------------------
     type: html5
     path: app/manage_units
     build-parameters:
@@ -195,9 +210,9 @@ modules:
         - npm run build
       supported-platforms: []
 
-  # -------------------- MANAGE_PLANTS APP MODULE -------------------
+# -------------------- MANAGE_PLANTS APP MODULE -------------------
   - name: manage_plants
-    # ------------------------------------------------------------
+  # ------------------------------------------------------------
     type: html5
     path: app/manage_plants
     build-parameters:
