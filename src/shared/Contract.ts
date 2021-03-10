@@ -35,6 +35,15 @@ export namespace com.seidor.sfc {
         description: string;
     }
 
+    export interface IMaterials extends ICuid, IManaged {
+        code: string;
+        description: string;
+        toUnit?: IUnits;
+        toUnit_ID?: string;
+        type: string;
+        isBatchManaged?: boolean;
+    }
+
     export interface IMaterialsToSync extends ICuid, IManaged {
         code: string;
         toPlant?: IPlants;
@@ -306,6 +315,7 @@ export namespace com.seidor.sfc {
         DocumentClasses = "com.seidor.sfc.md.DocumentClasses",
         GrantedTypes = "com.seidor.sfc.md.GrantedTypes",
         Incidents = "com.seidor.sfc.md.Incidents",
+        Materials = "com.seidor.sfc.md.Materials",
         MaterialsToSync = "com.seidor.sfc.md.MaterialsToSync",
         OeeRelevancies = "com.seidor.sfc.md.OeeRelevancies",
         Operators = "com.seidor.sfc.md.Operators",
@@ -341,6 +351,7 @@ export namespace com.seidor.sfc {
         DocumentClasses = "DocumentClasses",
         GrantedTypes = "GrantedTypes",
         Incidents = "Incidents",
+        Materials = "Materials",
         MaterialsToSync = "MaterialsToSync",
         OeeRelevancies = "OeeRelevancies",
         Operators = "Operators",
@@ -458,6 +469,20 @@ export namespace OrderService {
         ID: string;
         code: string;
         description: string;
+    }
+
+    export interface IMaterials {
+        ID: string;
+        createdAt?: Date;
+        createdBy?: string;
+        modifiedAt?: Date;
+        modifiedBy?: string;
+        code: string;
+        description: string;
+        toUnit?: IUnits;
+        toUnit_ID?: string;
+        type: string;
+        isBatchManaged?: boolean;
     }
 
     export interface IMaterialsToSync {
@@ -806,6 +831,7 @@ export namespace OrderService {
         DocumentClasses = "OrderService.DocumentClasses",
         GrantedTypes = "OrderService.GrantedTypes",
         Incidents = "OrderService.Incidents",
+        Materials = "OrderService.Materials",
         MaterialsToSync = "OrderService.MaterialsToSync",
         OeeRelevancies = "OrderService.OeeRelevancies",
         Operations = "OrderService.Operations",
@@ -847,6 +873,7 @@ export namespace OrderService {
         DocumentClasses = "DocumentClasses",
         GrantedTypes = "GrantedTypes",
         Incidents = "Incidents",
+        Materials = "Materials",
         MaterialsToSync = "MaterialsToSync",
         OeeRelevancies = "OeeRelevancies",
         Operations = "Operations",
