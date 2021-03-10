@@ -72,7 +72,7 @@ annotate OrderService.Responsibles with @(
                 },
                 {
                     $Type : 'UI.DataField',
-                    Value : toPlant.description,
+                    Value : toPlant.description
                 },
             ]
         },
