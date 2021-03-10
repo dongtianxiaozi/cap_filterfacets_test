@@ -119,7 +119,7 @@ modules:
      requires:  
      - artifacts:
        - materials_sync-content.zip
-       name: materials_sync
+       name: manage_materials_to_sync
        target-path: resources/  
 
  # -------------------- MANAGE_MATERIALS_TO_SYNC APP MODULE -------------------
