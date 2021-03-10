@@ -116,6 +116,10 @@ modules:
       build-result: resources
       requires:
         - artifacts:
+            - oee_relevancies-content.zip
+          name: manage_oee_relevancies
+          target-path: resources/
+        - artifacts:
             - activity_phases-content.zip
           name: manage_activity_phases
           target-path: resources/
@@ -135,6 +139,17 @@ modules:
             - manage_roles-content.zip
           name: manage_roles
           target-path: resources/
+          
+  #-------------------- MANAGE_OEE_RELEVANCIES ---------------------
+  - name: manage_oee_relevancies
+    # --------------------------------------------------------------
+    type: html5
+    path: app/manage_oee_relevancies
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
 
   # -------------------- MANAGE_GRANTED_TYPES APP MODULE -------------------
   - name: manage_granted_types
@@ -167,7 +182,7 @@ modules:
       builder: custom
       commands:
         - npm run build
-      supported-platforms: []
+      supported-platforms: []  
       
   # -------------------- MANAGE_UNITS APP MODULE -------------------
   - name: manage_units
