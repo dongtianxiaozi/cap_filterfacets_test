@@ -85,6 +85,8 @@
     "app\\v2_operations",
     "app\\v2_turns",
     "app\\manage_order_classes",
+    "app\\manage_oee_relevancies",
+    "app\\manage_granted_types",
     "app\\manage_activity_phases",
     "app\\manage_roles",
     "app\\manage_units",

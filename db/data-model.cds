@@ -52,7 +52,7 @@ context md {
   entity Stations : cuid, managed {
     code                             : String(4);
     description                      : String(30);
-    // toWorkCenter                     : Association to WorkCenters;
+    toWorkCenter                     : Association to WorkCenters;
     toOperator                       : Association to Operators;
     turnRequired                     : Boolean not null default false;
     turnDateIsToday                  : Boolean not null default false;

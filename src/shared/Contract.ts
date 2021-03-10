@@ -11,6 +11,7 @@ export namespace com.seidor.sfc {
         description: string;
         toUnit?: IUnits;
         toUnit_ID?: string;
+        toWorkCenters?: IWorkCenters_Activities[];
     }
 
     export interface IActivityPhases extends ICuid {
@@ -89,6 +90,8 @@ export namespace com.seidor.sfc {
     export interface IStations extends ICuid, IManaged {
         code: string;
         description: string;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
         toOperator?: IOperators;
         toOperator_ID?: string;
         turnRequired?: boolean;
@@ -106,6 +109,7 @@ export namespace com.seidor.sfc {
         ctecAuthorizationRequired?: boolean;
         toOperators?: IStations_Operators[];
         toStoppages?: IStations_Stoppages[];
+        toWorkCenters?: IStations_WorkCenters[];
     }
 
     export interface IStations_Operators extends ICuid {
@@ -130,6 +134,10 @@ export namespace com.seidor.sfc {
     }
 
     export interface IStations_WorkCenters extends ICuid {
+        toStation?: IStations;
+        toStation_ID?: string;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
     }
 
     export interface IStoppages extends ICuid {
@@ -212,6 +220,8 @@ export namespace com.seidor.sfc {
         toPlant_ID?: string;
         toResponsible?: IResponsibles;
         toResponsible_ID?: string;
+        toStations?: IStations_WorkCenters[];
+        toActivities?: IWorkCenters_Activities[];
     }
 
     export interface IWorkCenters_Activities extends ICuid {
@@ -402,6 +412,7 @@ export namespace OrderService {
         description: string;
         toUnit?: IUnits;
         toUnit_ID?: string;
+        toWorkCenters?: IWorkCenters_Activities[];
     }
 
     export interface IActivityPhases {
@@ -573,6 +584,8 @@ export namespace OrderService {
         modifiedBy?: string;
         code: string;
         description: string;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
         toOperator?: IOperators;
         toOperator_ID?: string;
         turnRequired?: boolean;
@@ -590,6 +603,7 @@ export namespace OrderService {
         ctecAuthorizationRequired?: boolean;
         toOperators?: IStations_Operators[];
         toStoppages?: IStations_Stoppages[];
+        toWorkCenters?: IStations_WorkCenters[];
     }
 
     export interface IStations_Operators {
@@ -614,6 +628,14 @@ export namespace OrderService {
         toStation_ID?: string;
         toTurn?: ITurns;
         toTurn_ID?: string;
+    }
+
+    export interface IStations_WorkCenters {
+        ID: string;
+        toStation?: IStations;
+        toStation_ID?: string;
+        toWorkCenter?: IWorkCenters;
+        toWorkCenter_ID?: string;
     }
 
     export interface IStoppages {
@@ -758,6 +780,8 @@ export namespace OrderService {
         toPlant_ID?: string;
         toResponsible?: IResponsibles;
         toResponsible_ID?: string;
+        toStations?: IStations_WorkCenters[];
+        toActivities?: IWorkCenters_Activities[];
     }
 
     export interface IWorkCenters_Activities {
@@ -796,6 +820,7 @@ export namespace OrderService {
         Stations_Operators = "OrderService.Stations_Operators",
         Stations_Stoppages = "OrderService.Stations_Stoppages",
         Stations_Turns = "OrderService.Stations_Turns",
+        Stations_WorkCenters = "OrderService.Stations_WorkCenters",
         Stoppages = "OrderService.Stoppages",
         Stoppages_Types = "OrderService.Stoppages_Types",
         Supervisors = "OrderService.Supervisors",
@@ -836,6 +861,7 @@ export namespace OrderService {
         Stations_Operators = "Stations_Operators",
         Stations_Stoppages = "Stations_Stoppages",
         Stations_Turns = "Stations_Turns",
+        Stations_WorkCenters = "Stations_WorkCenters",
         Stoppages = "Stoppages",
         Stoppages_Types = "Stoppages_Types",
         Supervisors = "Supervisors",
