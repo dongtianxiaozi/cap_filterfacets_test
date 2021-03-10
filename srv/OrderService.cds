@@ -299,4 +299,11 @@ service OrderService @(requires : ['user']) {
             *
         };
 
+    @readonly
+    entity Materials                as
+        select from md.Materials {
+            *,
+            toUnit : redirected to Units
+        }
+
 }

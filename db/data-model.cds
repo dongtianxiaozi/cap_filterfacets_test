@@ -299,6 +299,15 @@ context md {
     application   : String(3);
   }
 
+  @assert.unique : {code : [code], }
+  entity Materials : cuid, managed {
+    code           : String(40);
+    description    : localized String(40);
+    toUnit         : Association to Units;
+    type           : String(4);
+    isBatchManaged : Boolean not null default false;
+  }
+
 
 }
 
