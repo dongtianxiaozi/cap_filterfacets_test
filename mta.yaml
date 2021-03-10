@@ -124,6 +124,10 @@ modules:
           name: manage_plants
           target-path: resources/
         - artifacts:
+            - manage_granted_types-content.zip
+          name: manage_granted_types
+          target-path: resources/
+        - artifacts:
             - manage_units-content.zip
           name: manage_units
           target-path: resources/
@@ -131,6 +135,17 @@ modules:
             - manage_roles-content.zip
           name: manage_roles
           target-path: resources/
+
+  # -------------------- MANAGE_GRANTED_TYPES APP MODULE -------------------
+  - name: manage_granted_types
+    # ------------------------------------------------------------
+    type: html5
+    path: app/manage_granted_types
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
 
   # -------------------- MANAGE_ACTIVITY_PHASES APP MODULE -------------------
   - name: manage_activity_phases
@@ -153,6 +168,7 @@ modules:
       commands:
         - npm run build
       supported-platforms: []
+      
   # -------------------- MANAGE_UNITS APP MODULE -------------------
   - name: manage_units
     # ------------------------------------------------------------
