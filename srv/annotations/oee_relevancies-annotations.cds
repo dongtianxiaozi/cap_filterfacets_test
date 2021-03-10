@@ -7,7 +7,8 @@ annotate OrderService.OeeRelevancies with {
     @UI.Hidden : true;
 
     code
-    @title     : '{i18n>oeeCode}';
+    @title     : '{i18n>oeeCode}'
+    @Common.IsUpperCase;
 
     description
     @title     : '{i18n>oee}';

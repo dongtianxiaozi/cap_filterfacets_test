@@ -2,14 +2,55 @@ namespace com.seidor.sfc;
 
 using {OrderService} from '../OrderService';
 
-@title: '{i18n>plant}'
 annotate OrderService.Plants with {
-    code @title: '{i18n>plant}';
-    description @title: '{i18n>description}';
-    ID 
-    @title: '{i18n>ID}'
-    @(Common : {
+    ID
+    @UI.Hidden;
+    code
+    @title : '{i18n>plantsCode}'
+    @Common.IsUpperCase;
+    /*@(Common : {
         Text            : description,
-        TextArrangement : #TextOnly
-    }); 
-};
+        TextArrangement : #TextLast
+    })*/
+    description
+    @title : '{i18n>plantsDescription}';
+}
+
+annotate OrderService.Plants with @(
+    Common.SemanticKey : [code, ],
+    UI                 : {
+        Identification  : [{
+            $Type : 'UI.DataField',
+            Value : code,
+        }],
+        SelectionFields : [],
+        LineItem        : [
+            {Value : code},
+            {Value : description},
+        ],
+        HeaderInfo      : {
+            TypeName       : '{i18n>plant}',
+            TypeNamePlural : '{i18n>plants}',
+            Title          : {Value : code},
+            Description    : {Value : description}
+        },
+        Facets                    : [{
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>details}',
+            Target : '@UI.FieldGroup#PlantsDetails'
+        }],
+        FieldGroup #PlantsDetails : {
+            Label : '{i18n>details}',
+            Data  : [
+                {
+                    $Type : 'UI.DataField',
+                    Value : code
+                },
+                {
+                    $Type : 'UI.DataField',
+                    Value : description
+                },
+            ]
+        }
+    }
+);
