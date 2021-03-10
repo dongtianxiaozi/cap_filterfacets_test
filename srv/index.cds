@@ -13,5 +13,8 @@ using from './annotations/vh-annotations';
 using from './annotations/turns-annotations';
 using from './annotations/stations-annotations';
 using from './annotations/stations_turns-annotations';
+using from './annotations/granted_types-annotations';
+using from './annotations/activity_phases-annotations';
+using from './annotations/roles-annotations';
 using from './annotations/units-annotations';
 using from './annotations/plants-annotations';

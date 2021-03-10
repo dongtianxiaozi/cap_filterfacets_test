@@ -11,6 +11,7 @@ export namespace com.seidor.sfc {
         description: string;
         toUnit?: IUnits;
         toUnit_ID?: string;
+        toWorkCenters?: IWorkCenters_Activities[];
     }
 
     export interface IActivityPhases extends ICuid {
@@ -220,6 +221,7 @@ export namespace com.seidor.sfc {
         toResponsible?: IResponsibles;
         toResponsible_ID?: string;
         toStations?: IStations_WorkCenters[];
+        toActivities?: IWorkCenters_Activities[];
     }
 
     export interface IWorkCenters_Activities extends ICuid {
@@ -410,6 +412,7 @@ export namespace OrderService {
         description: string;
         toUnit?: IUnits;
         toUnit_ID?: string;
+        toWorkCenters?: IWorkCenters_Activities[];
     }
 
     export interface IActivityPhases {
@@ -778,6 +781,7 @@ export namespace OrderService {
         toResponsible?: IResponsibles;
         toResponsible_ID?: string;
         toStations?: IStations_WorkCenters[];
+        toActivities?: IWorkCenters_Activities[];
     }
 
     export interface IWorkCenters_Activities {

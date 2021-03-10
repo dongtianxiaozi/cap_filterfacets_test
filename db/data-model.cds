@@ -92,6 +92,8 @@ context md {
     toResponsible : Association to Responsibles;
     toStations    : Association to many Stations_WorkCenters
                       on toStations.toWorkCenter = $self;
+    toActivities  : Association to many WorkCenters_Activities
+                      on toActivities.toWorkCenter = $self;
   }
 
   @assert.unique : {toWorkCenter : [
@@ -279,9 +281,11 @@ context md {
 
   @assert.unique : {code : [code], }
   entity Activities : cuid {
-    code        : String(6);
-    description : localized String(20);
-    toUnit      : Association to Units;
+    code          : String(6);
+    description   : localized String(20);
+    toUnit        : Association to Units;
+    toWorkCenters : Association to many WorkCenters_Activities
+                      on toWorkCenters.toActivity = $self;
   }
 
   @assert.unique : {objectClass : [
