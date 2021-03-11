@@ -17,7 +17,7 @@ annotate OrderService.DocumentClasses with {
 
 }
 
-/*annotate OrderService.DocumentClasses with @(
+annotate OrderService.DocumentClasses with @(
     Common.SemanticKey : [ ],
     UI                 : {
         Identification                : [{
@@ -59,4 +59,4 @@ annotate OrderService.DocumentClasses with {
             ]
         }
     }
-);*/
+);
