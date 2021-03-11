@@ -91,6 +91,7 @@
     "app\\manage_activity_phases",
     "app\\manage_roles",
     "app\\manage_units",
-    "app\\manage_plants"
+    "app\\manage_plants",
+    "app\\manage_materials"
   ]
 }

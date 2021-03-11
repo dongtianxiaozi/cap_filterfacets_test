@@ -130,7 +130,7 @@ modules:
         - artifacts:
             - order_classes-content.zip
           name: manage_order_classes
-          target-path: resources/  
+          target-path: resources/
         - artifacts:
             - manage_granted_types-content.zip
           name: manage_granted_types
@@ -146,8 +146,12 @@ modules:
         - artifacts:
             - materials_sync-content.zip
           name: manage_materials_to_sync
-          target-path: resources/  
-          
+          target-path: resources/
+        - artifacts:
+            - manage_materials-content.zip
+          name: manage_materials
+          target-path: resources/
+
   #-------------------- MANAGE_OEE_RELEVANCIES ---------------------
   - name: manage_oee_relevancies
     # --------------------------------------------------------------
@@ -172,7 +176,7 @@ modules:
 
   # -------------------- MANAGE_ORDER_CLASSES APP MODULE -------------------
   - name: manage_order_classes
-   # ------------------------------------------------------------ 
+    # ------------------------------------------------------------
     type: html5
     path: app/manage_order_classes
     build-parameters:
@@ -181,19 +185,19 @@ modules:
         - npm run build
       supported platforms: []
 
- # -------------------- MANAGE_MATERIALS_TO_SYNC APP MODULE -------------------
+  # -------------------- MANAGE_MATERIALS_TO_SYNC APP MODULE -------------------
   - name: manage_materials_to_sync
-   # ----------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------
     type: html5
     path: app/manage_materials_to_sync
     build-parameters:
-     builder: custom
-     commands:
-     - npm run build
-     supported-platforms: []  
- # -------------------- MANAGE_ACTIVITY_PHASES APP MODULE -------------------
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+  # -------------------- MANAGE_ACTIVITY_PHASES APP MODULE -------------------
   - name: manage_activity_phases
-   # ------------------------------------------------------------
+    # ------------------------------------------------------------
     type: html5
     path: app/manage_activity_phases
     build-parameters:
@@ -212,10 +216,10 @@ modules:
       commands:
         - npm run build
       supported-platforms: []
-      
+
   # -------------------- MANAGE_UNITS APP MODULE -------------------
   - name: manage_units
-  # ------------------------------------------------------------
+    # ------------------------------------------------------------
     type: html5
     path: app/manage_units
     build-parameters:
@@ -224,11 +228,22 @@ modules:
         - npm run build
       supported-platforms: []
 
-# -------------------- MANAGE_PLANTS APP MODULE -------------------
+  # -------------------- MANAGE_PLANTS APP MODULE -------------------
   - name: manage_plants
-  # ------------------------------------------------------------
+    # ------------------------------------------------------------
     type: html5
     path: app/manage_plants
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+
+  # -------------------- MANAGE_MATERIALS APP MODULE -------------------
+  - name: manage_materials
+    # ------------------------------------------------------------
+    type: html5
+    path: app/manage_materials
     build-parameters:
       builder: custom
       commands:
