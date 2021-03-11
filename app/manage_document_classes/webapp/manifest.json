@@ -44,7 +44,7 @@
                         "parameters": {},
                         "additionalParameters": "allowed"
                     },
-                    "semanticObject": "document_classes",
+                    "semanticObject": "documentClasses",
                     "action": "display"
                 }
             }   
@@ -161,6 +161,7 @@
                 "pages": {
                     "ObjectPage|DocumentClasses": {
                         "entitySet": "DocumentClasses",
+                        "editableHeaderContent": "true",
                         "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
                         "component": {
                             "name": "sap.suite.ui.generic.template.ObjectPage"

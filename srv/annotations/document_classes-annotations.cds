@@ -18,7 +18,7 @@ annotate OrderService.DocumentClasses with {
 }
 
 annotate OrderService.DocumentClasses with @(
-    Common.SemanticKey : [ ],
+    Common.SemanticKey : [objectClass],
     UI                 : {
         Identification                : [{
             $Type : 'UI.DataField',
