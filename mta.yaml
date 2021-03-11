@@ -143,6 +143,10 @@ modules:
             - manage_roles-content.zip
           name: manage_roles
           target-path: resources/
+        - artifacts:
+            - materials_sync-content.zip
+          name: manage_materials_to_sync
+          target-path: resources/  
           
   #-------------------- MANAGE_OEE_RELEVANCIES ---------------------
   - name: manage_oee_relevancies
@@ -166,9 +170,9 @@ modules:
         - npm run build
       supported-platforms: []
 
-# -------------------- MANAGE_ORDER_CLASSES APP MODULE -------------------
+  # -------------------- MANAGE_ORDER_CLASSES APP MODULE -------------------
   - name: manage_order_classes
-  # ------------------------------------------------------------ 
+   # ------------------------------------------------------------ 
     type: html5
     path: app/manage_order_classes
     build-parameters:
@@ -177,9 +181,19 @@ modules:
         - npm run build
       supported platforms: []
 
-  # -------------------- MANAGE_ACTIVITY_PHASES APP MODULE -------------------
+ # -------------------- MANAGE_MATERIALS_TO_SYNC APP MODULE -------------------
+  - name: manage_materials_to_sync
+   # ----------------------------------------------------------------------------
+    type: html5
+    path: app/manage_materials_to_sync
+    build-parameters:
+     builder: custom
+     commands:
+     - npm run build
+     supported-platforms: []  
+ # -------------------- MANAGE_ACTIVITY_PHASES APP MODULE -------------------
   - name: manage_activity_phases
-    # ------------------------------------------------------------
+   # ------------------------------------------------------------
     type: html5
     path: app/manage_activity_phases
     build-parameters:
