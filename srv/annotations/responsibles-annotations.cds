@@ -9,13 +9,13 @@ annotate OrderService.Responsibles with {
     toPlant
     @title: '{i18n>plants}'
         @(Common : {Text : {
-        $value                 : toPlant.code,
-        ![@UI.TextArrangement] : #TextOnly
-    }});
-            @(Common : {Text : {
         $value                 : toPlant.description,
         ![@UI.TextArrangement] : #TextOnly
-    }})
+    }});
+            /*@(Common : {Text : {
+        $value                 : toPlant.description,
+        ![@UI.TextArrangement] : #TextOnly
+    }})*/
 
 
     description
@@ -91,6 +91,11 @@ annotate OrderService.Responsibles with {
                     LocalDataProperty : toPlant_ID,
                     ValueListProperty : '_ID'
                     },
+                    /*{
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : toPlant.description,
+                    ValueListProperty : '_text'
+                    },*/
                 ]
             }
         }
