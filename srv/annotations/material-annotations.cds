@@ -6,6 +6,18 @@ annotate OrderService.Materials with {
     ID
     @UI.Hidden : true;
 
+    createdAt
+    @title     : '{i18n>createdAt}';
+
+    createdBy
+    @title     : '{i18n>createdBy}';
+
+    modifiedAt
+    @title     : '{i18n>modifiedAt}';
+
+    modifiedBy
+    @title     : '{i18n>modifiedBy}';
+
     code
     @title     : '{i18n>materialCode}'
     @Common.IsUpperCase;
@@ -29,15 +41,12 @@ annotate OrderService.Materials with {
 }
 
 annotate OrderService.Materials with @(
-    Common.SemanticKey : [
-        code
-    ],
     UI                 : {
         Identification  : [{
             $Type : 'UI.DataField',
             Value : code,
         }],
-
+        SelectionFields : [type],
         LineItem        : [
             {Value : ID},
             {Value : code},
@@ -62,6 +71,22 @@ annotate OrderService.Materials with @(
         FieldGroup #materialsDetails : {
             Label : '{i18n>details}',
             Data  : [
+            {
+                $Type : 'UI.DataField',
+                Value : createdAt
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : createdBy
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : modifiedAt
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : modifiedBy
+            },
             {
                 $Type : 'UI.DataField',
                 Value : code

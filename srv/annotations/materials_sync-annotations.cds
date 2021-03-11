@@ -7,7 +7,7 @@ annotate OrderService.MaterialsToSync with {
     @UI.Hidden : true;
 
     code
-    @title     : '{i18n>materialCode}'
+    @title     : '{i18n>smaterialCode}'
     @Common.IsUpperCase;
 
     toPlant
@@ -36,8 +36,8 @@ annotate OrderService.MaterialsToSync with @(
             {Value : code},    
         ],
         HeaderInfo      : {
-            TypeName       : '{i18n>material}',
-            TypeNamePlural : '{i18n>materials}',
+            TypeName       : '{i18n>smaterial}',
+            TypeNamePlural : '{i18n>smaterials}',
             Title          : {Value : code},
             Description    : {Value : toPlant.code}
         },
@@ -45,10 +45,10 @@ annotate OrderService.MaterialsToSync with @(
         {
             $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>details}',
-            Target : '@UI.FieldGroup#MaterialsDetails'
+            Target : '@UI.FieldGroup#SmaterialsDetails'
         },
         ],
-        FieldGroup #MaterialsDetails : {
+        FieldGroup #SmaterialsDetails : {
             Label : '{i18n>details}',
             Data  : [
             {
