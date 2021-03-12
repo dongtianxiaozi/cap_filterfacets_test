@@ -28,7 +28,7 @@ export class VHPlantsHandler {
 		});
 		if (resultUsers.isRight()) {
 			try {
-				if (resultUsers.value.data.length == 1) {
+				if (resultUsers.value.data.length === 1) {
 					if (this.environmentManager.ROLE_WORKSTATION_OF_PLANT.indexOf(resultUsers.value.data[0].toType.code) >= 0) {
 						req.query['SELECT'].where =
 							req.query['SELECT'].where !== undefined

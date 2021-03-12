@@ -5,7 +5,6 @@ import { UnexpectedError } from '@Results/GlobalResults';
 import { EmptyResult, QueryResult } from '@Results/CrudResults';
 import { DBDatasource } from '@Persistence/DBDatasource';
 import { ILogger } from '@Logger/ILogger';
-import { SELECT_one } from '@sap/cds/apis/ql';
 
 @injectable()
 export class UsersRepository {
@@ -30,14 +29,14 @@ export class UsersRepository {
 					where: [{ ref: ['code'] }, '=', { val: id }],
 				},
 			});
-			if (resultUsers.length == 1) {
+			if (resultUsers.length === 1) {
 				const resultRoles: OrderService.IRoles[] = await this.dbDatasource.executeOrThrow({
 					SELECT: {
 						from: { ref: [OrderService.Entity.Roles] },
 						where: [{ ref: ['ID'] }, '=', { val: resultUsers[0].toType_ID }],
 					},
 				});
-				if (resultRoles.length == 1) {
+				if (resultRoles.length === 1) {
 					resultUsers[0].toType = resultRoles[0];
 				}
 			}
