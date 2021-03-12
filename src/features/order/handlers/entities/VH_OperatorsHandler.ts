@@ -8,8 +8,8 @@ import { ExecuteInContext } from '@Core/ExecuteInContext';
 import { GetUserUseCase } from '@Features/order/usecases/GetUserUseCase';
 import { EnvironmentManager } from '@Root/application/EnvironmentManager';
 
-@Handler(OrderService.SanitizedEntity.VH_Responsibles)
-export class VHResponsiblesHandler {
+@Handler(OrderService.SanitizedEntity.VH_Operators)
+export class VHOperatorsHandler {
 	private readonly logger: ILogger;
 	private readonly environmentManager: EnvironmentManager;
 
@@ -20,12 +20,8 @@ export class VHResponsiblesHandler {
 
 	@BeforeRead()
 	@ExecuteInContext()
-	async before(
-		@Req() req: Request,
-		@Data() responsibles: OrderService.IResponsibles,
-		@User() incommingUser: Promise<IUser>
-	) {
-		this.logger.i(VHResponsiblesHandler.name, () => `@BeforeRead ${VHResponsiblesHandler.name}: start`);
+	async before(@Req() req: Request, @Data() operators: OrderService.IOperators, @User() incommingUser: Promise<IUser>) {
+		this.logger.i(VHOperatorsHandler.name, () => `@BeforeRead ${VHOperatorsHandler.name}: start`);
 		const userUseCase: GetUserUseCase = DIContainer.get(GetUserUseCase);
 		const resultUsers = await userUseCase.execute({
 			id: (await incommingUser).username,
@@ -33,22 +29,26 @@ export class VHResponsiblesHandler {
 		if (resultUsers.isRight()) {
 			try {
 				if (resultUsers.value.data.length === 1) {
-					if (this.environmentManager.ROLE_WORKSTATION_OF_PLANT.indexOf(resultUsers.value.data[0].toType.code) >= 0) {
-						req.query['SELECT'].where =
-							req.query['SELECT'].where !== undefined
-								? [
-										...req.query['SELECT'].where,
-										...['and', { ref: ['toPlant_id'] }, '=', { val: resultUsers.value.data[0].toPlant_ID }],
-								  ]
-								: [...[{ ref: ['toPlant_id'] }, '=', { val: resultUsers.value.data[0].toPlant_ID }]];
+					if (this.environmentManager.ROLE_WORKSTATION_OF_PLANT.indexOf(resultUsers.value.data[0].toType.code) == -1) {
+						// req.query['SELECT'].where =
+						// 	req.query['SELECT'].where !== undefined
+						// 		? [
+						// 				...req.query['SELECT'].where,
+						// 				...['and', { ref: ['toPlant_id'] }, '=', { val: resultUsers.value.data[0].toPlant_ID }],
+						// 		  ]
+						// 		: [...[{ ref: ['toPlant_id'] }, '=', { val: resultUsers.value.data[0].toPlant_ID }]];
+					} else {
+						req.query['SELECT'].where = [...[{ ref: ['_ID'] }, '=', { val: '' }]];
 					}
-				} else req.error();
+				} else {
+					req.error();
+				}
 			} catch (e) {
 				req.error();
 			}
 		} else {
 			req.error();
 		}
-		this.logger.i(VHResponsiblesHandler.name, () => `@BeforeRead ${VHResponsiblesHandler.name}: end`);
+		this.logger.i(VHOperatorsHandler.name, () => `@BeforeRead ${VHOperatorsHandler.name}: end`);
 	}
 }

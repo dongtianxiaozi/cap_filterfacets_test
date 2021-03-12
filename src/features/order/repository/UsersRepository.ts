@@ -48,6 +48,15 @@ export class UsersRepository {
 				if (resultPlants.length === 1) {
 					resultUsers[0].toPlant = resultPlants[0];
 				}
+				const resultStations: OrderService.IStations[] = await this.dbDatasource.executeOrThrow({
+					SELECT: {
+						from: { ref: [OrderService.Entity.Stations] },
+						where: [{ ref: ['ID'] }, '=', { val: resultUsers[0].toStation_ID }],
+					},
+				});
+				if (resultStations.length === 1) {
+					resultUsers[0].toStation = resultStations[0];
+				}
 			}
 
 			return Right(new QueryResult(resultUsers));
