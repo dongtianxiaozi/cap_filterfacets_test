@@ -93,6 +93,7 @@
     "app\\manage_units",
     "app\\manage_plants",
     "app\\manage_document_classes",
-    "app\\manage_materials"
+    "app\\manage_materials",
+    "app\\manage_stations"
   ]
 }

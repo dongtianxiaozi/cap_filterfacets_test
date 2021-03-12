@@ -155,6 +155,10 @@ modules:
             - manage_materials-content.zip
           name: manage_materials
           target-path: resources/
+        - artifacts:
+            - manage_stations-content.zip
+          name: manage_stations
+          target-path: resources/
 
   #-------------------- MANAGE_OEE_RELEVANCIES ---------------------
   - name: manage_oee_relevancies
@@ -259,6 +263,17 @@ modules:
     # ------------------------------------------------------------
     type: html5
     path: app/manage_materials
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+
+  # -------------------- MANAGE_STATIONS APP MODULE -------------------
+  - name: manage_stations
+    # ------------------------------------------------------------
+    type: html5
+    path: app/manage_stations
     build-parameters:
       builder: custom
       commands:
