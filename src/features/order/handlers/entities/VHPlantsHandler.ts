@@ -1,19 +1,21 @@
 import { OrderService } from '@Shared/Contract';
 import { IUser } from '@Shared/IUser';
-import { BeforeCreate, Handler, User, Data, Req, Entities, AfterCreate, BeforeRead } from 'cds-routing-handlers';
+import { Handler, User, Data, Req, BeforeRead } from 'cds-routing-handlers';
 import { DIContainer } from '@Root/application/DIContainer';
 import { Request } from '@sap/cds/apis/services';
-import { GetResponsiblesUseCase } from '@Root/features/order/usecases/GetResponsiblesUseCase';
 import { ILogger } from '@Logger/ILogger';
 import { ExecuteInContext } from '@Core/ExecuteInContext';
-import { GetUserUseCase } from '../../usecases/GetUserUseCase';
+import { GetUserUseCase } from '@Features/order/usecases/GetUserUseCase';
+import { EnvironmentManager } from '@Root/application/EnvironmentManager';
 
 @Handler(OrderService.SanitizedEntity.VH_Plants)
 export class VHPlantsHandler {
 	private readonly logger: ILogger;
+	private readonly environmentManager: EnvironmentManager;
 
 	constructor() {
 		this.logger = DIContainer.get('Logger');
+		this.environmentManager = DIContainer.get(EnvironmentManager);
 	}
 
 	@BeforeRead()
@@ -27,7 +29,7 @@ export class VHPlantsHandler {
 		if (resultUsers.isRight()) {
 			try {
 				if (resultUsers.value.data.length == 1) {
-					if (resultUsers.value.data[0].toType.code == 'E') {
+					if (this.environmentManager.ROLE_WORKSTATION_OF_PLANT.indexOf(resultUsers.value.data[0].toType.code) >= 0) {
 						req.query['SELECT'].where =
 							req.query['SELECT'].where !== undefined
 								? [
