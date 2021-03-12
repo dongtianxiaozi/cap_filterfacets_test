@@ -144,6 +144,10 @@ modules:
           name: manage_roles
           target-path: resources/
         - artifacts:
+            - document_classes-content.zip
+          name: manage_document_classes
+          target-path: resources/
+        - artifacts:
             - materials_sync-content.zip
           name: manage_materials_to_sync
           target-path: resources/
@@ -233,6 +237,17 @@ modules:
     # ------------------------------------------------------------
     type: html5
     path: app/manage_plants
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+  
+# -------------------- MANAGE_DOCUMENT_CLASSES APP MODULE -------------------
+  - name: manage_document_classes
+  # ------------------------------------------------------------
+    type: html5
+    path: app/manage_document_classes
     build-parameters:
       builder: custom
       commands:
