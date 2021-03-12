@@ -21,3 +21,4 @@ using from './annotations/activity_phases-annotations';
 using from './annotations/roles-annotations';
 using from './annotations/units-annotations';
 using from './annotations/plants-annotations';
+using from './annotations/material-annotations';
