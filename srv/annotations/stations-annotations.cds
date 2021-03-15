@@ -22,7 +22,7 @@ annotate OrderService.Stations with @(
         LineItem                     : [
         {Value : description},
         {Value : code},
-        {Value : toWorkcenter.code},
+        {Value : toWorkCenter.code},
         {Value : toOperator.code},
         {Value : turnRequired},
         ],
@@ -68,7 +68,7 @@ annotate OrderService.Stations with @(
             },
             {
                 $Type : 'UI.DataField',
-                Value : toWorkcenter_ID
+                Value : toWorkCenter_ID
             },
             {
                 $Type : 'UI.DataField',

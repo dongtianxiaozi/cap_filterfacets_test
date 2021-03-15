@@ -47,13 +47,13 @@
                     "semanticObject": "stations",
                     "action": "display"
                 }
-            }   
+            }
         }
     },
     "sap.cloud": {
         "public": true,
         "service": "sfcservice"
-    }, 
+    },
     "sap.ui": {
         "technology": "UI5",
         "icons": {
@@ -112,7 +112,6 @@
                 "type": "sap.ui.model.resource.ResourceModel",
                 "uri": "i18n/ObjectPage/Stations/i18n.properties"
             },
-            
             "": {
                 "dataSource": "mainService",
                 "preload": true,
@@ -164,6 +163,22 @@
                         "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
                         "component": {
                             "name": "sap.suite.ui.generic.template.ObjectPage"
+                        },
+                        "pages": {
+                            "ObjectPage|Stations_Operators": {
+                                "component": {
+                                    "name": "sap.suite.ui.generic.template.ObjectPage"
+                                },
+                                "entitySet": "Stations_Operators",
+                                "navigationProperty": "toOperators"
+                            },
+                            "ObjectPage|Stations_Stoppages": {
+                                "component": {
+                                    "name": "sap.suite.ui.generic.template.ObjectPage"
+                                },
+                                "entitySet": "Stations_Stoppages",
+                                "navigationProperty": "toStoppages"
+                            }
                         }
                     }
                 }
