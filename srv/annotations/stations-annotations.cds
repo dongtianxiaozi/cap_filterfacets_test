@@ -38,6 +38,26 @@ annotate OrderService.Stations with @(
             Label  : '{i18n>details}',
             Target : '@UI.FieldGroup#StationsDetails'
         },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>operators}',
+            Target : 'toOperators/@UI.LineItem'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>turns}',
+            Target : 'toTurns/@UI.LineItem'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>workcenters}',
+            Target : 'toWorkCenters/@UI.LineItem'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>stoppage}',
+            Target : 'toStoppages/@UI.LineItem'
+        }
         ],
         FieldGroup #StationsDetails : {
             Label : '{i18n>details}',
