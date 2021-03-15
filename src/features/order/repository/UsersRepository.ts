@@ -21,7 +21,7 @@ export class UsersRepository {
 	 * @param id
 	 */
 	async getUser(id?: string): Promise<Either<UnexpectedError | EmptyResult, QueryResult<OrderService.IUsers>>> {
-		this.logger.d(UsersRepository.name, () => `get Responsible with: ID=${id}`);
+		this.logger.d(UsersRepository.name, () => `get User with: ID=${id}`);
 		try {
 			const resultUsers: OrderService.IUsers[] = await this.dbDatasource.executeOrThrow({
 				SELECT: {
@@ -48,15 +48,15 @@ export class UsersRepository {
 				if (resultPlants.length === 1) {
 					resultUsers[0].toPlant = resultPlants[0];
 				}
-				const resultStations: OrderService.IStations[] = await this.dbDatasource.executeOrThrow({
-					SELECT: {
-						from: { ref: [OrderService.Entity.Stations] },
-						where: [{ ref: ['ID'] }, '=', { val: resultUsers[0].toStation_ID }],
-					},
-				});
-				if (resultStations.length === 1) {
-					resultUsers[0].toStation = resultStations[0];
-				}
+				// const resultStations: OrderService.IStations[] = await this.dbDatasource.executeOrThrow({
+				// 	SELECT: {
+				// 		from: { ref: [OrderService.Entity.Stations] },
+				// 		where: [{ ref: ['ID'] }, '=', { val: resultUsers[0].toStation_ID }],
+				// 	},
+				// });
+				// if (resultStations.length === 1) {
+				// 	resultUsers[0].toStation = resultStations[0];
+				// }
 			}
 
 			return Right(new QueryResult(resultUsers));
