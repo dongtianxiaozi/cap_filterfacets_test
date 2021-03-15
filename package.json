@@ -61,7 +61,7 @@
         "kind": "xsuaa"
       },
       "db": {
-        "kind": "sqlite",
+        "kind": "sql",
         "model": "*",
         "credentials": {
           "database": "sfc.db"
