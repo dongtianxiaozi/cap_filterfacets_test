@@ -39,7 +39,6 @@ annotate OrderService.Responsibles with @(
             {Value : toPlant.code},
             {Value : code},
             {Value : description},
-            {Value : toPlant.description},
         ],
         HeaderInfo               : {
             TypeName       : '{i18n>responsible}',
@@ -69,11 +68,7 @@ annotate OrderService.Responsibles with @(
                 {
                     $Type : 'UI.DataField',
                     Value : code
-                },
-                {
-                    $Type : 'UI.DataField',
-                    Value : toPlant.description
-                },
+                }
             ]
         },
     }
@@ -91,11 +86,6 @@ annotate OrderService.Responsibles with {
                     LocalDataProperty : toPlant_ID,
                     ValueListProperty : '_ID'
                     },
-                    /*{
-                    $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : toPlant.description,
-                    ValueListProperty : '_text'
-                    }*/
                 ]
             }
         }
