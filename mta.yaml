@@ -157,17 +157,6 @@ modules:
           name: manage_materials
           target-path: resources/
 
-  #-------------------- MANAGE_OEE_RELEVANCIES ---------------------
-  - name: manage_oee_relevancies
-    # --------------------------------------------------------------
-    type: html5
-    path: app/manage_oee_relevancies
-    build-parameters:
-      builder: custom
-      commands:
-        - npm run build
-      supported-platforms: []
-
   # -------------------- MANAGE_RESPONSIBLES APP MODULE -------------------
   - name: manage_responsibles
     # ------------------------------------------------------------
@@ -179,6 +168,16 @@ modules:
         - npm run build
       supported-platforms: []
 
+    #-------------------- MANAGE_OEE_RELEVANCIES ---------------------
+  - name: manage_oee_relevancies
+    # --------------------------------------------------------------
+    type: html5
+    path: app/manage_oee_relevancies
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
   # -------------------- MANAGE_GRANTED_TYPES APP MODULE -------------------
   - name: manage_granted_types
     # ------------------------------------------------------------
