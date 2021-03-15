@@ -95,7 +95,7 @@ annotate OrderService.Responsibles with {
                     $Type             : 'Common.ValueListParameterInOut',
                     LocalDataProperty : toPlant.description,
                     ValueListProperty : '_text'
-                    },*/
+                    }*/
                 ]
             }
         }
