@@ -44,9 +44,8 @@ export class GetUserUseCase
 				case QueryResultObject:
 					return Right(new QueryResultObject(resultUsers.value.data));
 				case EmptyResult:
-					return Left(new EmptyResult());
 				case TooManyResults:
-					return Left(new TooManyResults());
+					return Left(resultUsers.value.constructor == EmptyResult ? new EmptyResult() : new TooManyResults());
 			}
 		} else {
 			return Left(new UndefinedParameterFound(`Paramater 'id' is: ${params.id})`));

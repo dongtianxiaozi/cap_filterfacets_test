@@ -36,8 +36,8 @@ export class StationsRepository {
 					where: [{ ref: ['ID'] }, '=', { val: ID }],
 				},
 			});
-			if (resultStations.length != 1) return Left(new UnexpectedError());
-			let operators: Array<OrderService.IOperators> = [];
+			if (resultStations.length !== 1) return Left(new UnexpectedError());
+			const operators: Array<OrderService.IOperators> = [];
 			if (resultStations[0].toOperator != null) {
 				operators.push(resultStations[0].toOperator);
 			} else if (resultStations[0].toOperators != null) {

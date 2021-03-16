@@ -27,7 +27,7 @@ export class OperatorsRepository {
 		this.logger.d(OperatorsRepository.name, () => `set Filter of Operators:  ${operators}`);
 		try {
 			let where = [];
-			if (operators.length == 0) where = [{ ref: ['_ID'] }, '=', { val: '' }];
+			if (operators.length === 0) where = [{ ref: ['_ID'] }, '=', { val: '' }];
 			else {
 				operators.forEach((operator) => {
 					if (where.length > 0) where = where.concat(['or']);
