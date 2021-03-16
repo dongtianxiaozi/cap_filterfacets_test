@@ -38,34 +38,25 @@ export class VHOperatorsHandler {
 							id: resultUsers.value.data[0].toStation_ID,
 						});
 						console.log(resultStations);
-						// if (resultStations.isLeft()) {
-						// 	req.error();
-						// 	return;
-						// }
-						// if (resultStations.value.data.length != 1) {
-						// 	req.error();
-						// 	return;
-						// }
-						// let operators = [];
-						// if (resultStations.value.data[0].toOperator_ID != null) {
-						// 	operators.push(resultStations.value.data[0].toOperator_ID);
-						// } else if (resultStations.value.data[0].toOperators !== undefined) {
-						// 	resultStations.value.data[0].toOperators.forEach((operator) => {
-						// 		if (operator.ID !== undefined) operators.push(operator.ID);
-						// 	});
-						// }
-						// let where = [];
-						// if (operators.length == 0) req.query['SELECT'].where = [...[{ ref: ['_ID'] }, '=', { val: '' }]];
-						// else {
-						// 	operators.forEach((operator) => {
-						// 		if (where.length > 0) where = where.concat(['or']);
-						// 		where = where.concat([{ ref: ['_ID'] }, '=', { val: operator }]);
-						// 	});
-						// }
-						// req.query['SELECT'].where =
-						// 	req.query['SELECT'].where !== undefined ? [...req.query['SELECT'].where, ...['and', where]] : [...where];
+						if (resultStations.isLeft()) {
+							req.error();
+							return;
+						}
+						let where = [];
+						if (resultStations.value.data.length == 0)
+							req.query['SELECT'].where = [...[{ ref: ['_ID'] }, '=', { val: '' }]];
+						else {
+							resultStations.value.data.forEach((operator) => {
+								if (where.length > 0) where = where.concat(['or']);
+								where = where.concat([{ ref: ['_ID'] }, '=', { val: operator.ID }]);
+							});
+						}
+						req.query['SELECT'].where =
+							req.query['SELECT'].where !== undefined
+								? [...req.query['SELECT'].where, 'and', '(', ...where, ')']
+								: where;
 					} else {
-						req.query['SELECT'].where = [...[{ ref: ['_ID'] }, '=', { val: '' }]];
+						req.query['SELECT'].where = [{ val: '1' }, '=', { val: '2' }];
 					}
 				} else {
 					req.error();

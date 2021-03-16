@@ -30,33 +30,23 @@ export class StationsRepository {
 				SELECT: {
 					columns: [
 						{ ref: ['code'] },
-						{ ref: ['toOperator_ID'] },
-						{ ref: ['toOperators'], expand: [{ ref: ['toOperator_ID'] }] },
+						{ ref: ['toOperator'], expand: [{ ref: ['ID'] }, { ref: ['code'] }] },
+						{ ref: ['toOperators'], expand: [{ ref: ['toOperator'], expand: [{ ref: ['ID'] }, { ref: ['code'] }] }] },
 					],
 					from: { ref: [OrderService.Entity.Stations] },
 					where: [{ ref: ['ID'] }, '=', { val: ID }],
 				},
 			});
-			let operators: Array<OrderService.IOperators>;
-			// if (resultStations.length === 1) {
-			// 	if (resultStations[0].toOperator_ID !== undefined) {
-			// 		const resultStationsOperators: OrderService.IStations_Operators[] = await this.dbDatasource.executeOrThrow({
-			// 			SELECT: {
-			// 				columns: [{ ref: ['toOperator_ID'], as: 'ID' }],
-			// 				from: { ref: [OrderService.Entity.Stations_Operators] },
-			// 				where: [{ ref: ['toStation_ID'] }, '=', { val: resultStations[0].ID }],
-			// 			},
-			// 		});
-			// 		if (resultStationsOperators.length > 0) {
-			// 			resultStations[0].toOperators = resultStationsOperators;
-			// 		}
-			// 	}
-			// 	else{
-			// 		operators.push({ID:resultStations[0].toOperator_ID})
-			// 	}
-			// }
-			return Left(new UnexpectedError());
-			// return Right(new QueryResult([]));
+			if (resultStations.length != 1) return Left(new UnexpectedError());
+			let operators: Array<OrderService.IOperators> = [];
+			if (resultStations[0].toOperator != null) {
+				operators.push(resultStations[0].toOperator);
+			} else if (resultStations[0].toOperators != null) {
+				resultStations[0].toOperators.forEach((operator) => {
+					operators.push(operator.toOperator);
+				});
+			}
+			return Right(new QueryResult(operators));
 		} catch (e) {
 			this.logger.w(
 				StationsRepository.name,
