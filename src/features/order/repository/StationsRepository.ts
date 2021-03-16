@@ -5,7 +5,6 @@ import { UnexpectedError } from '@Results/GlobalResults';
 import { EmptyResult, QueryResult } from '@Results/CrudResults';
 import { DBDatasource } from '@Persistence/DBDatasource';
 import { ILogger } from '@Logger/ILogger';
-import { QueryObject } from '@Root/core/QueryObject';
 
 @injectable()
 export class StationsRepository {

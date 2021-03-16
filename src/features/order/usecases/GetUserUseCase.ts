@@ -3,13 +3,7 @@ import { OrderService } from '@Shared/Contract';
 import { injectable, inject } from 'inversify';
 import { Either, Left, Right } from '@Core/Either';
 import { UnexpectedError } from '@Results/GlobalResults';
-import {
-	UndefinedParameterFound,
-	EmptyResult,
-	QueryResult,
-	TooManyResults,
-	QueryResultObject,
-} from '@Results/CrudResults';
+import { UndefinedParameterFound, EmptyResult, TooManyResults, QueryResultObject } from '@Results/CrudResults';
 import { ILogger } from '@Logger/ILogger';
 import { UsersRepository } from '../repository/UsersRepository';
 

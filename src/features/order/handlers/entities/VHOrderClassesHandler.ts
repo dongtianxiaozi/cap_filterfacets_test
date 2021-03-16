@@ -7,7 +7,6 @@ import { ILogger } from '@Logger/ILogger';
 import { ExecuteInContext } from '@Core/ExecuteInContext';
 import { GetUserUseCase } from '@Features/order/usecases/GetUserUseCase';
 import { EnvironmentManager } from '@Root/application/EnvironmentManager';
-import { Order } from '@sap-cloud-sdk/core';
 
 @Handler(OrderService.SanitizedEntity.VH_OrderClasses)
 export class VHOrderClassesHandler {

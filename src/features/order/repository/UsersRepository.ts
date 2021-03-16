@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 import { OrderService } from '@Shared/Contract';
 import { Either, Left, Right } from '@Core/Either';
 import { UnexpectedError } from '@Results/GlobalResults';
-import { EmptyResult, QueryResultObject, QueryResult, TooManyResults } from '@Results/CrudResults';
+import { EmptyResult, QueryResultObject, TooManyResults } from '@Results/CrudResults';
 import { DBDatasource } from '@Persistence/DBDatasource';
 import { ILogger } from '@Logger/ILogger';
 

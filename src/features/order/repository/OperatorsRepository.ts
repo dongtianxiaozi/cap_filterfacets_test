@@ -2,10 +2,9 @@ import { injectable, inject } from 'inversify';
 import { OrderService } from '@Shared/Contract';
 import { Either, Left, Right } from '@Core/Either';
 import { UnexpectedError } from '@Results/GlobalResults';
-import { AddedFilter, EmptyResult, QueryResult } from '@Results/CrudResults';
+import { AddedFilter, EmptyResult } from '@Results/CrudResults';
 import { DBDatasource } from '@Persistence/DBDatasource';
 import { ILogger } from '@Logger/ILogger';
-import { QueryObject } from '@Root/core/QueryObject';
 import { predicate } from '@sap/cds/apis/cqn';
 
 @injectable()
