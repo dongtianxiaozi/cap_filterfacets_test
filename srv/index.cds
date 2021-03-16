@@ -13,6 +13,7 @@ using from './annotations/vh-annotations';
 using from './annotations/turns-annotations';
 using from './annotations/stations-annotations';
 using from './annotations/stations_turns-annotations';
+using from './annotations/responsibles-annotations';
 using from './annotations/materials_sync-annotations';
 using from './annotations/order_classes-annotations';
 using from './annotations/oee_relevancies-annotations';
