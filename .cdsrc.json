@@ -3,16 +3,28 @@
 		"passport": {
 			"strategy": "mock",
 			"users": {
-				"user": {
+				"user0004": {
 					"password": "",
-					"ID": "user0007",
-					"_ID_comment_": "user0004 (S;Supervisor de produccion), user0007 (E;Estación de trabajo en planta)",
+					"ID": "user0004",
+					"_ID_comment_": "S;Supervisor de produccion",
 					"roles": ["user"],
 					"tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
 					"userAttributes": {
 						"currency": ["USD"],
 						"tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
-						"email": "user@seidor.es"
+						"email": "user0004@seidor.es"
+					}
+				},
+				"user0007": {
+					"password": "",
+					"ID": "user0007",
+					"_ID_comment_": "E;Estación de trabajo en planta",
+					"roles": ["user"],
+					"tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+					"userAttributes": {
+						"currency": ["USD"],
+						"tenant": "999ef85a-aef2-464b-89f6-6a3ce64f2e99",
+						"email": "user0007@seidor.es"
 					}
 				}
 			}
