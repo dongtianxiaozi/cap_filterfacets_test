@@ -23,48 +23,11 @@ export class VHOperatorsHandler {
 	@ExecuteInContext()
 	async before(@Req() req: Request, @Data() operators: OrderService.IOperators, @User() incommingUser: Promise<IUser>) {
 		this.logger.i(VHOperatorsHandler.name, () => `@BeforeRead ${VHOperatorsHandler.name}: start`);
-		const userUseCase: GetUserUseCase = DIContainer.get(GetUserUseCase);
-		const resultUsers = await userUseCase.execute({
-			id: (await incommingUser).username,
+		const getOperatorsOfStationUseCase: GetOperatorsOfStationUseCase = DIContainer.get(GetOperatorsOfStationUseCase);
+		const resultOperators = await getOperatorsOfStationUseCase.execute({
+			userId: (await incommingUser).username,
 		});
-		if (resultUsers.isRight()) {
-			try {
-				if (resultUsers.value.data.length === 1) {
-					if (this.environmentManager.ROLE_VHOPERATORS.indexOf(resultUsers.value.data[0].toType.code) == -1) {
-						const getOperatorsOfStationUseCase: GetOperatorsOfStationUseCase = DIContainer.get(
-							GetOperatorsOfStationUseCase
-						);
-						const resultStations = await getOperatorsOfStationUseCase.execute({
-							id: resultUsers.value.data[0].toStation_ID,
-						});
-						console.log(resultStations);
-						if (resultStations.isLeft()) {
-							req.error();
-							return;
-						}
-						let where = [];
-						if (resultStations.value.data.length == 0)
-							req.query['SELECT'].where = [...[{ ref: ['_ID'] }, '=', { val: '' }]];
-						else {
-							resultStations.value.data.forEach((operator) => {
-								if (where.length > 0) where = where.concat(['or']);
-								where = where.concat([{ ref: ['_ID'] }, '=', { val: operator.ID }]);
-							});
-						}
-						req.query['SELECT'].where =
-							req.query['SELECT'].where !== undefined
-								? [...req.query['SELECT'].where, 'and', '(', ...where, ')']
-								: where;
-					} else {
-						req.query['SELECT'].where = [{ val: '1' }, '=', { val: '2' }];
-					}
-				} else {
-					req.error();
-				}
-			} catch (e) {
-				req.error();
-			}
-		} else {
+		if (resultOperators.isLeft()) {
 			req.error();
 		}
 		this.logger.i(VHOperatorsHandler.name, () => `@BeforeRead ${VHOperatorsHandler.name}: end`);

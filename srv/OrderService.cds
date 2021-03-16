@@ -18,6 +18,7 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity Stations                 as projection on md.Stations {
         * ,
+        toTurns : redirected to Stations_Turns,
         toOperator : redirected to Operators, toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages, toWorkCenters : redirected to Stations_WorkCenters, toWorkCenter : redirected to WorkCenters
     }
 
