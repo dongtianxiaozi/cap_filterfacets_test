@@ -14,7 +14,7 @@ annotate OrderService.Stations with @(
     /*Common.SemanticKey : [
     ],*/
     UI                 : {
-        Identification               : [{Value : position}],
+        Identification               : [{Value : code}],
         /*SelectionFields              : [
         material,
         batch
