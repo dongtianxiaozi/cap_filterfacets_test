@@ -23,4 +23,4 @@ using from './annotations/units-annotations';
 using from './annotations/plants-annotations';
 using from './annotations/document_classes-annotations';
 using from './annotations/material-annotations';
-using from './annotations/stations-annotations';
+using from './annotations/stations_operators-annotations';
