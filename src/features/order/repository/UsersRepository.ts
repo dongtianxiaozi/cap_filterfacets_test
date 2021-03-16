@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 import { OrderService } from '@Shared/Contract';
 import { Either, Left, Right } from '@Core/Either';
 import { UnexpectedError } from '@Results/GlobalResults';
-import { EmptyResult, QueryResult } from '@Results/CrudResults';
+import { EmptyResult, QueryResultObject, QueryResult, TooManyResults } from '@Results/CrudResults';
 import { DBDatasource } from '@Persistence/DBDatasource';
 import { ILogger } from '@Logger/ILogger';
 
@@ -20,7 +20,7 @@ export class UsersRepository {
 	 *
 	 * @param id
 	 */
-	async getUser(id?: string): Promise<Either<UnexpectedError | EmptyResult, QueryResult<OrderService.IUsers>>> {
+	async getUser(id?: string): Promise<Either<UnexpectedError, EmptyResult | QueryResultObject<OrderService.IUsers>>> {
 		this.logger.d(UsersRepository.name, () => `get User with: ID=${id}`);
 		try {
 			const resultUsers: OrderService.IUsers[] = await this.dbDatasource.executeOrThrow({
@@ -29,37 +29,35 @@ export class UsersRepository {
 					where: [{ ref: ['code'] }, '=', { val: id }],
 				},
 			});
-			if (resultUsers.length === 1) {
-				const resultRoles: OrderService.IRoles[] = await this.dbDatasource.executeOrThrow({
-					SELECT: {
-						from: { ref: [OrderService.Entity.Roles] },
-						where: [{ ref: ['ID'] }, '=', { val: resultUsers[0].toType_ID }],
-					},
-				});
-				if (resultRoles.length === 1) {
-					resultUsers[0].toType = resultRoles[0];
+			switch (resultUsers.length) {
+				case 0: {
+					return Left(new EmptyResult());
 				}
-				const resultPlants: OrderService.IPlants[] = await this.dbDatasource.executeOrThrow({
-					SELECT: {
-						from: { ref: [OrderService.Entity.Plants] },
-						where: [{ ref: ['ID'] }, '=', { val: resultUsers[0].toPlant_ID }],
-					},
-				});
-				if (resultPlants.length === 1) {
-					resultUsers[0].toPlant = resultPlants[0];
+				case 1: {
+					const resultRoles: OrderService.IRoles[] = await this.dbDatasource.executeOrThrow({
+						SELECT: {
+							from: { ref: [OrderService.Entity.Roles] },
+							where: [{ ref: ['ID'] }, '=', { val: resultUsers[0].toType_ID }],
+						},
+					});
+					if (resultRoles.length === 1) {
+						resultUsers[0].toType = resultRoles[0];
+					}
+					const resultPlants: OrderService.IPlants[] = await this.dbDatasource.executeOrThrow({
+						SELECT: {
+							from: { ref: [OrderService.Entity.Plants] },
+							where: [{ ref: ['ID'] }, '=', { val: resultUsers[0].toPlant_ID }],
+						},
+					});
+					if (resultPlants.length === 1) {
+						resultUsers[0].toPlant = resultPlants[0];
+					}
+					return Right(new QueryResultObject(resultUsers[0]));
 				}
-				// const resultStations: OrderService.IStations[] = await this.dbDatasource.executeOrThrow({
-				// 	SELECT: {
-				// 		from: { ref: [OrderService.Entity.Stations] },
-				// 		where: [{ ref: ['ID'] }, '=', { val: resultUsers[0].toStation_ID }],
-				// 	},
-				// });
-				// if (resultStations.length === 1) {
-				// 	resultUsers[0].toStation = resultStations[0];
-				// }
+				default: {
+					return Left(new TooManyResults());
+				}
 			}
-
-			return Right(new QueryResult(resultUsers));
 		} catch (e) {
 			this.logger.w(
 				UsersRepository.name,

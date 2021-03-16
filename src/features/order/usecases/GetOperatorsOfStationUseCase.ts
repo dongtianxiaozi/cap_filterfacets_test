@@ -3,10 +3,15 @@ import { OrderService } from '@Shared/Contract';
 import { injectable, inject } from 'inversify';
 import { Either, Left, Right } from '@Core/Either';
 import { UnexpectedError } from '@Results/GlobalResults';
-import { AddedFilter, EmptyResult, QueryResult } from '@Results/CrudResults';
+import {
+	QueryResultObject,
+	EmptyResult,
+	QueryResult,
+	TooManyResults,
+	UndefinedParameterFound,
+} from '@Results/CrudResults';
 import { ILogger } from '@Logger/ILogger';
 import { StationsRepository } from '../repository/StationsRepository';
-import { QueryObject } from '@Root/core/QueryObject';
 import { DIContainer } from '@Root/application/DIContainer';
 import { GetUserUseCase } from './GetUserUseCase';
 import { OperatorsRepository } from '../repository/OperatorsRepository';
@@ -20,7 +25,7 @@ export class GetOperatorsOfStationUseCase
 	implements
 		IUseCase<
 			GetOperatorsOfStationOfuserUseCaseParams,
-			Either<UnexpectedError | EmptyResult, QueryResult<OrderService.IOperators>>
+			Either<UnexpectedError | EmptyResult | UndefinedParameterFound<string>, QueryResult<OrderService.IOperators>>
 		> {
 	private readonly stationsRepository: StationsRepository;
 	private readonly operatorsRepository: OperatorsRepository;
@@ -38,7 +43,9 @@ export class GetOperatorsOfStationUseCase
 
 	async execute(
 		params: GetOperatorsOfStationOfuserUseCaseParams
-	): Promise<Either<UnexpectedError | EmptyResult, QueryResult<OrderService.IOperators>>> {
+	): Promise<
+		Either<UnexpectedError | EmptyResult | UndefinedParameterFound<string>, QueryResult<OrderService.IOperators>>
+	> {
 		this.logger.i(
 			GetOperatorsOfStationUseCase.name,
 			() => `start get persons Use Case with params=${JSON.stringify(params)}`
@@ -47,24 +54,30 @@ export class GetOperatorsOfStationUseCase
 		const resultUsers = await userUseCase.execute({
 			id: params.userId,
 		});
-		if (resultUsers.isLeft()) return Left(new UnexpectedError());
-		if (resultUsers.isRight()) {
-			try {
-				if (resultUsers.value.data.length != 1) return Left(new UnexpectedError());
-				if (resultUsers.value.data[0].toStation_ID) {
-					const resultOperatorsID = await this.stationsRepository.getOperatorsOfStation(
-						resultUsers.value.data[0].toStation_ID
-					);
-					if (resultOperatorsID.isLeft()) return Left(new UnexpectedError());
-					const resultSetFilter = await this.operatorsRepository.setFilterOfOperators(resultOperatorsID.value.data);
-					if (resultSetFilter.isLeft()) return Left(new UnexpectedError());
-					else return Right(new QueryResult(resultOperatorsID.value.data));
-				} else {
-					return Left(new EmptyResult());
+		switch (resultUsers.value.constructor) {
+			case EmptyResult:
+				return Left(new EmptyResult());
+			case TooManyResults:
+				return Left(new TooManyResults());
+			case UndefinedParameterFound:
+				return Left(new UndefinedParameterFound(resultUsers.value.data as string));
+			case QueryResultObject:
+				try {
+					const user: OrderService.IUsers = resultUsers.value.data as OrderService.IUsers;
+					if (user.toStation_ID) {
+						const resultOperatorsID = await this.stationsRepository.getOperatorsOfStation(user.toStation_ID);
+						if (resultOperatorsID.isLeft()) return Left(new UnexpectedError());
+						const resultSetFilter = await this.operatorsRepository.setFilterOfOperators(resultOperatorsID.value.data);
+						if (resultSetFilter.isLeft()) return Left(new UnexpectedError());
+						else return Right(new QueryResult(resultOperatorsID.value.data));
+					} else {
+						return Left(new UndefinedParameterFound(`Parameter userId not found`));
+					}
+				} catch (e) {
+					return Left(new UnexpectedError());
 				}
-			} catch (e) {
-				//TODO: add left
-			}
+			default:
+				return Left(new UnexpectedError());
 		}
 	}
 }

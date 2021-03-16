@@ -5,18 +5,14 @@ import { DIContainer } from '@Root/application/DIContainer';
 import { Request } from '@sap/cds/apis/services';
 import { ILogger } from '@Logger/ILogger';
 import { ExecuteInContext } from '@Core/ExecuteInContext';
-import { GetUserUseCase } from '@Features/order/usecases/GetUserUseCase';
-import { EnvironmentManager } from '@Root/application/EnvironmentManager';
 import { GetOperatorsOfStationUseCase } from '@Root/features/order/usecases/GetOperatorsOfStationUseCase';
 
 @Handler(OrderService.SanitizedEntity.VH_Operators)
 export class VHOperatorsHandler {
 	private readonly logger: ILogger;
-	private readonly environmentManager: EnvironmentManager;
 
 	constructor() {
 		this.logger = DIContainer.get('Logger');
-		this.environmentManager = DIContainer.get(EnvironmentManager);
 	}
 
 	@BeforeRead()

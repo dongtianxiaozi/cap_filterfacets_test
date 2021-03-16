@@ -15,6 +15,12 @@ export class QueryResult<T> extends Result<T[]> {
 		super(value);
 	}
 }
+
+export class QueryResultObject<T> extends Result<T> {
+	constructor(value: T) {
+		super(value);
+	}
+}
 export class ReadResult<T> extends Result<T[]> {
 	constructor(value: T[]) {
 		super(value);
@@ -30,6 +36,12 @@ export class EmptyResult extends Result<undefined> {
 		super(undefined);
 	}
 }
+
+export class TooManyResults extends Result<undefined> {
+	constructor() {
+		super(undefined);
+	}
+}
 export class EntityNotFoundResult extends Result<undefined> {
 	constructor() {
 		super(undefined);
@@ -37,6 +49,12 @@ export class EntityNotFoundResult extends Result<undefined> {
 }
 
 export class AddedFilter<T> extends Result<T> {
+	constructor(value: T) {
+		super(value);
+	}
+}
+
+export class UndefinedParameterFound<T> extends Result<T> {
 	constructor(value: T) {
 		super(value);
 	}
