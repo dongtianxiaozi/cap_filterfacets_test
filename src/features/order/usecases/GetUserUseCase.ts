@@ -38,6 +38,7 @@ export class GetUserUseCase
 		>
 	> {
 		this.logger.i(GetUserUseCase.name, () => `start get persons Use Case with params=${JSON.stringify(params)}`);
+		let resultObj: UnexpectedError | EmptyResult | UndefinedParameterFound<string>;
 		if (params.id) {
 			const resultUsers = await this.usersRepository.getUser(params.id);
 			switch (resultUsers.value.constructor) {
@@ -45,10 +46,14 @@ export class GetUserUseCase
 					return Right(new QueryResultObject(resultUsers.value.data));
 				case EmptyResult:
 				case TooManyResults:
-					return Left(resultUsers.value.constructor == EmptyResult ? new EmptyResult() : new TooManyResults());
+					resultObj = resultUsers.value.constructor === EmptyResult ? new EmptyResult() : new TooManyResults();
+					break;
+				default:
+					resultObj = new UnexpectedError();
 			}
 		} else {
-			return Left(new UndefinedParameterFound(`Paramater 'id' is: ${params.id})`));
+			resultObj = new UndefinedParameterFound(`Paramater 'id' is: ${params.id})`);
 		}
+		return Left(resultObj);
 	}
 }
