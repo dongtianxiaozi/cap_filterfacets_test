@@ -24,3 +24,5 @@ using from './annotations/plants-annotations';
 using from './annotations/document_classes-annotations';
 using from './annotations/material-annotations';
 using from './annotations/stations_operators-annotations';
+using from './annotations/stations_workcenters-annotations';
+using from './annotations/stations_stoppages-annotations';

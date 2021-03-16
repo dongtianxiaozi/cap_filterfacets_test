@@ -3,10 +3,20 @@ namespace com.seidor.sfc;
 using {OrderService} from '../OrderService';
 
 annotate OrderService.Stations with {
-    code        @title : '{i18n>station}';
+    code        @title : '{i18n>stationCode}';
     description @title : '{i18n>stationDescription}';
-    toWorkcenter @title : '{i18n>workcenter}';
-    toOperator @title : '{i18n>operator}';
+    toWorkCenter @title : '{i18n>workcenterCode}';
+        /*@(Common : {Text : {
+        $value                 : toWorkCenter.code,
+        ![@UI.TextArrangement] : #TextOnly
+    }});*/
+
+    toOperator @title : '{i18n>operatorCode}';
+        /*@(Common : {Text : {
+        $value                 : toOperator.code,
+        ![@UI.TextArrangement] : #TextOnly
+    }});*/
+
     turnRequired @title : '{i18n>turnRequired}';
 }
 
@@ -72,22 +82,6 @@ annotate OrderService.Stations with @(
             },
             {
                 $Type : 'UI.DataField',
-                Value : createdAt
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : createdBy
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : modifiedAt
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : modifiedBy
-            },
-            {
-                $Type : 'UI.DataField',
                 Value : toWorkCenter_ID
             },
             {
@@ -98,50 +92,6 @@ annotate OrderService.Stations with @(
                 $Type : 'UI.DataField',
                 Value : turnRequired
             },
-            {
-                $Type : 'UI.DataField',
-                Value : turnDateIsToday
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : quantityRequired
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : turnDate
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : pinRequired
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : eventNotificationRequired
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : multipleOperatorStartsAllowed
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : multipleStartsAllowed
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : activityAuthorizationRequired
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : goodReceiptAuthorizationRequired
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : consumptionAuthorizationRequired
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : ctecAuthorizationRequired
-            }
             ]
         }
     }
