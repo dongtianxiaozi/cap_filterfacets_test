@@ -3,11 +3,11 @@ namespace com.seidor.sfc;
 using {OrderService} from '../OrderService';
 
 annotate OrderService.Stations with {
-    code        @title : '{i18n>stationCode}';
-    description @title : '{i18n>stationDescription}';
-    toWorkCenter @title : '{i18n>workcenterCode}';
-        /*@(Common : {Text : {
-        $value                 : toWorkCenter.code,
+    code              @title : '{i18n>stationCode}';
+    description       @title : '{i18n>stationDescription}';
+    toFixedWorkCenter @title : '{i18n>workcenterCode}';
+    /*@(Common : {Text : {
+        $value                 : toFixedWorkCenter.code,
         ![@UI.TextArrangement] : #TextOnly
     }});*/
 
@@ -32,7 +32,7 @@ annotate OrderService.Stations with @(
         LineItem                     : [
         {Value : description},
         {Value : code},
-        /*{Value : toWorkCenter.code},*/
+        {Value : toFixedWorkCenter.code},
         {Value : toOperator.code},
         {Value : turnRequired},
         ],
@@ -80,10 +80,10 @@ annotate OrderService.Stations with @(
                 $Type : 'UI.DataField',
                 Value : description
             },
-            /*{
+            {
                 $Type : 'UI.DataField',
-                Value : toWorkCenter_ID
-            },*/
+                Value : toFixedWorkCenter_ID
+            },
             {
                 $Type : 'UI.DataField',
                 Value : toOperator_ID
@@ -107,6 +107,21 @@ annotate OrderService.Stations with {
                 Parameters      : [{
                     $Type             : 'Common.ValueListParameterInOut',
                     LocalDataProperty : toOperator_ID,
+                    ValueListProperty : '_ID'
+                    },
+                ]
+            }
+        }
+    );
+    toFixedWorkCenter @(
+        Common : {            
+            ValueListWithFixedValues,
+            ValueList : {
+                SearchSupported : true,
+                CollectionPath  : 'VH_WorkCenters',
+                Parameters      : [{
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : toFixedWorkCenter_ID,
                     ValueListProperty : '_ID'
                     },
                 ]
