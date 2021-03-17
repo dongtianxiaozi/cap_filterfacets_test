@@ -20,7 +20,11 @@ export class VHOrderClassesHandler {
 
 	@BeforeRead()
 	@ExecuteInContext()
-	async before(@Req() req: Request, @Data() plants: OrderService.IPlants, @User() incommingUser: Promise<IUser>) {
+	async before(
+		@Req() req: Request,
+		@Data() orderclasses: OrderService.IOrderClasses,
+		@User() incommingUser: Promise<IUser>
+	) {
 		this.logger.i(VHOrderClassesHandler.name, () => `@BeforeRead ${VHOrderClassesHandler.name}: start`);
 		const userUseCase: GetUserUseCase = DIContainer.get(GetUserUseCase);
 		const resultUsers = await userUseCase.execute({
@@ -28,19 +32,14 @@ export class VHOrderClassesHandler {
 		});
 		if (resultUsers.isRight()) {
 			try {
-				if (resultUsers.value.data.length === 1) {
-					if (this.environmentManager.ROLE_WORKSTATION_OF_PLANT.indexOf(resultUsers.value.data[0].toType.code) >= 0) {
-						if (
-							resultUsers.value.data[0].toPlant !== undefined &&
-							resultUsers.value.data[0].toPlant.code !== undefined
-						) {
+				if (resultUsers.value.data) {
+					const user: OrderService.IUsers = resultUsers.value.data as OrderService.IUsers;
+					if (this.environmentManager.ROLE_WORKSTATION_OF_PLANT.indexOf(user.toType.code) >= 0) {
+						if (user.toPlant !== undefined && user.toPlant.code !== undefined) {
 							req.query['SELECT'].where =
 								req.query['SELECT'].where !== undefined
-									? [
-											...req.query['SELECT'].where,
-											...['and', { ref: ['plant'] }, '=', { val: resultUsers.value.data[0].toPlant.code }],
-									  ]
-									: [...[{ ref: ['plant'] }, '=', { val: resultUsers.value.data[0].toPlant.code }]];
+									? [...req.query['SELECT'].where, ...['and', { ref: ['plant'] }, '=', { val: user.toPlant.code }]]
+									: [...[{ ref: ['plant'] }, '=', { val: user.toPlant.code }]];
 						}
 					}
 				} else req.error();

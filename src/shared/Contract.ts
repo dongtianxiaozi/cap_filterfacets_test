@@ -742,6 +742,12 @@ export namespace OrderService {
 		toResponsibles?: ISupervisors_Responsibles[];
 	}
 
+	export interface IVH_Operators {
+		_ID: string;
+		_code: string;
+		_text: string;
+	}
+
 	export interface IVH_OrderClasses {
 		_ID: string;
 		_code: string;
@@ -855,6 +861,7 @@ export namespace OrderService {
 		Turns = 'OrderService.Turns',
 		Units = 'OrderService.Units',
 		Users = 'OrderService.Users',
+		VH_Operators = 'OrderService.VH_Operators',
 		VH_OrderClasses = 'OrderService.VH_OrderClasses',
 		VH_Orders = 'OrderService.VH_Orders',
 		VH_Plants = 'OrderService.VH_Plants',
@@ -897,6 +904,7 @@ export namespace OrderService {
 		Turns = 'Turns',
 		Units = 'Units',
 		Users = 'Users',
+		VH_Operators = 'VH_Operators',
 		VH_OrderClasses = 'VH_OrderClasses',
 		VH_Orders = 'VH_Orders',
 		VH_Plants = 'VH_Plants',
