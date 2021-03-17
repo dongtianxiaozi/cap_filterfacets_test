@@ -15,11 +15,11 @@ service OrderService @(requires : ['user']) {
         * , toOrder : redirected to Orders, toWorkCenter : redirected to WorkCenters, toOrder.code as order_, toWorkCenter.code as workCenter
     }
 
-    @readonly
+    @odata.draft.enabled
     entity Stations                 as projection on md.Stations {
         * ,
         toTurns : redirected to Stations_Turns,
-        toOperator : redirected to Operators, toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages, toWorkCenters : redirected to Stations_WorkCenters, toWorkCenter : redirected to WorkCenters
+        toOperator : redirected to Operators, toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages, toWorkCenters : redirected to Stations_WorkCenters, toFixedWorkCenter : redirected to WorkCenters
     }
 
     @odata.draft.enabled

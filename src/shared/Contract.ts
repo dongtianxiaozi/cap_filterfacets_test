@@ -99,8 +99,8 @@ export namespace com.seidor.sfc {
 	export interface IStations extends ICuid, IManaged {
 		code: string;
 		description: string;
-		toWorkCenter?: IWorkCenters;
-		toWorkCenter_ID?: string;
+		toFixedWorkCenter?: IWorkCenters;
+		toFixedWorkCenter_ID?: string;
 		toOperator?: IOperators;
 		toOperator_ID?: string;
 		turnRequired?: boolean;
@@ -609,8 +609,8 @@ export namespace OrderService {
 		modifiedBy?: string;
 		code: string;
 		description: string;
-		toWorkCenter?: IWorkCenters;
-		toWorkCenter_ID?: string;
+		toFixedWorkCenter?: IWorkCenters;
+		toFixedWorkCenter_ID?: string;
 		toOperator?: IOperators;
 		toOperator_ID?: string;
 		turnRequired?: boolean;
