@@ -24,4 +24,8 @@ export class EnvironmentManager {
 	public get ROLE_WORKSTATION_OF_PLANT(): Array<string> {
 		return ['E'];
 	}
+
+	public get ROLE_VHOPERATORS(): Array<string> {
+		return ['E'];
+	}
 }

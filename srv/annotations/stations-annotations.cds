@@ -11,11 +11,11 @@ annotate OrderService.Stations with {
         ![@UI.TextArrangement] : #TextOnly
     }});*/
 
-    toOperator @title : '{i18n>operatorCode}';
-        /*@(Common : {Text : {
+    toOperator @title : '{i18n>operatorCode}'
+    @(Common : {Text : {
         $value                 : toOperator.code,
         ![@UI.TextArrangement] : #TextOnly
-    }});*/
+    }});
 
     turnRequired @title : '{i18n>turnRequired}';
 }
@@ -32,7 +32,7 @@ annotate OrderService.Stations with @(
         LineItem                     : [
         {Value : description},
         {Value : code},
-        {Value : toWorkCenter.code},
+        /*{Value : toWorkCenter.code},*/
         {Value : toOperator.code},
         {Value : turnRequired},
         ],
@@ -80,10 +80,10 @@ annotate OrderService.Stations with @(
                 $Type : 'UI.DataField',
                 Value : description
             },
-            {
+            /*{
                 $Type : 'UI.DataField',
                 Value : toWorkCenter_ID
-            },
+            },*/
             {
                 $Type : 'UI.DataField',
                 Value : toOperator_ID
@@ -97,8 +97,20 @@ annotate OrderService.Stations with @(
     }
 );
 
-/*annotate OrderService.Stations with @(
-    UI : {LineItem : [
-{Value : code},
-{Value : description}
-]});*/
+annotate OrderService.Stations with {
+    toOperator @(
+        Common : {            
+            ValueListWithFixedValues,
+            ValueList : {
+                SearchSupported : true,
+                CollectionPath  : 'VH_Operators',
+                Parameters      : [{
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : toOperator_ID,
+                    ValueListProperty : '_ID'
+                    },
+                ]
+            }
+        }
+    );
+};

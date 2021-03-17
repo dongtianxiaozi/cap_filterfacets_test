@@ -87,3 +87,26 @@ annotate OrderService.VH_Units with {
         UI    : {HiddenFilter : true}
     );
 }
+
+annotate OrderService.VH_Operators with {
+    _ID @(
+        UI     : {
+            Hidden       : true
+        },
+        Common : {Text : {
+            $value                 : _code,
+            ![@UI.TextArrangement] : #TextOnly
+        }}
+    );
+    _code @(
+        title  : '{i18n>code}',
+        UI     : {
+            Hidden       : false,
+            HiddenFilter : true
+        }
+    );
+    _text @(
+        title : '{i18n>plant}',
+        UI    : {HiddenFilter : true}
+    );
+}

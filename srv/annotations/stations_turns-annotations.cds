@@ -11,8 +11,8 @@ annotate OrderService.Stations_Turns with {
 }
 
 annotate OrderService.Stations_Turns with @(UI : {LineItem : [
-{Value : toStation.code},
+/*{Value : toStation.code},
 {Value : toStation.toWorkCenter.code},
 {Value : toStation.toWorkCenter.description},
-{Value : toStation.toOperator.code}
+{Value : toStation.toOperator.code}*/
 ]});

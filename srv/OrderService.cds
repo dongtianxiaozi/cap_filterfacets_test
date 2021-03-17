@@ -15,9 +15,11 @@ service OrderService @(requires : ['user']) {
         * , toOrder : redirected to Orders, toWorkCenter : redirected to WorkCenters, toOrder.code as order_, toWorkCenter.code as workCenter
     }
 
-    @readonly
+    @odata.draft.enabled
     entity Stations                 as projection on md.Stations {
-        * ,toTurns : redirected to Stations_Turns, toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages, toWorkCenters : redirected to Stations_WorkCenters, toWorkCenter : redirected to WorkCenters
+        * ,
+        toTurns : redirected to Stations_Turns,
+        toOperator : redirected to Operators, toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages, toWorkCenters : redirected to Stations_WorkCenters, toFixedWorkCenter : redirected to WorkCenters
     }
 
     @odata.draft.enabled
@@ -114,6 +116,13 @@ service OrderService @(requires : ['user']) {
             toTurn     : redirected to Turns,
             toStations : redirected to Stations_Operators
         };
+
+    @readonly
+    entity VH_Operators as select from md.Operators {
+        ID as _ID,
+        code as _code,
+        name as _text
+    };
 
     @odata.draft.enabled
     entity Roles                    as

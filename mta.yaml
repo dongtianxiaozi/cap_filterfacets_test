@@ -14,6 +14,7 @@ build-parameters:
     - builder: custom
       commands:
         - npm install --production
+        - npx -p @sap/cds-dk cds build --production
         - npm run build
 
 modules:
@@ -116,12 +117,12 @@ modules:
       build-result: resources
       requires:
         - artifacts:
-            - oee_relevancies-content.zip
-          name: manage_oee_relevancies
+            - manage_responsibles-content.zip
+          name: manage_responsibles
           target-path: resources/
         - artifacts:
-            - activity_phases-content.zip
-          name: manage_activity_phases
+            - oee_relevancies-content.zip
+          name: manage_oee_relevancies
           target-path: resources/
         - artifacts:
             - manage_plants-content.zip
@@ -193,43 +194,11 @@ modules:
         - npm run build
       supported platforms: []
 
-  # -------------------- MANAGE_MATERIALS_TO_SYNC APP MODULE -------------------
-  - name: manage_materials_to_sync
-    # ----------------------------------------------------------------------------
-    type: html5
-    path: app/manage_materials_to_sync
-    build-parameters:
-      builder: custom
-      commands:
-        - npm run build
-      supported-platforms: []
-  # -------------------- MANAGE_ACTIVITY_PHASES APP MODULE -------------------
-  - name: manage_activity_phases
+  # -------------------- MANAGE_RESPONSIBLES APP MODULE -------------------
+  - name: manage_responsibles
     # ------------------------------------------------------------
     type: html5
-    path: app/manage_activity_phases
-    build-parameters:
-      builder: custom
-      commands:
-        - npm run build
-      supported platforms: []
-
-  # -------------------- MANAGE_ROLES APP MODULE -------------------
-  - name: manage_roles
-    # ------------------------------------------------------------
-    type: html5
-    path: app/manage_roles
-    build-parameters:
-      builder: custom
-      commands:
-        - npm run build
-      supported-platforms: []
-
-  # -------------------- MANAGE_UNITS APP MODULE -------------------
-  - name: manage_units
-    # ------------------------------------------------------------
-    type: html5
-    path: app/manage_units
+    path: app/manage_responsibles
     build-parameters:
       builder: custom
       commands:
@@ -246,10 +215,43 @@ modules:
       commands:
         - npm run build
       supported-platforms: []
+
+  # -------------------- MANAGE_UNITS APP MODULE -------------------
+  - name: manage_units
+    # ------------------------------------------------------------
+    type: html5
+    path: app/manage_units
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
   
-# -------------------- MANAGE_DOCUMENT_CLASSES APP MODULE -------------------
+    # -------------------- MANAGE_STATIONS APP MODULE -------------------
+  - name: manage_stations
+    # ------------------------------------------------------------
+    type: html5
+    path: app/manage_stations
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+
+    # -------------------- MANAGE_ROLES APP MODULE -------------------
+  - name: manage_roles
+    # ------------------------------------------------------------
+    type: html5
+    path: app/manage_roles
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+
+    # -------------------- MANAGE_DOCUMENT_CLASSES APP MODULE -------------------
   - name: manage_document_classes
-  # ------------------------------------------------------------
+    # ------------------------------------------------------------
     type: html5
     path: app/manage_document_classes
     build-parameters:
@@ -258,22 +260,22 @@ modules:
         - npm run build
       supported-platforms: []
 
-  # -------------------- MANAGE_MATERIALS APP MODULE -------------------
-  - name: manage_materials
+    # -------------------- MANAGE_MATERIALS_TO_SYNC APP MODULE -------------------
+  - name: manage_materials_to_sync
     # ------------------------------------------------------------
     type: html5
-    path: app/manage_materials
+    path: app/manage_materials_to_sync
     build-parameters:
       builder: custom
       commands:
         - npm run build
       supported-platforms: []
 
-  # -------------------- MANAGE_STATIONS APP MODULE -------------------
-  - name: manage_stations
+    # -------------------- MANAGE_MATERIALS APP MODULE -------------------
+  - name: manage_materials
     # ------------------------------------------------------------
     type: html5
-    path: app/manage_stations
+    path: app/manage_materials
     build-parameters:
       builder: custom
       commands:
