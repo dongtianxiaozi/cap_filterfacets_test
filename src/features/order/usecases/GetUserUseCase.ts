@@ -1,9 +1,9 @@
 import { IUseCase } from '@Core/IUseCase';
 import { OrderService } from '@Shared/Contract';
 import { injectable, inject } from 'inversify';
-import { Either, Left } from '@Core/Either';
+import { Either, Left, Right } from '@Core/Either';
 import { UnexpectedError } from '@Results/GlobalResults';
-import { EmptyResult, QueryResult } from '@Results/CrudResults';
+import { UndefinedParameterFound, EmptyResult, TooManyResults, QueryResultObject } from '@Results/CrudResults';
 import { ILogger } from '@Logger/ILogger';
 import { UsersRepository } from '../repository/UsersRepository';
 
@@ -13,7 +13,14 @@ export interface GetUserUseCaseParams {
 
 @injectable()
 export class GetUserUseCase
-	implements IUseCase<GetUserUseCaseParams, Either<UnexpectedError | EmptyResult, QueryResult<OrderService.IUsers>>> {
+	implements
+		IUseCase<
+			GetUserUseCaseParams,
+			Either<
+				UnexpectedError | EmptyResult | TooManyResults | UndefinedParameterFound<string>,
+				QueryResultObject<OrderService.IUsers>
+			>
+		> {
 	private readonly usersRepository: UsersRepository;
 	private readonly logger: ILogger;
 
@@ -24,12 +31,29 @@ export class GetUserUseCase
 
 	async execute(
 		params: GetUserUseCaseParams
-	): Promise<Either<UnexpectedError | EmptyResult, QueryResult<OrderService.IUsers>>> {
+	): Promise<
+		Either<
+			UnexpectedError | EmptyResult | TooManyResults | UndefinedParameterFound<string>,
+			QueryResultObject<OrderService.IUsers>
+		>
+	> {
 		this.logger.i(GetUserUseCase.name, () => `start get persons Use Case with params=${JSON.stringify(params)}`);
+		let resultObj: UnexpectedError | EmptyResult | UndefinedParameterFound<string>;
 		if (params.id) {
-			return this.usersRepository.getUser(params.id);
+			const resultUsers = await this.usersRepository.getUser(params.id);
+			switch (resultUsers.value.constructor) {
+				case QueryResultObject:
+					return Right(new QueryResultObject(resultUsers.value.data));
+				case EmptyResult:
+				case TooManyResults:
+					resultObj = resultUsers.value.constructor === EmptyResult ? new EmptyResult() : new TooManyResults();
+					break;
+				default:
+					resultObj = new UnexpectedError();
+			}
 		} else {
-			return Left(new EmptyResult());
+			resultObj = new UndefinedParameterFound(`Paramater 'id' is: ${params.id})`);
 		}
+		return Left(resultObj);
 	}
 }

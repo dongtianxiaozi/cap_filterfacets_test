@@ -2,7 +2,7 @@ import { ILogger } from '@Logger/ILogger';
 import { inject, injectable } from 'inversify';
 import { ContextManager } from '@Application/ContextManager';
 import { Transaction } from '@sap/cds/apis/services';
-import { Query } from '@sap/cds/apis/cqn';
+import { predicate, Query } from '@sap/cds/apis/cqn';
 import { IEnvironment } from '@Shared/IEnvironment';
 
 @injectable()
@@ -54,5 +54,14 @@ export class DBDatasource {
 			}
 			throw e;
 		}
+	}
+
+	appendFilter(where: predicate) {
+		this.logger.v(DBDatasource.name, () => `trying caca`);
+		const environment: IEnvironment = this.contextManager.getEnvironment();
+		environment.__REQUEST.query['SELECT'].where =
+			environment.__REQUEST.query['SELECT'].where !== undefined
+				? [...environment.__REQUEST.query['SELECT'].where, 'and', '(', ...where, ')']
+				: where;
 	}
 }

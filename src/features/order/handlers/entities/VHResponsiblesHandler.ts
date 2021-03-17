@@ -20,7 +20,11 @@ export class VHResponsiblesHandler {
 
 	@BeforeRead()
 	@ExecuteInContext()
-	async before(@Req() req: Request, @Data() plants: OrderService.IPlants, @User() incommingUser: Promise<IUser>) {
+	async before(
+		@Req() req: Request,
+		@Data() responsibles: OrderService.IResponsibles,
+		@User() incommingUser: Promise<IUser>
+	) {
 		this.logger.i(VHResponsiblesHandler.name, () => `@BeforeRead ${VHResponsiblesHandler.name}: start`);
 		const userUseCase: GetUserUseCase = DIContainer.get(GetUserUseCase);
 		const resultUsers = await userUseCase.execute({
@@ -28,15 +32,13 @@ export class VHResponsiblesHandler {
 		});
 		if (resultUsers.isRight()) {
 			try {
-				if (resultUsers.value.data.length === 1) {
-					if (this.environmentManager.ROLE_WORKSTATION_OF_PLANT.indexOf(resultUsers.value.data[0].toType.code) >= 0) {
+				if (resultUsers.value.data) {
+					const user: OrderService.IUsers = resultUsers.value.data as OrderService.IUsers;
+					if (this.environmentManager.ROLE_WORKSTATION_OF_PLANT.indexOf(user.toType.code) >= 0) {
 						req.query['SELECT'].where =
 							req.query['SELECT'].where !== undefined
-								? [
-										...req.query['SELECT'].where,
-										...['and', { ref: ['toPlant_id'] }, '=', { val: resultUsers.value.data[0].toPlant_ID }],
-								  ]
-								: [...[{ ref: ['toPlant_id'] }, '=', { val: resultUsers.value.data[0].toPlant_ID }]];
+								? [...req.query['SELECT'].where, ...['and', { ref: ['toPlant_id'] }, '=', { val: user.toPlant_ID }]]
+								: [...[{ ref: ['toPlant_id'] }, '=', { val: user.toPlant_ID }]];
 					}
 				} else req.error();
 			} catch (e) {

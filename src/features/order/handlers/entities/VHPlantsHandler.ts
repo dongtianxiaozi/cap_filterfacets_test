@@ -28,15 +28,13 @@ export class VHPlantsHandler {
 		});
 		if (resultUsers.isRight()) {
 			try {
-				if (resultUsers.value.data.length === 1) {
-					if (this.environmentManager.ROLE_WORKSTATION_OF_PLANT.indexOf(resultUsers.value.data[0].toType.code) >= 0) {
+				if (resultUsers.value.data) {
+					const user: OrderService.IUsers = resultUsers.value.data as OrderService.IUsers;
+					if (this.environmentManager.ROLE_WORKSTATION_OF_PLANT.indexOf(user.toType.code) >= 0) {
 						req.query['SELECT'].where =
 							req.query['SELECT'].where !== undefined
-								? [
-										...req.query['SELECT'].where,
-										...['and', { ref: ['_ID'] }, '=', { val: resultUsers.value.data[0].toPlant_ID }],
-								  ]
-								: [...[{ ref: ['_ID'] }, '=', { val: resultUsers.value.data[0].toPlant_ID }]];
+								? [...req.query['SELECT'].where, ...['and', { ref: ['_ID'] }, '=', { val: user.toPlant_ID }]]
+								: [...[{ ref: ['_ID'] }, '=', { val: user.toPlant_ID }]];
 					}
 				} else req.error();
 			} catch (e) {
