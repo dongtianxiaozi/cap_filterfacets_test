@@ -52,12 +52,12 @@ context md {
   entity Stations : cuid, managed {
     code                             : String(4);
     description                      : String(30);
-    toFixedWorkCenter                     : Association to WorkCenters;
+    toFixedWorkCenter                : Association to WorkCenters;
     toOperator                       : Association to Operators;
     turnRequired                     : Boolean not null default false;
     turnDateIsToday                  : Boolean not null default false;
     quantityRequired                 : Boolean not null default false;
-    toTurns                          : Association to many Stations_Turns
+    toTurns                          : Composition of many Stations_Turns
                                          on toTurns.toStation = $self;
     turnDate                         : Date;
     pinRequired                      : Boolean not null default false;
@@ -68,11 +68,11 @@ context md {
     goodReceiptAuthorizationRequired : Boolean not null default false;
     consumptionAuthorizationRequired : Boolean not null default false;
     ctecAuthorizationRequired        : Boolean not null default false;
-    toOperators                      : Association to many Stations_Operators
+    toOperators                      : Composition of many Stations_Operators
                                          on toOperators.toStation = $self;
-    toStoppages                      : Association to many Stations_Stoppages
+    toStoppages                      : Composition of many Stations_Stoppages
                                          on toStoppages.toStation = $self;
-    toWorkCenters                    : Association to many Stations_WorkCenters
+    toWorkCenters                    : Composition of many Stations_WorkCenters
                                          on toWorkCenters.toStation = $self;
   }
 

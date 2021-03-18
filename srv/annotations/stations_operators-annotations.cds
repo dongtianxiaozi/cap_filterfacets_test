@@ -2,6 +2,11 @@ namespace com.seidor.sfc;
 
 using {OrderService} from '../OrderService';
 
+
+annotate OrderService.Stations_Operators with @(
+    Capabilities: { Insertable:true, Updatable:false, Deletable:true }
+);
+
 annotate OrderService.Stations_Operators with {
     name           @title : '{i18n>operatorName}';   
     code           @title : '{i18n>operatorCode}';
