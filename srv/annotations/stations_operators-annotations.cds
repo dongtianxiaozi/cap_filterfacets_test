@@ -15,10 +15,45 @@ annotate OrderService.Stations_Operators with {
     currentDate    @title : '{i18n>currentDate}';
 }
 
-annotate OrderService.Stations_Operators with @(UI : {LineItem : [
-    {Value : toOperator.name},
-    {Value : toOperator.code},
-    {Value : toOperator.personalNumber},
-    {Value : toOperator.toTurn.description},
-    {Value : toOperator.currentDate}
-]});
+annotate OrderService.Stations_Operators with @(
+    UI : {LineItem : [
+        {Value : toOperator.name},
+        {Value : toOperator.code},
+        {Value : toOperator.personalNumber},
+        {Value : toOperator.toTurn.description},
+        {Value : toOperator.currentDate}
+    ],
+    Facets : [
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>details}',
+            Target : '@UI.FieldGroup#StationOperatorsDetails'
+        }
+    ],
+        FieldGroup #StationOperatorsDetails : {
+            Label : '{i18n>details}',
+            Data  : [
+            {
+                $Type : 'UI.DataField',
+                Value : toOperator.name
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : toOperator.code
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : toOperator.personalNumber
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : toOperator.toTurn.description
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : toOperator.currentDate
+            }
+            ]
+        }
+
+});

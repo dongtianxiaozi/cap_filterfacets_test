@@ -178,6 +178,20 @@
                                 },
                                 "entitySet": "Stations_Stoppages",
                                 "navigationProperty": "toStoppages"
+                            },
+                            "ObjectPage|Stations_WorkCenters": {
+                                "component": {
+                                    "name": "sap.suite.ui.generic.template.ObjectPage"
+                                },
+                                "entitySet": "Stations_WorkCenters",
+                                "navigationProperty": "toWorkCenters"
+                            },
+                            "ObjectPage|Stations_Turns": {
+                                "component": {
+                                    "name": "sap.suite.ui.generic.template.ObjectPage"
+                                },
+                                "entitySet": "Stations_Turns",
+                                "navigationProperty": "toTurns"
                             }
                         }
                     }
