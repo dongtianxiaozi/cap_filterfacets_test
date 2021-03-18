@@ -2,9 +2,11 @@ namespace com.seidor.sfc;
 
 using {OrderService} from '../OrderService';
 
-annotate OrderService.Stations_WorkCenters with @(
-    Capabilities: { Insertable:true, Updatable:false, Deletable:true }
-);
+annotate OrderService.Stations_WorkCenters with @(Capabilities : {
+    Insertable : true,
+    Updatable  : false,
+    Deletable  : true
+});
 
 annotate OrderService.Stations_WorkCenters with {
     code          @title : '{i18n>workcenterCode}';
@@ -15,25 +17,20 @@ annotate OrderService.Stations_WorkCenters with {
     isOeeRelevant @title : '{i18n>isOeeRelevant}';
 }
 
-annotate OrderService.Stations_WorkCenters with @(UI : {LineItem : [
-    {Value : toWorkCenter.code},
-    {Value : toWorkCenter.description},
-    {Value : toWorkCenter.toPlant.code},
-    {Value : toWorkCenter.toResponsible.code},
-    {Value : toWorkCenter.queueType},
-    {Value : toWorkCenter.isOeeRelevant}
-],
-
-    Facets : [
-        {
-            $Type  : 'UI.ReferenceFacet',
-            Label  : '{i18n>details}',
-            Target : '@UI.FieldGroup#StationWorkcentersDetails'
-        }
+annotate OrderService.Stations_WorkCenters with @(UI : {
+    LineItem                              : [
+        {Value : toWorkCenter.code},
+        {Value : toWorkCenter.description}
     ],
-        FieldGroup #StationWorkcentersDetails : {
-            Label : '{i18n>details}',
-            Data  : [
+
+    Facets                                : [{
+        $Type  : 'UI.ReferenceFacet',
+        Label  : '{i18n>details}',
+        Target : '@UI.FieldGroup#StationWorkcentersDetails'
+    }],
+    FieldGroup #StationWorkcentersDetails : {
+        Label : '{i18n>details}',
+        Data  : [
             {
                 $Type : 'UI.DataField',
                 Value : toWorkCenter.code
@@ -44,11 +41,11 @@ annotate OrderService.Stations_WorkCenters with @(UI : {LineItem : [
             },
             {
                 $Type : 'UI.DataField',
-                Value : toWorkCenter.toPlant.code
+                Value : toWorkCenter.toPlant_ID
             },
             {
                 $Type : 'UI.DataField',
-                Value : toWorkCenter.toResponsible.code
+                Value : toWorkCenter.toResponsible_ID
             },
             {
                 $Type : 'UI.DataField',
@@ -58,6 +55,6 @@ annotate OrderService.Stations_WorkCenters with @(UI : {LineItem : [
                 $Type : 'UI.DataField',
                 Value : toWorkCenter.isOeeRelevant
             }
-            ]
-        }
+        ]
+    }
 });

@@ -15,21 +15,18 @@ service OrderService @(requires : ['user']) {
         * , toOrder : redirected to Orders, toWorkCenter : redirected to WorkCenters, toOrder.code as order_, toWorkCenter.code as workCenter
     }
 
-    @odata.draft.enabled
     entity Stations                 as projection on md.Stations {
-        * ,
-        toTurns : redirected to Stations_Turns,
-        toOperator : redirected to Operators, toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages, toWorkCenters : redirected to Stations_WorkCenters, toFixedWorkCenter : redirected to WorkCenters
+        * , toTurns : redirected to Stations_Turns, toOperator : redirected to Operators, toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages, toWorkCenters : redirected to Stations_WorkCenters, toFixedWorkCenter : redirected to WorkCenters
     }
 
     entity Stations_Operators       as projection on md.Stations_Operators {
         * , toStation : redirected to Stations, toOperator : redirected to Operators
     }
-    
+
     entity Stations_Stoppages       as projection on md.Stations_Stoppages {
         * , toStation : redirected to Stations, toStoppage : redirected to Stoppages
     }
-    
+
     entity Stations_WorkCenters     as projection on md.Stations_WorkCenters {
         * , toStation : redirected to Stations, toWorkCenter : redirected to WorkCenters
     }
@@ -49,18 +46,16 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity VH_Turns                 as
         select from md.Turns {
-            ID          as _ID,
-            code        as _code,
-            description as _text,
-            isNightShift
+            ID              as _ID,
+            code            as _code,
+            description     as _text,
+            longDescription as _longText,
+            isNightShift    as _isNightShift
         };
 
-    entity Stations_Turns           as
-        select from md.Stations_Turns {
-            ID,
-            toStation : redirected to Stations,
-            toTurn    : redirected to Turns
-        };
+    entity Stations_Turns           as projection on md.Stations_Turns {
+        * , toStation : redirected to Stations, toTurn : redirected to Turns
+    };
 
     @odata.draft.enabled
     entity WorkCenters              as
@@ -113,19 +108,21 @@ service OrderService @(requires : ['user']) {
             toTurn     : redirected to Turns,
             toStations : redirected to Stations_Operators
         };
-    
-    entity NDOperators                as
+
+    entity NDOperators              as
         select from md.Operators {
             *,
             toTurn     : redirected to Turns,
             toStations : redirected to Stations_Operators
         };
+
     @readonly
-    entity VH_Operators as select from md.Operators {
-        ID as _ID,
-        code as _code,
-        name as _text
-    };
+    entity VH_Operators             as
+        select from md.Operators {
+            ID   as _ID,
+            code as _code,
+            name as _text
+        };
 
     @odata.draft.enabled
     entity Roles                    as

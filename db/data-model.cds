@@ -44,6 +44,10 @@ context md {
                         on toSupervisors.toTurn = $self;
   }
 
+  @assert.unique : {unique : [
+    toStation,
+    toTurn
+  ], }
   entity Stations_Turns : cuid {
     toStation : Association to Stations;
     toTurn    : Association to Turns;

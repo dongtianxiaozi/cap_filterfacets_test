@@ -67,7 +67,7 @@ annotate OrderService.Stations with @(
             $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>stoppage}',
             Target : 'toStoppages/@UI.LineItem'
-        }
+        } 
         ],
         FieldGroup #StationsDetails : {
             Label : '{i18n>details}',
