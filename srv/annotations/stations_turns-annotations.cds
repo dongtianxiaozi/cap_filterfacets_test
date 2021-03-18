@@ -65,19 +65,15 @@ annotate OrderService.Stations_Turns with @(UI : {
 annotate OrderService.Stations_Turns with {
     toTurn
     @(Common : {
-        //ValueListWithFixedValues,
-        ValueList : {
-            SearchSupported : true,
-            CollectionPath  : 'VH_Turns',
-            Parameters      : [{
+                //ValueListWithFixedValues,
+               ValueList : {
+        SearchSupported : true,
+        CollectionPath  : 'VH_Turns',
+        Parameters      : [
+            {
                 $Type             : 'Common.ValueListParameterInOut',
                 LocalDataProperty : toTurn_ID,
                 ValueListProperty : '_ID'
-            },
-            {
-                $Type             : 'Common.ValueListParameterInOut',
-                LocalDataProperty : toTurn.code,
-                ValueListProperty : '_code'
             },
             {
                 $Type             : 'Common.ValueListParameterInOut',
@@ -93,7 +89,7 @@ annotate OrderService.Stations_Turns with {
                 $Type             : 'Common.ValueListParameterInOut',
                 LocalDataProperty : toTurn.isNightShift,
                 ValueListProperty : '_isNightShift'
-            }, ]
-        }
-    });
+            },
+        ]
+    }});
 };
