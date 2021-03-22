@@ -2,11 +2,11 @@ namespace com.seidor.sfc;
 
 using {OrderService} from '../OrderService';
 
-/* annotate OrderService.Stations_Turns with @(Capabilities : {
+annotate OrderService.Stations_Turns with @(Capabilities : {
     Insertable : true,
     Updatable  : false,
     Deletable  : true
-});  */
+});  
 
 annotate OrderService.Stations_Turns with {
     ID        @Core.Computed;
@@ -44,7 +44,7 @@ annotate OrderService.Stations_Turns with
 annotate OrderService.Stations_Turns with {
     toTurn
     @(Common : {
-        ValueListWithFixedValues,
+        //ValueListWithFixedValues,
         ValueList : {
             SearchSupported : true,
             CollectionPath  : 'VH_Turns',
@@ -53,11 +53,6 @@ annotate OrderService.Stations_Turns with {
                     $Type             : 'Common.ValueListParameterOut',
                     LocalDataProperty : toTurn_ID,
                     ValueListProperty : '_ID'
-                },
-                {
-                    $Type             : 'Common.ValueListParameterOut',
-                    LocalDataProperty : toTurn.code,
-                    ValueListProperty : '_code'
                 },
                 {
                     $Type             : 'Common.ValueListParameterDisplayOnly',
