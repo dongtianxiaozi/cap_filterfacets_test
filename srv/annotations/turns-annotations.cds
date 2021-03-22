@@ -16,10 +16,10 @@ annotate OrderService.Turns with @(UI : {
     }],
     SelectionFields         : [],
     LineItem                : [
-    {Value : code},
-    {Value : description},
-    {Value : longDescription},
-    {Value : isNightShift},
+        {Value : code},
+        {Value : description},
+        {Value : longDescription},
+        {Value : isNightShift},
     ],
     HeaderInfo              : {
         TypeName       : '{i18n>turn}',
@@ -28,36 +28,59 @@ annotate OrderService.Turns with @(UI : {
         Description    : {Value : description}
     },
     Facets                  : [
-    {
-        $Type  : 'UI.ReferenceFacet',
-        Label  : '{i18n>details}',
-        Target : '@UI.FieldGroup#TurnDetails'
-    },
-    {
-        $Type  : 'UI.ReferenceFacet',
-        Label  : '{i18n>stations}',
-        Target : 'toStations/@UI.LineItem'
-    }
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>details}',
+            Target : '@UI.FieldGroup#TurnDetails'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>stations}',
+            Target : 'toStations/@UI.LineItem'
+        }
     ],
     FieldGroup #TurnDetails : {
         Label : '{i18n>details}',
         Data  : [
-        {
-            $Type : 'UI.DataField',
-            Value : code
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : description
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : longDescription
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : isNightShift
-        },
+            {
+                $Type : 'UI.DataField',
+                Value : code
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : description
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : longDescription
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : isNightShift
+            },
         ]
     }
 });
+
+
+/* annotate OrderService.Turns with {
+    code
+    @(Common : {
+        ValueListWithFixedValues,
+        ValueList : {
+            SearchSupported : true,
+            CollectionPath  : 'VH_Turns',
+            Parameters      : [
+                {
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : ID,
+                    ValueListProperty : '_ID'
+                },
+                {
+                    $Type             : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : '_code'
+                }
+            ]
+        }
+    });
+};  */ 

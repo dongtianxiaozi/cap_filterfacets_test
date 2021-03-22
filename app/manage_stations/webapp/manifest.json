@@ -162,7 +162,26 @@
                         "entitySet": "Stations",
                         "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
                         "component": {
-                            "name": "sap.suite.ui.generic.template.ObjectPage"
+                            "name": "sap.suite.ui.generic.template.ObjectPage",
+                            "settings": {
+                                "showRelatedApps": true,
+                                "gridTable": false,
+                                "sections": {
+                                    "toTurns::com.sap.vocabularies.UI.v1.LineItem": {
+                                        "navigationProperty": "toTurns",
+                                        "entitySet": "Stations_Turns",
+                                        "tableSettings": {
+                                            "createWithParameterDialog": {
+                                                "fields": {
+                                                    "toTurn_ID": {
+                                                        "path": "toTurn_ID"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         },
                         "pages": {
                             "ObjectPage|Stations_Operators": {

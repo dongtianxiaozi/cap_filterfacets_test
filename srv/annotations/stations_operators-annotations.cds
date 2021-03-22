@@ -3,13 +3,17 @@ namespace com.seidor.sfc;
 using {OrderService} from '../OrderService';
 
 
-annotate OrderService.Stations_Operators with @(Capabilities : {
+/* annotate OrderService.Stations_Operators with @(Capabilities : {
     Insertable : true,
     Updatable  : false,
     Deletable  : true
-});
+}); */
 
 annotate OrderService.Stations_Operators with {
+    toOperator          @(Common : {
+        Text            : toOperator.code,
+        TextArrangement : #TextOnly
+    });
     name           @title : '{i18n>operatorName}';
     code           @title : '{i18n>operatorCode}';
     personalNumber @title : '{i18n>personalNumber}';
@@ -19,6 +23,7 @@ annotate OrderService.Stations_Operators with {
 
 annotate OrderService.Stations_Operators with @(UI : {
     LineItem                            : [
+        {Value : toOperator_ID},
         {Value : toOperator.code},
         {Value : toOperator.name}
     ],
