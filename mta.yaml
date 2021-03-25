@@ -129,10 +129,6 @@ modules:
           name: manage_plants
           target-path: resources/
         - artifacts:
-            - order_classes-content.zip
-          name: manage_order_classes
-          target-path: resources/
-        - artifacts:
             - manage_granted_types-content.zip
           name: manage_granted_types
           target-path: resources/
@@ -182,17 +178,6 @@ modules:
       commands:
         - npm run build
       supported-platforms: []
-
-  # -------------------- MANAGE_ORDER_CLASSES APP MODULE -------------------
-  - name: manage_order_classes
-    # ------------------------------------------------------------
-    type: html5
-    path: app/manage_order_classes
-    build-parameters:
-      builder: custom
-      commands:
-        - npm run build
-      supported platforms: []
 
   # -------------------- MANAGE_RESPONSIBLES APP MODULE -------------------
   - name: manage_responsibles
