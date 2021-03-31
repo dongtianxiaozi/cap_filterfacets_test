@@ -29,6 +29,7 @@ modules:
     requires:
       - name: sfc-uaa
       - name: sfc-destination-service
+      - name: sfc-html-repo-runtime
       - name: srv_api
         group: destinations
         properties:
@@ -84,6 +85,10 @@ modules:
         parameters:
           service-key:
             name: sfc_html_repo_host-key
+      - name: sfc-html-repo-runtime
+        parameters:
+          service-key:
+            name: sfc_html_repo_runtime-key
       - name: sfc-destination-service
         parameters:
           content-target: true
@@ -95,6 +100,10 @@ modules:
               ServiceInstanceName: sfc-html5-app-host-service
               ServiceKeyName: sfc_html_repo_host-key
               sap.cloud.service: sfcservice
+            - Name: sfcservice_sfc_html_repo_runtime
+              ServiceInstanceName: sfc-html-repo-runtime
+              ServiceKeyName: sfc_html_repo_runtime-key
+              sap.cloud.service: sfcservice              
             - Authentication: OAuth2UserTokenExchange
               Name: sfcservice_sfc-uaa
               ServiceInstanceName: sfc-xsuaa-service
@@ -121,10 +130,6 @@ modules:
           name: manage_responsibles
           target-path: resources/
         - artifacts:
-            - oee_relevancies-content.zip
-          name: manage_oee_relevancies
-          target-path: resources/
-        - artifacts:
             - manage_plants-content.zip
           name: manage_plants
           target-path: resources/
@@ -139,11 +144,7 @@ modules:
         - artifacts:
             - manage_roles-content.zip
           name: manage_roles
-          target-path: resources/
-        - artifacts:
-            - document_classes-content.zip
-          name: manage_document_classes
-          target-path: resources/
+          target-path: resources/          
         - artifacts:
             - materials_sync-content.zip
           name: manage_materials_to_sync
@@ -156,17 +157,6 @@ modules:
             - manage_stations-content.zip
           name: manage_stations
           target-path: resources/
-
-  #-------------------- MANAGE_OEE_RELEVANCIES ---------------------
-  - name: manage_oee_relevancies
-    # --------------------------------------------------------------
-    type: html5
-    path: app/manage_oee_relevancies
-    build-parameters:
-      builder: custom
-      commands:
-        - npm run build
-      supported-platforms: []
 
   # -------------------- MANAGE_GRANTED_TYPES APP MODULE -------------------
   - name: manage_granted_types
@@ -228,17 +218,6 @@ modules:
     # ------------------------------------------------------------
     type: html5
     path: app/manage_roles
-    build-parameters:
-      builder: custom
-      commands:
-        - npm run build
-      supported-platforms: []
-
-    # -------------------- MANAGE_DOCUMENT_CLASSES APP MODULE -------------------
-  - name: manage_document_classes
-    # ------------------------------------------------------------
-    type: html5
-    path: app/manage_document_classes
     build-parameters:
       builder: custom
       commands:
@@ -322,3 +301,11 @@ resources:
       service: html5-apps-repo
       service-name: sfc-html5-app-host-service
       service-plan: app-host
+
+      # ------------------------------------------------------------
+  - name: sfc-html-repo-runtime
+    # ------------------------------------------------------------
+    parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
