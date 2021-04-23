@@ -1,0 +1,37 @@
+{
+  "name": "cap_filterfacets_test",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^4",
+    "express": "^4",
+    "@sap/hana-client": "^2.6.61"
+  },
+  "devDependencies": {
+    "sqlite3": "^5.0.2"
+  },
+  "scripts": {
+    "start": "cds run"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "model": "*",
+        "credentials": {
+          "database": "my.db"
+        }
+      }
+    },
+    "i18n": {
+      "default_language": "en",
+      "for_sqlite": [
+        "en",
+        "es"
+      ]
+    }
+  }
+}
