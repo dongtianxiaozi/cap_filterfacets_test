@@ -1,28 +1,48 @@
-using { Currency, managed, sap } from '@sap/cds/common';
+using {
+  Currency,
+  managed,
+  sap,
+  cuid
+} from '@sap/cds/common';
+
 namespace sap.capire.bookshop;
 
-@cds.search : {title, descr: false, author.name }
+@cds.search : {
+  title,
+  descr : false,
+  author.name
+}
 entity Books : managed {
-  key ID : Integer;
-  title  : localized String(111);
-  descr  : localized String(1111);
-  author : Association to Authors;
-  genre  : Association to Genres;
-  stock  : Integer;
-  price  : Decimal(9,2);
-  currency : Currency;
+  key ID       : Integer;
+      title    : localized String(111);
+      descr    : localized String(1111);
+      toAuthor : Association to Authors;
+      toGenre  : Association to Genres;
+      toSales  : Association to Sales;
+      stock    : Integer;
+      price    : Decimal(9, 2);
+      currency : Currency;
+}
+
+entity Sales : cuid {
+  units  : Integer;
+  toBook : Association to Books;
 }
 
 entity Authors : managed {
-  key ID : Integer;
-  name   : String(111);
-  alias  : String(10);
-  books  : Association to many Books on books.author = $self;
+  key ID    : Integer;
+      name  : String(111);
+      alias : String(10);
+      books : Association to many Books
+                on books.toAuthor = $self;
 }
 
-/** Hierarchically organized Code List for Genres */
+/**
+ * Hierarchically organized Code List for Genres
+ */
 entity Genres : sap.common.CodeList {
-  key ID   : Integer;
-  parent   : Association to Genres;
-  children : Composition of many Genres on children.parent = $self;
+  key ID       : Integer;
+      parent   : Association to Genres;
+      children : Composition of many Genres
+                   on children.parent = $self;
 }

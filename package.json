@@ -11,6 +11,7 @@
     "@sap/hana-client": "^2.6.61"
   },
   "devDependencies": {
+    "@sap/ux-specification": "^1.84.9",
     "sqlite3": "^5.0.2"
   },
   "scripts": {
@@ -19,7 +20,7 @@
   "cds": {
     "requires": {
       "db": {
-        "kind": "hana",
+        "kind": "sql",
         "model": "*",
         "credentials": {
           "database": "my.db"
@@ -33,5 +34,9 @@
         "es"
       ]
     }
-  }
+  },
+  "sapux": [
+    "app\\authors",
+    "app\\books"
+  ]
 }

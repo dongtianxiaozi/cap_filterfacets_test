@@ -3,8 +3,9 @@ service CatalogService @(path:'/browse') {
 
   @readonly entity Books as SELECT from my.Books {
       *,
-      author : redirected to Authors,
-      author.alias as alias
+      toAuthor : redirected to Authors,
+      toSales : redirected to Sales,
+      toAuthor.alias as alias
   } excluding { createdBy, modifiedBy };
 
   @readonly entity Authors as SELECT from my.Authors {
@@ -13,4 +14,6 @@ service CatalogService @(path:'/browse') {
 
   @requires_: 'authenticated-user'
   action submitOrder (book: Books:ID, amount: Integer);
+
+  entity Sales as projection on my.Sales;
 }
