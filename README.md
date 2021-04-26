@@ -4,6 +4,23 @@ This project has been developed to test the @cds.search annotation.
 CAP docs about @cds.search usage here https://cap.cloud.sap/docs/guides/providing-services#search, section Searching data.
 Check current limitations here https://cap.cloud.sap/docs/releases/mar21#tailored-search-with-cdssearch.
 
+## Lecciones aprendidas
+
+  Lecciones aprendidas sobre la configuración del “Adapt Filters”
+
+  - siempre aparece un grupo de filtros que hace referencia a la entidad e incluyn todos los campos de esta
+
+  - si no añades la anotación FilterFacets, también se muestran agrupaciones por cada FieldGroups que tengas definido
+
+  - si añades FilterFacets, puedes indicar un field group y este se mostrará junto con el de de entidadFilterFacets                    : [ {Label : '{i18n>filterfacetlabel}',Target : '@UI.FieldGroup#Test2Details'} ],
+      FilterFacets                    : [ {
+        Label : '{i18n>filterfacetlabel}',
+        Target : '@UI.FieldGroup#Test2Details'
+      } ],
+  - si añades FilterFacets sin ninguna referencia a field group, sólo aparecerá el grupo de la entidadFilterFacets                    : [],
+      FilterFacets                    : [],
+  - Las Label que indiques prevalecen sobre los títulos que hayas puesto y son los textos que se van a mostrar en el Adapt Filters.    
+
 ## Setup and deploy
 
 ```bash
