@@ -4,7 +4,6 @@ service CatalogService @(path:'/browse') {
   entity Books as SELECT from my.Books {
       *,
       toAuthor : redirected to Authors,
-      toSales : redirected to Sales,
       toAuthor.alias as alias
   } excluding { createdBy, modifiedBy };
 

@@ -1,10 +1,13 @@
+annotate CatalogService.Books with {
+  toAuthor @title:'{i18n>sapModule}' @Common.Label:'ostia';
+  toGenre @UI.Filters;
+}
+
 annotate CatalogService.Books with @(UI : {
-  /*   SelectionFields                 : [
-      ID,
-      price,
+  SelectionFields                 : [
       currency_code,
       toAuthor_ID
-    ], */
+    ], 
   LineItem                        : [
     {
       Value : title,

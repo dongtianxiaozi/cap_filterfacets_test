@@ -18,7 +18,6 @@ entity Books : managed {
       descr    : localized String(1111);
       toAuthor : Association to Authors;
       toGenre  : Association to Genres;
-      toSales  : Association to Sales;
       stock    : Integer;
       price    : Decimal(9, 2);
       currency : Currency;
