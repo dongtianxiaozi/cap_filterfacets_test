@@ -1,7 +1,7 @@
 using { sap.capire.bookshop as my } from '../db/data-model';
 service CatalogService @(path:'/browse') {
 
-  @readonly entity Books as SELECT from my.Books {
+  entity Books as SELECT from my.Books {
       *,
       toAuthor : redirected to Authors,
       toSales : redirected to Sales,

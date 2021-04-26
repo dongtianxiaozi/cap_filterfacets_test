@@ -33,8 +33,8 @@ entity Authors : managed {
   key ID    : Integer;
       name  : String(111);
       alias : String(10);
-      books : Association to many Books
-                on books.toAuthor = $self;
+      toBooks : Association to many Books
+                on toBooks.toAuthor = $self;
 }
 
 /**
