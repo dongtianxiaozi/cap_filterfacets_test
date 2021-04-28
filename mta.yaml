@@ -22,6 +22,9 @@ modules:
     # ------------------------------------------------------------
     type: nodejs
     path: gen/srv
+    parameters:
+      memory: 256M
+      disk-quota: 384M
     requires:
       # Resources extracted from CAP configuration
       - name: cap_filterfacets_test-db
@@ -36,10 +39,36 @@ modules:
     type: hdb
     path: gen/db
     parameters:
+      memory: 256M
+      disk-quota: 256M    
       buildpack: nodejs_buildpack
     requires:
       # 'hana' and 'xsuaa' resources extracted from CAP configuration
       - name: cap_filterfacets_test-db
+
+  # -------------------- UI MODULE ------------------------
+  - name: cap_filterfacets_test-ui
+    type: nodejs
+    path: app
+    parameters:
+      memory: 256M
+      disk-quota: 384M
+    provides:               
+      - name: s4n-ui  
+        properties:
+          url: ${default-url}      
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          forwardAuthToken: true
+          strictSSL: true
+          name: srv-api
+          url: ~{srv-url}
+    properties:
+      SAP_JWT_TRUST_ACL:
+       - clientid: "*"
+         identityzone: "*"  
 
 resources:
   # services extracted from CAP configuration
@@ -49,7 +78,7 @@ resources:
     # ------------------------------------------------------------
     type: com.sap.xs.hdi-container
     parameters:
-      service: hanatrial # or 'hanatrial' on trial landscapes
+      service: hana # or 'hanatrial' on trial landscapes
       service-plan: hdi-shared
     properties:
       hdi-service-name: ${service-name}
