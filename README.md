@@ -1,12 +1,10 @@
 # Getting Started
  
-This project has been developed to test the @cds.search annotation.
-CAP docs about @cds.search usage here https://cap.cloud.sap/docs/guides/providing-services#search, section Searching data.
-Check current limitations here https://cap.cloud.sap/docs/releases/mar21#tailored-search-with-cdssearch.
+This project has been developed to test the FilterFacets annotation.
 
 ## Lecciones aprendidas
 
-  Lecciones aprendidas sobre la configuración del “Adapt Filters”
+  Lecciones aprendidas sobre la configuración del “Adapt Filters” en una app Odata V4:
 
   - siempre aparece un grupo de filtros que hace referencia a la entidad e incluyn todos los campos de esta
 
@@ -20,6 +18,10 @@ Check current limitations here https://cap.cloud.sap/docs/releases/mar21#tailore
   - si añades FilterFacets sin ninguna referencia a field group, sólo aparecerá el grupo de la entidadFilterFacets                    : [],
       FilterFacets                    : [],
   - Las Label que indiques prevalecen sobre los títulos que hayas puesto y son los textos que se van a mostrar en el Adapt Filters.    
+
+Lecciones aprendidas sobre la configuración del “Adapt Filters” en una app Odata V2:
+
+  - Se añaden por defecto tantos grupos de filtros como asociaciones tenga la entidad, también se añaden para localized y para tipos (currency por ejemplo)
 
 ## Setup and deploy
 
@@ -54,29 +56,6 @@ To deploy to BTP run the following commands:
 mbt build  
 cf deploy ....  
 ```
-
-## Scenario
-
-Entity Books is annotated with @cds.search:  
-```  
-@cds.search : {title, descr: false, author.name }  
-entity Books : managed {  
-  key ID : Integer;  
-  title  : localized String(111);  
-  descr  : localized String(1111);  
-  author : Association to Authors;  
-  genre  : Association to Genres;  
-  stock  : Integer;  
-  price  : Decimal(9,2);  
-  currency : Currency;  
-}  
-``` 
-Run and open fiori preview for browse/Books.
-Try out different searches by the Search field:
-- by title -> works fine
-- by descr -> doesn't work, because is searching and it doesnt because of descr: false
-- by author's name -> as mentioned in the docs doesn't work (see current limitations link at top of this document).
-
 
 ## Learn More
 

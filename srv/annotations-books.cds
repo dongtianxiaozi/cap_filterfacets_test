@@ -5,10 +5,10 @@ annotate CatalogService.Books with {
 }
 
 annotate CatalogService.Books with @(UI : {
-  SelectionFields                 : [
+   SelectionFields                 : [
       currency_code,
-      toAuthor_ID
-    ], 
+      toAuthor.ID
+    ],  
   LineItem                        : [
     {
       Value : title,
@@ -26,12 +26,12 @@ annotate CatalogService.Books with @(UI : {
       Value : descr,
       Label : '{i18n>Description}'
     },
-    {Value : toGenre.parent},
+    {Value : toGenre.parent_ID},
     {Value : price},
-    {
+/*     {
       Value : toSales.units,
       Label : '{i18n>Units}'
-    },
+    }, */
     {
       Value : currency.symbol,
       Label : ' '

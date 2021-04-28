@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>Test page</title>
+
+    <script>
+        window['sap-ushell-config'] = {
+            defaultRenderer: 'fiori2',
+            applications: {
+                'browse-v2books': {
+                    title: 'v2 Books',
+                    description: 'v2 Books',
+                    additionalInformation: 'SAPUI5.Component=v2books',
+                    applicationType : 'URL',
+                    url: '/v2_books/webapp',
+					navigationMode: "embedded"
+                },
+                'browse-v4books': {
+                    title: 'v4 Books',
+                    description: 'v4 Books',
+                    additionalInformation: 'SAPUI5.Component=v4books',
+                    applicationType : 'URL',
+                    url: '/v4_books/webapp',
+					navigationMode: "embedded"
+                }             
+            }
+        };
+    </script>
+
+<!--     <script src="https://sapui5.hana.ondemand.com/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
+    <script src="https://sapui5.hana.ondemand.com/1.64.0/resources/sap-ui-core.js"
+        data-sap-ui-libs="sap.m, sap.ushell, sap.collaboration, sap.ui.layout"
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-theme="sap_belize"
+        data-sap-ui-frameOptions="allow"
+    ></script>
+    <script>   -->
+        
+    <script
+        src="https://sapui5.hana.ondemand.com/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
+
+    <script id="sap-ui-bootstrap"
+        src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+    		data-sap-ui-libs="sap.m,sap.ushell,sap.collaboration,sap.ui.layout"
+    		data-sap-ui-compatVersion="edge"
+    		data-sap-ui-theme="sap_fiori_3"
+    		data-sap-ui-resourceroots='{"s4notifications": "../"}'
+        data-sap-ui-frameOptions="allow"></script>
+
+    <script>      
+        sap.ui.getCore().attachInit(
+            () => sap.ushell.Container.createRenderer().placeAt('content')
+        )
+    </script>
+
+</head>
+<body class="sapUiBody" id="content"></body>
+</html>
