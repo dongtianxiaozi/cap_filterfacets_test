@@ -2,7 +2,6 @@ annotate CatalogService.Books with {
   toAuthor @title:'{i18n>AuthorTitle}' @Common.Label:'{i18n>AuthorLabel}';
   toAuthor_ID @title:'{i18n>AuthorTitle}' @Common.Label:'{i18n>AuthorLabel}';
 }
-}
 
 annotate CatalogService.Books with @(UI : {
    SelectionFields                 : [
