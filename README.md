@@ -4,7 +4,7 @@ This project has been developed to test the FilterFacets annotation.
 
 ## Lecciones aprendidas
 
-  Lecciones aprendidas sobre la configuración del “Adapt Filters”
+  Lecciones aprendidas sobre la configuración del “Adapt Filters” en una app Odata V4:
 
   - siempre aparece un grupo de filtros que hace referencia a la entidad e incluyn todos los campos de esta
 
@@ -18,6 +18,10 @@ This project has been developed to test the FilterFacets annotation.
   - si añades FilterFacets sin ninguna referencia a field group, sólo aparecerá el grupo de la entidadFilterFacets                    : [],
       FilterFacets                    : [],
   - Las Label que indiques prevalecen sobre los títulos que hayas puesto y son los textos que se van a mostrar en el Adapt Filters.    
+
+Lecciones aprendidas sobre la configuración del “Adapt Filters” en una app Odata V2:
+
+  - Se añaden por defecto tantos grupos de filtros como asociaciones tenga la entidad, también se añaden para localized y para tipos (currency por ejemplo)
 
 ## Setup and deploy
 
