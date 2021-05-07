@@ -10,7 +10,7 @@ This project has been developed to test the FilterFacets annotation.
 
   - si no añades la anotación FilterFacets, también se muestran agrupaciones por cada FieldGroups que tengas definido
 
-  - si añades FilterFacets, puedes indicar un field group y este se mostrará junto con el de de entidadFilterFacets                    : [ {Label : '{i18n>filterfacetlabel}',Target : '@UI.FieldGroup#Test2Details'} ],
+  - si añades FilterFacets, puedes indicar un field group y este se mostrará junto con el de de entidadFilterFacets                    
       FilterFacets                    : [ {
         Label : '{i18n>filterfacetlabel}',
         Target : '@UI.FieldGroup#Test2Details'
