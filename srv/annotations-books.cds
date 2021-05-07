@@ -4,10 +4,10 @@ annotate CatalogService.Books with {
 }
 
 annotate CatalogService.Books with @(UI : {
-   SelectionFields                 : [
+  SelectionFields                 : [
       currency_code,
       toAuthor.ID
-    ],  
+  ],   
   LineItem                        : [
     {
       Value : title,
@@ -27,10 +27,6 @@ annotate CatalogService.Books with @(UI : {
     },
     {Value : toGenre.parent_ID},
     {Value : price},
-/*     {
-      Value : toSales.units,
-      Label : '{i18n>Units}'
-    }, */
     {
       Value : currency.symbol,
       Label : ' '
@@ -61,7 +57,10 @@ annotate CatalogService.Books with @(UI : {
   - Las Label que indiques prevalecen sobre los títulos que hayas puesto y son los textos que se van a mostrar en el Adapt Filters.    
   */
 
-  FilterFacets                    : [],
+  FilterFacets                    : [ {
+        Label : '{i18n>filterfacetlabel}',
+        Target : '@UI.FieldGroup#Test2Details'
+  } ],
 
   FieldGroup #ResponsiblesDetails : {
     Label : '{i18n>fieldgrouplabel}',
@@ -69,10 +68,6 @@ annotate CatalogService.Books with @(UI : {
       {
         $Type : 'UI.DataField',
         Value : descr
-      },
-      {
-        $Type : 'UI.DataField',
-        Value : toSales.units,
       }
     ]
   },
@@ -83,10 +78,6 @@ annotate CatalogService.Books with @(UI : {
         $Type : 'UI.DataField',
         Value : title
       },
-      {
-        $Type : 'UI.DataField',
-        Value : toSales.units,
-      }
     ]
   },
 });
