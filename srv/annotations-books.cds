@@ -1,13 +1,13 @@
 annotate CatalogService.Books with {
-  toAuthor @title:'{i18n>AuthorTitle}' @Common.Label:'{i18n>AuthorLabel}';
-  toAuthor_ID @title:'{i18n>AuthorTitle}' @Common.Label:'{i18n>AuthorLabel}';
+  toAuthor    @title : '{i18n>AuthorTitle}'  @Common.Label : '{i18n>AuthorLabel}';
+  toAuthor_ID @title : '{i18n>AuthorTitle}'  @Common.Label : '{i18n>AuthorLabel}';
 }
 
 annotate CatalogService.Books with @(UI : {
   SelectionFields                 : [
-      currency_code,
-      toAuthor.ID
-  ],   
+    currency_code,
+    toAuthor.ID
+  ],
   LineItem                        : [
     {
       Value : title,
@@ -32,15 +32,13 @@ annotate CatalogService.Books with @(UI : {
       Label : ' '
     },
   ],
-  Facets                          : [
-    {
-      $Type  : 'UI.ReferenceFacet',
-      Label  : '{i18n>facetlabel}',
-      Target : '@UI.FieldGroup#ResponsiblesDetails'
-    },
-  ],
+  Facets                          : [{
+    $Type  : 'UI.ReferenceFacet',
+    Label  : '{i18n>facetlabel}',
+    Target : '@UI.FieldGroup#ResponsiblesDetails'
+  }, ],
 
-  /* 
+  /*
   Lecciones aprendidas sobre la configuración del “Adapt Filters”
 
   - siempre aparece un grupo de filtros que hace referencia a la entidad e incluyn todos los campos de esta
@@ -54,30 +52,32 @@ annotate CatalogService.Books with @(UI : {
       } ],
   - si añades FilterFacets sin ninguna referencia a field group, sólo aparecerá el grupo de la entidadFilterFacets                    : [],
       FilterFacets                    : [],
-  - Las Label que indiques prevalecen sobre los títulos que hayas puesto y son los textos que se van a mostrar en el Adapt Filters.    
+  - Las Label que indiques prevalecen sobre los títulos que hayas puesto y son los textos que se van a mostrar en el Adapt Filters.
   */
 
-  FilterFacets                    : [ {
-        Label : '{i18n>filterfacetlabel}',
-        Target : '@UI.FieldGroup#Test2Details'
-  } ],
+  FilterFacets                    : [
+    {
+      Label  : '{i18n>filterfacetlabel}',
+      Target : '@UI.FieldGroup#Test2Details'
+    },
+    {
+      Label  : '{i18n>filterfacetlabel}',
+      Target : '@UI.DataField#toGenre'
+    }
+  ],
 
   FieldGroup #ResponsiblesDetails : {
     Label : '{i18n>fieldgrouplabel}',
-    Data  : [
-      {
-        $Type : 'UI.DataField',
-        Value : descr
-      }
-    ]
+    Data  : [{
+      $Type : 'UI.DataField',
+      Value : descr
+    }]
   },
   FieldGroup #Test2Details        : {
     Label : '{i18n>secondfgrouplabel}',
-    Data  : [
-      {
-        $Type : 'UI.DataField',
-        Value : title
-      },
-    ]
+    Data  : [{
+      $Type : 'UI.DataField',
+      Value : title
+    }, ]
   },
 });
