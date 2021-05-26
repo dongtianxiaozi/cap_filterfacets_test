@@ -5,11 +5,6 @@ using {OrderService} from '../OrderService';
 annotate OrderService.Stations with {
     code              @title : '{i18n>stationCode}';
     description       @title : '{i18n>stationDescription}';
-    toFixedWorkCenter @title : '{i18n>workcenterCode}';
-    /*@(Common : {Text : {
-        $value                 : toFixedWorkCenter.code,
-        ![@UI.TextArrangement] : #TextOnly
-    }});*/
 
     toOperator        @title : '{i18n>operatorCode}'
                       @(Common : {Text : {
@@ -21,19 +16,12 @@ annotate OrderService.Stations with {
 }
 
 annotate OrderService.Stations with @(
-                                      /*Common.SemanticKey : [
-                                      ],*/
                                     UI : {
     Identification              : [{Value : code}],
-    /*SelectionFields              : [
-    material,
-    batch
-    ],*/
+
     LineItem                    : [
         {Value : description},
         {Value : code},
-        {Value : toFixedWorkCenter.code},
-        {Value : toOperator.code},
         {Value : turnRequired},
     ],
     HeaderInfo                  : {
@@ -50,23 +38,8 @@ annotate OrderService.Stations with @(
         },
         {
             $Type  : 'UI.ReferenceFacet',
-            Label  : '{i18n>operators}',
-            Target : 'toOperators/@UI.LineItem'
-        },
-        {
-            $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>turns}',
             Target : 'toTurns/@UI.LineItem'
-        },
-        {
-            $Type  : 'UI.ReferenceFacet',
-            Label  : '{i18n>workcenters}',
-            Target : 'toWorkCenters/@UI.LineItem'
-        },
-        {
-            $Type  : 'UI.ReferenceFacet',
-            Label  : '{i18n>stoppage}',
-            Target : 'toStoppages/@UI.LineItem'
         }
     ],
     FieldGroup #StationsDetails : {
@@ -82,43 +55,10 @@ annotate OrderService.Stations with @(
             },
             {
                 $Type : 'UI.DataField',
-                Value : toFixedWorkCenter_ID
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : toOperator_ID
-            },
-            {
-                $Type : 'UI.DataField',
                 Value : turnRequired
             },
         ]
     }
 });
 
-annotate OrderService.Stations with {
-    toOperator        @(Common : {
-        ValueListWithFixedValues,
-        ValueList : {
-            SearchSupported : true,
-            CollectionPath  : 'VH_Operators',
-            Parameters      : [{
-                $Type             : 'Common.ValueListParameterInOut',
-                LocalDataProperty : toOperator_ID,
-                ValueListProperty : 'ID'
-            }, ]
-        }
-    });
-    toFixedWorkCenter @(Common : {
-        ValueListWithFixedValues,
-        ValueList : {
-            SearchSupported : true,
-            CollectionPath  : 'VH_WorkCenters',
-            Parameters      : [{
-                $Type             : 'Common.ValueListParameterInOut',
-                LocalDataProperty : toFixedWorkCenter_ID,
-                ValueListProperty : 'ID'
-            }, ]
-        }
-    });
-};
+
