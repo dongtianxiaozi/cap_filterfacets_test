@@ -26,11 +26,6 @@ type Turn : String(2);
 */
 
 context md {
-  entity Person : managed {
-    key ID          : Integer;
-        title       : String(255);
-        description : String(255);
-  }
 
   @assert.unique : {code : [code], }
   entity Turns : cuid, managed {

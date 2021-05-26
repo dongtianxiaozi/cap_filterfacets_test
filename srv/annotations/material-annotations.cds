@@ -27,7 +27,7 @@ annotate OrderService.Materials with {
 
     toUnit
     @title     : '{i18n>unitCode}'
-        @(Common : {Text : {
+    @(Common : {Text : {
         $value                 : toUnit.code,
         ![@UI.TextArrangement] : #TextOnly
     }});
@@ -40,37 +40,34 @@ annotate OrderService.Materials with {
 
 }
 
-annotate OrderService.Materials with @(
-    UI                 : {
-        Identification  : [{
-            $Type : 'UI.DataField',
-            Value : code,
-        }],
-        SelectionFields : [type],
-        LineItem        : [
-            {Value : ID},
-            {Value : code},
-            {Value : description},
-            {Value : toUnit.code},
-            {Value : type},
-            {Value : isBatchManaged}
-        ],
-        HeaderInfo      : {
-            TypeName       : '{i18n>material}',
-            TypeNamePlural : '{i18n>materials}',
-            Title          : {Value : code},
-            Description    : {Value : description}
-        },
-        Facets                   : [
-        {
-            $Type  : 'UI.ReferenceFacet',
-            Label  : '{i18n>details}',
-            Target : '@UI.FieldGroup#materialsDetails'
-        },
-        ],
-        FieldGroup #materialsDetails : {
-            Label : '{i18n>details}',
-            Data  : [
+annotate OrderService.Materials with @(UI : {
+    Identification               : [{
+        $Type : 'UI.DataField',
+        Value : code,
+    }],
+    SelectionFields              : [type],
+    LineItem                     : [
+        {Value : ID},
+        {Value : code},
+        {Value : description},
+        {Value : toUnit.code},
+        {Value : type},
+        {Value : isBatchManaged}
+    ],
+    HeaderInfo                   : {
+        TypeName       : '{i18n>material}',
+        TypeNamePlural : '{i18n>materials}',
+        Title          : {Value : code},
+        Description    : {Value : description}
+    },
+    Facets                       : [{
+        $Type  : 'UI.ReferenceFacet',
+        Label  : '{i18n>details}',
+        Target : '@UI.FieldGroup#materialsDetails'
+    }, ],
+    FieldGroup #materialsDetails : {
+        Label : '{i18n>details}',
+        Data  : [
             {
                 $Type : 'UI.DataField',
                 Value : createdAt
@@ -95,37 +92,33 @@ annotate OrderService.Materials with @(
                 $Type : 'UI.DataField',
                 Value : description
             },
-                        {
+            {
                 $Type : 'UI.DataField',
                 Value : toUnit_ID
             },
-                        {
+            {
                 $Type : 'UI.DataField',
                 Value : type
             },
-                        {
+            {
                 $Type : 'UI.DataField',
                 Value : isBatchManaged
             },
-            ]
-        }
+        ]
     }
-);
+});
 
 annotate OrderService.Materials with {
-    toUnit @(
-        Common : {            
-            ValueListWithFixedValues,
-            ValueList : {
-                SearchSupported : true,
-                CollectionPath  : 'VH_Units',
-                Parameters      : [{
-                    $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : toUnit_ID,
-                    ValueListProperty : '_ID'
-                    },
-                ]
-            }
+    toUnit @(Common : {
+        ValueListWithFixedValues,
+        ValueList : {
+            SearchSupported : true,
+            CollectionPath  : 'VH_Units',
+            Parameters      : [{
+                $Type             : 'Common.ValueListParameterInOut',
+                LocalDataProperty : toUnit_ID,
+                ValueListProperty : 'ID'
+            }, ]
         }
-    );
+    });
 };

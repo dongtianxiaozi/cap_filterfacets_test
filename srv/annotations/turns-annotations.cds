@@ -74,13 +74,13 @@ annotate OrderService.Turns with @(UI : {
                 {
                     $Type             : 'Common.ValueListParameterInOut',
                     LocalDataProperty : ID,
-                    ValueListProperty : '_ID'
+                    ValueListProperty : 'ID'
                 },
                 {
                     $Type             : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : '_code'
+                    ValueListProperty : 'code'
                 }
             ]
         }
     });
-};  */ 
+};  */

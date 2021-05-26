@@ -11,38 +11,38 @@ annotate OrderService.Stations with {
         ![@UI.TextArrangement] : #TextOnly
     }});*/
 
-    toOperator @title : '{i18n>operatorCode}'
-    @(Common : {Text : {
+    toOperator        @title : '{i18n>operatorCode}'
+                      @(Common : {Text : {
         $value                 : toOperator.code,
         ![@UI.TextArrangement] : #TextOnly
     }});
 
-    turnRequired @title : '{i18n>turnRequired}';
+    turnRequired      @title : '{i18n>turnRequired}';
 }
 
 annotate OrderService.Stations with @(
-    /*Common.SemanticKey : [
+                                      /*Common.SemanticKey : [
+                                      ],*/
+                                    UI : {
+    Identification              : [{Value : code}],
+    /*SelectionFields              : [
+    material,
+    batch
     ],*/
-    UI                 : {
-        Identification               : [{Value : code}],
-        /*SelectionFields              : [
-        material,
-        batch
-        ],*/
-        LineItem                     : [
+    LineItem                    : [
         {Value : description},
         {Value : code},
         {Value : toFixedWorkCenter.code},
         {Value : toOperator.code},
         {Value : turnRequired},
-        ],
-        HeaderInfo                   : {
-            TypeName       : '{i18n>station}',
-            TypeNamePlural : '{i18n>stations}',
-            Title          : {Value : code},
-            Description    : {Value : description}
-        },
-                Facets                   : [
+    ],
+    HeaderInfo                  : {
+        TypeName       : '{i18n>station}',
+        TypeNamePlural : '{i18n>stations}',
+        Title          : {Value : code},
+        Description    : {Value : description}
+    },
+    Facets                      : [
         {
             $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>details}',
@@ -67,11 +67,11 @@ annotate OrderService.Stations with @(
             $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>stoppage}',
             Target : 'toStoppages/@UI.LineItem'
-        } 
-        ],
-        FieldGroup #StationsDetails : {
-            Label : '{i18n>details}',
-            Data  : [
+        }
+    ],
+    FieldGroup #StationsDetails : {
+        Label : '{i18n>details}',
+        Data  : [
             {
                 $Type : 'UI.DataField',
                 Value : code
@@ -92,40 +92,33 @@ annotate OrderService.Stations with @(
                 $Type : 'UI.DataField',
                 Value : turnRequired
             },
-            ]
-        }
+        ]
     }
-);
+});
 
 annotate OrderService.Stations with {
-    toOperator @(
-        Common : {            
-            ValueListWithFixedValues,
-            ValueList : {
-                SearchSupported : true,
-                CollectionPath  : 'VH_Operators',
-                Parameters      : [{
-                    $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : toOperator_ID,
-                    ValueListProperty : '_ID'
-                    },
-                ]
-            }
+    toOperator        @(Common : {
+        ValueListWithFixedValues,
+        ValueList : {
+            SearchSupported : true,
+            CollectionPath  : 'VH_Operators',
+            Parameters      : [{
+                $Type             : 'Common.ValueListParameterInOut',
+                LocalDataProperty : toOperator_ID,
+                ValueListProperty : 'ID'
+            }, ]
         }
-    );
-    toFixedWorkCenter @(
-        Common : {            
-            ValueListWithFixedValues,
-            ValueList : {
-                SearchSupported : true,
-                CollectionPath  : 'VH_WorkCenters',
-                Parameters      : [{
-                    $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : toFixedWorkCenter_ID,
-                    ValueListProperty : '_ID'
-                    },
-                ]
-            }
+    });
+    toFixedWorkCenter @(Common : {
+        ValueListWithFixedValues,
+        ValueList : {
+            SearchSupported : true,
+            CollectionPath  : 'VH_WorkCenters',
+            Parameters      : [{
+                $Type             : 'Common.ValueListParameterInOut',
+                LocalDataProperty : toFixedWorkCenter_ID,
+                ValueListProperty : 'ID'
+            }, ]
         }
-    );
+    });
 };

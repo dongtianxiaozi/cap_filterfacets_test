@@ -71,7 +71,7 @@ annotate OrderService.OrderClasses with {
             Parameters      : [{
                 $Type             : 'Common.ValueListParameterInOut',
                 LocalDataProperty : toPlant_ID,
-                ValueListProperty : '_ID'
+                ValueListProperty : 'ID'
             }, ]
         }
     });

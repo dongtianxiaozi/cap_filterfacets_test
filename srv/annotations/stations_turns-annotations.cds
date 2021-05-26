@@ -6,7 +6,7 @@ annotate OrderService.Stations_Turns with @(Capabilities : {
     Insertable : true,
     Updatable  : false,
     Deletable  : true
-});  
+});
 
 annotate OrderService.Stations_Turns with {
     ID        @Core.Computed;
@@ -44,33 +44,32 @@ annotate OrderService.Stations_Turns with
 annotate OrderService.Stations_Turns with {
     toTurn
     @(Common : {
-        //ValueListWithFixedValues,
-        ValueList : {
-            SearchSupported : true,
-            CollectionPath  : 'VH_Turns',
-            Parameters      : [
-                {
-                    $Type             : 'Common.ValueListParameterOut',
-                    LocalDataProperty : toTurn_ID,
-                    ValueListProperty : '_ID'
-                },
-                {
-                    $Type             : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : '_code'
-                },
-                {
-                    $Type             : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : '_text'
-                },
-                {
-                    $Type             : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : '_longText'
-                },
-                {
-                    $Type             : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : '_isNightShift'
-                },
-            ]
-        }
-    });
+                //ValueListWithFixedValues,
+               ValueList : {
+        SearchSupported : true,
+        CollectionPath  : 'VH_Turns',
+        Parameters      : [
+            {
+                $Type             : 'Common.ValueListParameterOut',
+                LocalDataProperty : toTurn_ID,
+                ValueListProperty : 'ID'
+            },
+            {
+                $Type             : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'code'
+            },
+            {
+                $Type             : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'text'
+            },
+            {
+                $Type             : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'longText'
+            },
+            {
+                $Type             : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : '_isNightShift'
+            },
+        ]
+    }});
 };

@@ -21,62 +21,55 @@ annotate OrderService.MaterialsToSync with {
 }
 
 annotate OrderService.MaterialsToSync with @(
-    Common.SemanticKey : [
-        code,
-    ],
+    Common.SemanticKey : [code, ],
     UI                 : {
-        Identification  : [{
+        Identification                : [{
             $Type : 'UI.DataField',
             Value : code,
         }],
-        SelectionFields : [
-        ],
-        LineItem        : [
+        SelectionFields               : [],
+        LineItem                      : [
             {Value : toPlant.code},
-            {Value : code},    
+            {Value : code},
         ],
-        HeaderInfo      : {
+        HeaderInfo                    : {
             TypeName       : '{i18n>smaterial}',
             TypeNamePlural : '{i18n>smaterials}',
             Title          : {Value : code},
             Description    : {Value : toPlant.code}
         },
-        Facets                   : [
-        {
+        Facets                        : [{
             $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>details}',
             Target : '@UI.FieldGroup#SmaterialsDetails'
-        },
-        ],
+        }, ],
         FieldGroup #SmaterialsDetails : {
             Label : '{i18n>details}',
             Data  : [
-            {
-                $Type : 'UI.DataField',
-                Value : code
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : toPlant_ID
-            },
+                {
+                    $Type : 'UI.DataField',
+                    Value : code
+                },
+                {
+                    $Type : 'UI.DataField',
+                    Value : toPlant_ID
+                },
             ]
         }
     }
 );
+
 annotate OrderService.MaterialsToSync with {
-    toPlant @(
-        Common : {            
-            ValueListWithFixedValues,
-            ValueList : {
-                SearchSupported : true,
-                CollectionPath  : 'VH_Plants',
-                Parameters      : [{
-                    $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : toPlant_ID,
-                    ValueListProperty : '_ID'
-                    },
-                ]
-            }
+    toPlant @(Common : {
+        ValueListWithFixedValues,
+        ValueList : {
+            SearchSupported : true,
+            CollectionPath  : 'VH_Plants',
+            Parameters      : [{
+                $Type             : 'Common.ValueListParameterInOut',
+                LocalDataProperty : toPlant_ID,
+                ValueListProperty : 'ID'
+            }, ]
         }
-    );
+    });
 };

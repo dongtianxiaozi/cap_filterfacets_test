@@ -14,7 +14,7 @@ service OrderService @(requires : ['user']) {
     entity Operations               as projection on td.Operations {
         * , toOrder : redirected to Orders, toWorkCenter : redirected to WorkCenters, toOrder.code as order_, toWorkCenter.code as workCenter
     }
-    
+
     //@odata.draft.enabled
     entity Stations                 as projection on md.Stations {
         * , toTurns : redirected to Stations_Turns, toOperator : redirected to Operators, toOperators : redirected to Stations_Operators, toStoppages : redirected to Stations_Stoppages, toWorkCenters : redirected to Stations_WorkCenters, toFixedWorkCenter : redirected to WorkCenters
@@ -47,11 +47,11 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity VH_Turns                 as
         select from md.Turns {
-            ID              as _ID,
-            code            as _code,
-            description     as _text,
-            longDescription as _longText,
-            isNightShift    as _isNightShift
+            ID              as ID,
+            code            as code,
+            description     as text,
+            longDescription as longText,
+            isNightShift    as isNightShift
         };
 
     entity Stations_Turns           as projection on md.Stations_Turns {
@@ -87,8 +87,8 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity VH_Orders                as
         select from td.Orders {
-            ID   as _ID,
-            code as _code,
+            ID   as ID,
+            code as code,
             type,
             plant
         };
@@ -96,10 +96,10 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity VH_WorkCenters           as
         select from md.WorkCenters {
-            ID          as _ID,
-            code        as _code,
+            ID          as ID,
+            code        as code,
             plant,
-            description as _text
+            description as text
         };
 
     @odata.draft.enabled
@@ -120,9 +120,9 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity VH_Operators             as
         select from md.Operators {
-            ID   as _ID,
-            code as _code,
-            name as _text
+            ID   as ID,
+            code as code,
+            name as text
         };
 
     @odata.draft.enabled
@@ -138,9 +138,9 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity VH_Roles                 as
         select from md.Roles {
-            ID          as _ID,
-            code        as _code,
-            description as _text
+            ID          as ID,
+            code        as code,
+            description as text
         };
 
 
@@ -187,9 +187,9 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity VH_Plants                as
         select from md.Plants {
-            ID          as _ID,
-            code        as _code,
-            description as _text
+            ID          as ID,
+            code        as code,
+            description as text
         };
 
     @odata.draft.enabled
@@ -213,9 +213,9 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity VH_Responsibles          as
         select from md.Responsibles {
-            ID          as _ID,
-            code        as _code,
-            description as _text,
+            ID          as ID,
+            code        as code,
+            description as text,
             toPlant : redirected to Plants
         };
 
@@ -239,8 +239,8 @@ service OrderService @(requires : ['user']) {
     @readonly
     entity VH_OrderClasses          as
         select from md.OrderClasses {
-            ID           as _ID,
-            code         as _code,
+            ID           as ID,
+            code         as code,
             toPlant.code as plant
         };
 

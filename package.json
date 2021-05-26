@@ -5,37 +5,27 @@
   "repository": "<Add your repository here>",
   "license": "UNLICENSED",
   "private": true,
+  "engines": {
+    "node": "14.16.0"
+  },
   "scripts": {
-    "watch": "npm run build && cds watch",
-    "start:local": "npm run build && cds run",
-    "start": "cds run",
-    "build": "npm run build:cds && npm run build:cds2types && npm run build:ts",
-    "build:cds2types": "cds2types --cds ./srv/OrderService.cds --output ./src/shared/Contract.temp.ts --prefix I --debug",
-    "build:cds": "echo 'Compiling cds sources...' && cds build --production && cp .cdsrc.json gen/srv",
-    "build:ts": "echo 'Compiling *.ts sources...' && tsc",
-    "start2": "cds run",
-    "build:fast": "mbt build -m=verbose -j=8",
-    "build:ui": "mbt module-build -m=sfcs_ui_deployer -m=v4orders -m=v4workcenters -m=v2orders -m=v2workcenters -a",
-    "deploy:ui": "cf deploy .//mta_archives//sfc_1.0.0.mtar -m sfc_ui_deployer -r sfcs_html_repo_host",
-    "deploy:ui+ann": "cf deploy .//mta_archives//sfc_1.0.0.mtar -m sfc_ui_deployer -m sfc-srv -m sfc-db-deployer -r sfc_html_repo_host",
-    "cf:ui": "npm run build:fast && npm run deploy:ui",
-    "sonarscanner_osx": "./sonar_scanner_osx.sh"
+    "start": "cds run"
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "1.39.0",
+    "@sap-cloud-sdk/core": "1.44.0",
     "@sap/audit-logging": "5.0.0",
-    "@sap/cds": "4.6.5",
-    "@sap/cds-odata-v2-adapter-proxy": "1.5.10",
-    "@sap/hana-client": "2.7.26",
+    "@sap/cds": "5.1.5",
+    "@sap/cds-odata-v2-adapter-proxy": "1.6.3",
+    "@sap/hana-client": "2.8.20",
     "@sap/xsenv": "3.1.0",
-    "@sap/xssec": "3.1.2",
+    "@sap/xssec": "3.2.0",
     "cds-routing-handlers": "3.0.4",
     "cls-hooked": "4.2.2",
     "compression": "1.7.4",
-    "dotenv": "8.2.0",
+    "dotenv": "10.0.0",
     "express": "4.17.1",
-    "helmet": "4.4.1",
-    "inversify": "5.0.5",
+    "helmet": "4.6.0",
+    "inversify": "5.1.1",
     "module-alias": "^2.2.2",
     "moment": "2.29.1",
     "passport": "0.4.1",
@@ -43,14 +33,14 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@sap/ux-specification": "1.84.2",
+    "@sap/ux-specification": "1.84.11",
     "@types/cls-hooked": "4.3.3",
-    "@types/express": "4.17.11",
+    "@types/express": "4.17.12",
     "@types/uuid": "8.3.0",
     "cds2types": "2.6.0",
-    "prettier": "2.2.1",
-    "sqlite3": "5.0.0",
-    "typescript": "4.1.5"
+    "prettier": "2.3.0",
+    "sqlite3": "5.0.2",
+    "typescript": "4.3.2"
   },
   "cds": {
     "hana": {

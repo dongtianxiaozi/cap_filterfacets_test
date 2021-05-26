@@ -7,47 +7,49 @@ annotate OrderService.Responsibles with {
     @UI.Hidden;
 
     toPlant
-    @title: '{i18n>plants}'
-        @(Common : {Text : {
+    @title : '{i18n>plants}'
+    @(Common : {Text : {
         $value                 : toPlant.description,
         ![@UI.TextArrangement] : #TextOnly
     }});
-            /*@(Common : {Text : {
-        $value                 : toPlant.description,
-        ![@UI.TextArrangement] : #TextOnly
-    }})*/
+    /*@(Common : {Text : {
+$value                 : toPlant.description,
+![@UI.TextArrangement] : #TextOnly
+}})*/
 
 
     description
-    @title : '{i18n>description}';   
+    @title : '{i18n>description}';
 
     code
-    @title : '{i18n>responsible}';    
+    @title : '{i18n>responsible}';
 
 };
 
 annotate OrderService.Responsibles with @(
-    Common.SemanticKey : [toPlant.code, 
-                          code],
+    Common.SemanticKey : [
+        toPlant.code,
+        code
+    ],
     UI                 : {
-        Identification           : [{
+        Identification                  : [{
             $Type : 'UI.DataField',
             Value : code,
         }],
-        SelectionFields          : [toPlant_ID],
-        LineItem                 : [
+        SelectionFields                 : [toPlant_ID],
+        LineItem                        : [
             {Value : toPlant.code},
             {Value : code},
             {Value : description},
         ],
-        HeaderInfo               : {
+        HeaderInfo                      : {
             TypeName       : '{i18n>responsible}',
             TypeNamePlural : '{i18n>responsibles}',
             Title          : {Value : code},
             Description    : {Value : description}
         },
 
-        Facets : [{
+        Facets                          : [{
             $Type  : 'UI.ReferenceFacet',
             Label  : '{i18n>details}',
             Target : '@UI.FieldGroup#ResponsiblesDetails'
@@ -64,7 +66,7 @@ annotate OrderService.Responsibles with @(
                     $Type : 'UI.DataField',
                     Value : description
 
-                },                
+                },
                 {
                     $Type : 'UI.DataField',
                     Value : code
@@ -75,19 +77,16 @@ annotate OrderService.Responsibles with @(
 );
 
 annotate OrderService.Responsibles with {
-    toPlant @(
-        Common : {            
-            ValueListWithFixedValues,
-            ValueList : {
-                SearchSupported : true,
-                CollectionPath  : 'VH_Plants',
-                Parameters      : [{
-                    $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : toPlant_ID,
-                    ValueListProperty : '_ID'
-                    },
-                ]
-            }
+    toPlant @(Common : {
+        ValueListWithFixedValues,
+        ValueList : {
+            SearchSupported : true,
+            CollectionPath  : 'VH_Plants',
+            Parameters      : [{
+                $Type             : 'Common.ValueListParameterInOut',
+                LocalDataProperty : toPlant_ID,
+                ValueListProperty : 'ID'
+            }, ]
         }
-    );
+    });
 };
