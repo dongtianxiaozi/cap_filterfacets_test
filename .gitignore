@@ -37,5 +37,6 @@ Makefile_*
 # .vscode
 # .idea
 /package-lock.json
+default-env.json
 **/package-lock.json
 /src/shared/Contract.temp.ts
