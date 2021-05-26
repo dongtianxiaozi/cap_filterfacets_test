@@ -2,8 +2,6 @@ namespace com.seidor.sfc;
 
 using from '../db/data-model';
 using from './OrderService';
-using from './user-service';
-using from './TestService';
 using from './annotations/operations-annotations';
 using from './annotations/components-annotations';
 using from './annotations/orders-annotations';
