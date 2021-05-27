@@ -2,10 +2,10 @@
 ## appName = sfc
 ## language=nodejs; multiTenant=false
 ## approuter=
-_schema-version: '3.1'
+_schema-version: "3.1"
 ID: sfc
 version: 1.0.0
-description: 'A simple CAP project.'
+description: "A simple CAP project."
 parameters:
   enable-parallel-deployments: true
 
@@ -37,8 +37,8 @@ modules:
           url: ~{srv-url}
     properties:
       SAP_JWT_TRUST_ACL:
-        - clientid: '*'
-          identityzone: '*'
+        - clientid: "*"
+          identityzone: "*"
 
   # --------------------- SERVER MODULE ------------------------
   - name: sfc-srv
@@ -102,7 +102,7 @@ modules:
             - Name: sfcservice_sfc_html_repo_runtime
               ServiceInstanceName: sfc-html-repo-runtime
               ServiceKeyName: sfc_html_repo_runtime-key
-              sap.cloud.service: sfcservice              
+              sap.cloud.service: sfcservice
             - Authentication: OAuth2UserTokenExchange
               Name: sfcservice_sfc-uaa
               ServiceInstanceName: sfc-xsuaa-service
@@ -157,10 +157,34 @@ resources:
     # ------------------------------------------------------------
     type: com.sap.xs.hdi-container
     parameters:
-      service: hana
+      service: hanatrial
       service-plan: hdi-shared
     properties:
       hdi-service-name: ${service-name}
+
+  # -------------------- UI MODULE ------------------------
+  - name: sfc-ui
+    type: nodejs
+    path: app
+    parameters:
+      memory: 256M
+      disk-quota: 384M
+    provides:
+      - name: s4n-ui
+        properties:
+          url: ${default-url}
+    requires:
+      - name: srv_api
+        group: destinations
+        properties:
+          forwardAuthToken: true
+          strictSSL: true
+          name: srv-api
+          url: ~{srv-url}
+    properties:
+      SAP_JWT_TRUST_ACL:
+        - clientid: "*"
+          identityzone: "*"
 
   # ------------------------------------------------------------
   - name: sfc-destination-service
