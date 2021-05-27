@@ -1,6 +1,0 @@
-ID;toOrder_ID;operation;controlKey;isExternal;isNotifiable;text;toWorkCenter_ID;quantity;baseQuantity;queueSequence
-217ef85a-aef2-464b-89f6-6a3ce64f2e01;ea53a345-ed80-4272-8926-7e9eabc33730;0010;01;false;true;Preparación;427ef85a-aef2-464b-89f6-6a3ce64f2e01;100;10;00001
-217ef85a-aef2-464b-89f6-6a3ce64f2e02;ea53a345-ed80-4272-8926-7e9eabc33730;0020;01;false;true;Ejecución;427ef85a-aef2-464b-89f6-6a3ce64f2e01;100;10;00002
-217ef85a-aef2-464b-89f6-6a3ce64f2e03;ea53a345-ed80-4272-8926-7e9eabc33730;0030;01;false;true;Montaje;427ef85a-aef2-464b-89f6-6a3ce64f2e02;100;10;00001
-217ef85a-aef2-464b-89f6-6a3ce64f2e04;ad94a0ef-a440-4ae3-9a54-e3f4c44c5b82;0010;01;false;true;Preparación;427ef85a-aef2-464b-89f6-6a3ce64f2e02;100;10;00003
-217ef85a-aef2-464b-89f6-6a3ce64f2e05;ad94a0ef-a440-4ae3-9a54-e3f4c44c5b82;0020;01;false;true;Ejecución;427ef85a-aef2-464b-89f6-6a3ce64f2e01;100;10;00002

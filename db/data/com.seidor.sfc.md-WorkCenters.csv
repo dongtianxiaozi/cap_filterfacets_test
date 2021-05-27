@@ -1,7 +1,0 @@
-ID;code;plant;description;responsible;queueType;isOeeRelevant;toPlant_ID;toResponsible_ID
-427ef85a-aef2-464b-89f6-6a3ce64f2e01;M1-MPI01;2410;puesto A;;S;true;04693abf-fa43-44d2-ae38-97b157168178;2fde7b97-38e0-4224-97bf-8d3a15071aff
-427ef85a-aef2-464b-89f6-6a3ce64f2e02;M1-MPI02;2410;puesto B;;S;true;b8e09334-4866-4820-aecf-3bf478b9c473;73d5d8a3-b8d9-40e7-9e1d-140be23f1f63
-427ef85a-aef2-464b-89f6-6a3ce64f2e03;M1-MPI03;2410;puesto C;;S;true;7390f1f3-bbe8-4776-ba04-be85a4128d3e;ad89c3bd-630e-4de9-9499-72f3432209e2
-427ef85a-aef2-464b-89f6-6a3ce64f2e04;M1-MPI04;2410;puesto D;;S;true;04693abf-fa43-44d2-ae38-97b157168178;2fde7b97-38e0-4224-97bf-8d3a15071aff
-427ef85a-aef2-464b-89f6-6a3ce64f2e05;M1-MPI05;2410;puesto E;;S;true;04693abf-fa43-44d2-ae38-97b157168178;2fde7b97-38e0-4224-97bf-8d3a15071aff
-427ef85a-aef2-464b-89f6-6a3ce64f2e06;M1-MPI06;2410;puesto F;;S;true;b8e09334-4866-4820-aecf-3bf478b9c473;73d5d8a3-b8d9-40e7-9e1d-140be23f1f63
