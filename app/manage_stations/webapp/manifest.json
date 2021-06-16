@@ -15,7 +15,7 @@
         "resources": "resources.json",
         "dataSources": {
             "mainService": {
-                "uri": "v2/order/",
+                "uri": "/v2/order/",
                 "type": "OData",
                 "settings": {
                     "annotations": [
