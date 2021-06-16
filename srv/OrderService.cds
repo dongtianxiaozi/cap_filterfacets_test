@@ -1,6 +1,6 @@
 using {com.seidor.sfc.md as md} from '../db/data-model';
 
-service OrderService @(requires : ['user']) {
+service OrderService {
 
     entity Stations       as projection on md.Stations {
         * , toTurns : redirected to Stations_Turns

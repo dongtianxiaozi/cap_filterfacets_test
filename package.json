@@ -47,9 +47,6 @@
       "deploy-format": "hdbtable"
     },
     "requires": {
-      "uaa": {
-        "kind": "xsuaa"
-      },
       "db": {
         "kind": "sql",
         "model": "*",
@@ -57,34 +54,9 @@
           "database": "sfc.db"
         }
       }
-    },
-    "[production]": {
-      "auth": {
-        "passport": {
-          "strategy": "JWT"
-        }
-      }
     }
   },
   "sapux": [
-    "app\\v4_orders",
-    "app\\v4_workcenters",
-    "app\\v2_orders",
-    "app\\v2_workcenters",
-    "app\\v2_queues",
-    "app\\v2_operations",
-    "app\\v2_turns",
-    "app\\manage_responsibles",
-    "app\\manage_materials_to_sync",
-    "app\\manage_order_classes",
-    "app\\manage_oee_relevancies",
-    "app\\manage_granted_types",
-    "app\\manage_activity_phases",
-    "app\\manage_roles",
-    "app\\manage_units",
-    "app\\manage_plants",
-    "app\\manage_document_classes",
-    "app\\manage_materials",
     "app\\manage_stations"
   ]
 }
