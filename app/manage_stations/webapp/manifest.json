@@ -126,7 +126,16 @@
             }
         },
         "extends": {
-            "extensions": {}
+            "extensions": {
+                "sap.ui.controllerExtensions": {
+                    "sap.suite.ui.generic.template.ListReport.view.ListReport": {
+                        "controllerName": "com.seidor.sfc.apps.manage.managestations.ext.controller.ListReportExtension"
+                    },
+                    "sap.suite.ui.generic.template.ObjectPage.view.Details": {
+                        "controllerName": "com.seidor.sfc.apps.manage.managestations.ext.controller.DetailsExtension"
+                    }
+                }
+            }
         },
         "contentDensities": {
             "compact": true,
