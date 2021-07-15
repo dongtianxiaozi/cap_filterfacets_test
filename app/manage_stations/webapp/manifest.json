@@ -121,7 +121,8 @@
                     "refreshAfterChange": false,
                     "metadataUrlParams": {
                         "sap-value-list": "none"
-                    }
+                    },
+                    "persistTechnicalMessages": true
                 }
             }
         },

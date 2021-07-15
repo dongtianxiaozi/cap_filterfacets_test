@@ -5,7 +5,7 @@ sap.ui.controller("com.seidor.sfc.apps.manage.managestations.ext.controller.Deta
 
     onBeforeRendering: function () {
         debugger
-        this.getView().getModel().setPersistTechnicalMessages(true)
+        //this.getView().getModel().setPersistTechnicalMessages(true)
     },
 
     onAfterRendering: function () {
