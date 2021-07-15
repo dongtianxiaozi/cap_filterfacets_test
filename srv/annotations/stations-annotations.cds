@@ -3,20 +3,19 @@ namespace com.seidor.sfc;
 using {OrderService} from '../OrderService';
 
 annotate OrderService.Stations with {
-    code              @title : '{i18n>stationCode}';
-    description       @title : '{i18n>stationDescription}';
+    code         @title : '{i18n>stationCode}';
+    description  @title : '{i18n>stationDescription}';
 
-    toOperator        @title : '{i18n>operatorCode}'
-                      @(Common : {Text : {
+    toOperator   @title : '{i18n>operatorCode}'
+                 @(Common : {Text : {
         $value                 : toOperator.code,
         ![@UI.TextArrangement] : #TextOnly
     }});
 
-    turnRequired      @title : '{i18n>turnRequired}';
+    turnRequired @title : '{i18n>turnRequired}';
 }
 
-annotate OrderService.Stations with @(
-                                    UI : {
+annotate OrderService.Stations with @(UI : {
     Identification              : [{Value : code}],
 
     LineItem                    : [
@@ -38,8 +37,13 @@ annotate OrderService.Stations with @(
         },
         {
             $Type  : 'UI.ReferenceFacet',
-            Label  : '{i18n>turns}',
+            Label  : '{i18n>turnsWithDialog}',
             Target : 'toTurns/@UI.LineItem'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Label  : '{i18n>turns}',
+            Target : 'toTurns2/@UI.LineItem'
         }
     ],
     FieldGroup #StationsDetails : {

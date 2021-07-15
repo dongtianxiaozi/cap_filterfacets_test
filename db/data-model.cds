@@ -54,6 +54,8 @@ context md {
     quantityRequired                 : Boolean not null default false;
     toTurns                          : Composition of many Stations_Turns
                                          on toTurns.toStation = $self;
+    toTurns2                          : Composition of many Stations_Turns
+                                         on toTurns2.toStation = $self;
     turnDate                         : Date;
     pinRequired                      : Boolean not null default false;
     eventNotificationRequired        : Boolean not null default false;
